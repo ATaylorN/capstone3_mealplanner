@@ -4,6 +4,9 @@ import com.techelevator.dao.IngredientDao;
 import com.techelevator.model.Ingredient;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @RestController
 @CrossOrigin
 @RequestMapping(value = "/ingredients")
@@ -22,6 +25,18 @@ public class IngredientController {
             throw new RuntimeException("Unable to add ingredient!");
         }
     }
+
+    @RequestMapping(value = "", method = RequestMethod.GET)
+    public List<Ingredient> getAllIngredients(){
+        List<Ingredient> ingredients = new ArrayList<Ingredient>();
+        try{
+            ingredients = ingredientDao.getAllIngredients();
+        } catch (RuntimeException e){
+            throw new RuntimeException("Couldn't get ingredients!");
+        }
+        return ingredients;
+    }
+
 
 
 }

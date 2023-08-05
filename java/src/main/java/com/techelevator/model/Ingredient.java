@@ -4,6 +4,16 @@ public class Ingredient {
     // gonna let ID be determined by the DB
     private int id;
     private String name;
+    private String image;
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public Ingredient(){
     }

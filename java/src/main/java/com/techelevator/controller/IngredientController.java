@@ -18,12 +18,14 @@ public class IngredientController {
     }
 
     @RequestMapping(value = "", method = RequestMethod.POST)
-    public void addIngredient (@RequestBody Ingredient ingredient){
+    public int addIngredient (@RequestBody Ingredient ingredient){
+        int newIngredientId;
         try {
-            ingredientDao.addIngredient(ingredient);
+            newIngredientId = ingredientDao.addIngredient(ingredient);
         } catch (RuntimeException e){
-            throw new RuntimeException("Unable to add ingredient!");
+            throw new RuntimeException("Unable to add ingredient!", e);
         }
+        return newIngredientId;
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)

@@ -18,10 +18,13 @@ public class JdbcIngredientDao implements IngredientDao{
         this.jdbcTemplate = jdbcTemplate;
     }
     public int addIngredient(Ingredient ingredientToAdd){
-        String sql = "INSERT INTO ingredients (ingredient_name) VALUES (?) RETURNING ingredient_id;";
+        String sql = "INSERT INTO ingredients (ingredient_name, ingredient_image) VALUES (?, ?) RETURNING ingredient_id;";
         int ingredientId;
+        if (ingredientToAdd.getImage() == null){
+            ingredientToAdd.setImage("");
+        }
         try {
-            ingredientId = jdbcTemplate.queryForObject(sql, int.class, ingredientToAdd.getName());
+            ingredientId = jdbcTemplate.queryForObject(sql, int.class, ingredientToAdd.getName(), ingredientToAdd.getImage());
             // TODO: Make specific exception types for DAO-related issues.
             // TODO: Think about what kind of exceptions we want to build.
         } catch (CannotGetJdbcConnectionException e) {
@@ -37,7 +40,7 @@ public class JdbcIngredientDao implements IngredientDao{
 
     public List<Ingredient> getAllIngredients(){
         List<Ingredient> ingredients = new ArrayList<Ingredient>();
-        String sql = "SELECT ingredient_id, ingredient_name FROM ingredients;";
+        String sql = "SELECT ingredient_id, ingredient_name, ingredient_image FROM ingredients;";
         try {
             SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
             while(rows.next()){
@@ -58,6 +61,7 @@ public class JdbcIngredientDao implements IngredientDao{
         Ingredient newIngredient = new Ingredient();
         newIngredient.setId(rows.getInt("ingredient_id"));
         newIngredient.setName(rows.getString("ingredient_name"));
+        newIngredient.setImage(rows.getString("ingredient_image"));
         return newIngredient;
     }
 

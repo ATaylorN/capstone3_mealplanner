@@ -20,6 +20,15 @@ CREATE TABLE ingredients (
 
 -- TODO: Create table for recipes
 
+CREATE TABLE recipes (
+	recipe_id SERIAL,
+	recipe_name varchar (75) NOT NULL UNIQUE,
+	recipe_image varchar (200),
+	recipe_ingredients varchar (1000) NOT NULL,
+	instructions varchar (5000) NOT NULL,
+	CONSTRAINT PK_recipe PRIMARY KEY (recipe_id)
+);
+
 -- TODO: Create table for meals
 
 -- TODO: Create table for meal plans

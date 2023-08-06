@@ -1,5 +1,6 @@
 package com.techelevator.model;
 
+import javax.lang.model.element.NestingKind;
 import java.util.List;
 
 public class Recipe {
@@ -7,14 +8,14 @@ public class Recipe {
     private String name;
     private String image;
 
-    private List<Ingredient> ingredients;
+    private String ingredients;
 
     private String instructions;
 
     public Recipe() {
     }
 
-    public Recipe(int id, String name, String image, List<Ingredient> ingredients, String instructions){
+    public Recipe(int id, String name, String image, String ingredients, String instructions){
         this.id = id;
         this.name = name;
         this.image = image;
@@ -45,11 +46,11 @@ public class Recipe {
         this.image = image;
     }
 
-    public List<Ingredient> getIngredients() {
+    public String getIngredients() {
         return ingredients;
     }
 
-    public void setIngredients(List<Ingredient> ingredients) {
+    public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
     }
 

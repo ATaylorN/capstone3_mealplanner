@@ -76,7 +76,7 @@ public class JdbcRecipeDao implements RecipeDao{
         try {
             SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, id);
             if (rows.next()) {
-                return mapRowToRecipe(rows);
+                recipe = mapRowToRecipe(rows);
             }
         } catch (CannotGetJdbcConnectionException e) {
             throw new RuntimeException("Unable to connect to server or database", e);
@@ -86,7 +86,7 @@ public class JdbcRecipeDao implements RecipeDao{
             throw new RuntimeException("Invalid syntax.", e);
         }
 
-        return null;
+        return recipe;
     }
 
 

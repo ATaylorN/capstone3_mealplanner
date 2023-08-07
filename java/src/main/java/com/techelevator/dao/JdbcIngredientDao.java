@@ -37,6 +37,29 @@ public class JdbcIngredientDao implements IngredientDao{
 
         return ingredientId;
     }
+    public int addRecipeIngredients(List<Ingredient> ingredients, int recipeId){
+        // Once we get our recipe ID back from the addRecipe call, we'll feed it to this method along with our ingredient list.
+        int ingredientsToAdd = ingredients.size();
+        int ingredientsAdded = 0;
+        String sql = "INSERT INTO recipe_ingredients(recipe_id, ingredient_id) VALUES (?, ?)";
+        try {
+            for (Ingredient ingredient : ingredients){
+                jdbcTemplate.update(sql, recipeId, ingredient.getId());
+                ingredientsAdded++;
+            }
+            if(ingredientsToAdd != ingredientsAdded){
+                throw new RuntimeException("Didn't create the expected number of rows.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+
+        return 0;
+    }
 
     public List<Ingredient> getAllIngredients(){
         List<Ingredient> ingredients = new ArrayList<Ingredient>();

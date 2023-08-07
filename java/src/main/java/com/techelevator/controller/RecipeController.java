@@ -40,5 +40,4 @@ public class RecipeController {
         return recipes;
     }
 
-
 }

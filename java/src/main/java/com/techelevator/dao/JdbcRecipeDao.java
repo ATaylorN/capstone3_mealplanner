@@ -98,8 +98,22 @@ public class JdbcRecipeDao implements RecipeDao{
                 "recipe_ingredients = ?, " +
                 "instructions = ? " +
                 "WHERE recipe_id = ?";
+        try {
+            int numberOfRows = jdbcTemplate.update(sql, recipe.getName(), recipe.getImage(), recipe.getIngredients(), recipe.getInstructions(), recipe.getId());
+            if (numberOfRows == 0) {
+                throw new RuntimeException("Zero rows affected, expected at least one");
+            } else {
+                updatedRecipe = getRecipeById(recipe.getId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
 
-        return null;
+        return updatedRecipe;
     }
 
 

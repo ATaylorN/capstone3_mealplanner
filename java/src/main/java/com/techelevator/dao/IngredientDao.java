@@ -17,4 +17,7 @@ public interface IngredientDao {
      */
     List<Ingredient> getAllIngredients();
 
+    int addRecipeIngredients(List<Ingredient> ingredients, int recipeId);
+
+
 }

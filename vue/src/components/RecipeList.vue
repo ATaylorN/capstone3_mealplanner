@@ -8,7 +8,7 @@
         </tr>
         <tr v-for="recipe in recipes" :key="recipe.id">
             <td class="recipe-name">
-                <router-link :to="{}"> {{recipe.name}} </router-link> 
+                <router-link :to="{name: 'recipe-details', params: { id: recipe.id}}"> {{recipe.name}} </router-link> 
             </td>
             <td class="recipe-image-container">
                 <img class="recipe-image" :src="recipe.image" alt="">

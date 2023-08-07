@@ -39,5 +39,16 @@ public class RecipeController {
         }
         return recipes;
     }
+    @RequestMapping(value = "/{id}"  ,method = RequestMethod.GET)
+    public Recipe getRecipeById(@PathVariable int id){
+        // should 404 if the id does not exist.
+        Recipe recipe = null;
+        try{
+            recipe = recipeDao.getRecipeById(id);
+        } catch (RuntimeException e){
+            throw new RuntimeException("Recipe not found");
+        }
+        return recipe;
+    }
 
 }

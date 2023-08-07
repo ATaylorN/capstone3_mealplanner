@@ -1,5 +1,6 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS users_recipes;
 DROP TABLE IF EXISTS recipe_ingredients;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS ingredients;
@@ -45,6 +46,12 @@ CREATE TABLE recipe_ingredients (
 );
 
 -- TODO: create table to match users with their recipes
+CREATE TABLE users_recipes (
+user_id int NOT NULL,
+recipe_id int NOT NULL,
+CONSTRAINT FK_userIds FOREIGN KEY (user_id) REFERENCES users(user_id),
+CONSTRAINT FK_recipeIds FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
+);
 
 -- TODO: Create table for meals
 

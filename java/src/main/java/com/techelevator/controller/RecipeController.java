@@ -4,6 +4,7 @@ import com.techelevator.dao.IngredientDao;
 import com.techelevator.dao.RecipeDao;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Recipe;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -18,7 +19,7 @@ public class RecipeController {
     public RecipeController(RecipeDao recipeDao){
         this.recipeDao = recipeDao;
     }
-
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "", method = RequestMethod.POST)
     public int addRecipe (@RequestBody Recipe recipe){
         int newRecipeId;

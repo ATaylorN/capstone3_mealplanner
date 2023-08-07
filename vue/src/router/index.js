@@ -8,6 +8,7 @@ import store from '../store/index'
 import Ingredients from '../views/Ingredients.vue';
 import Recipe from '../views/Recipe.vue'
 import RecipeDetails from '../views/RecipeDetails.vue';
+import RecipeBuilder from '../views/RecipeBuilder.vue';
 
 Vue.use(Router)
 
@@ -67,10 +68,16 @@ const router = new Router({
       component: Recipe
     },
     {
+      path: '/recipes/new-recipe',
+      name: 'new-recipe',
+      component: RecipeBuilder
+    },
+    {
       path: '/recipes/:id',
       name: 'recipe-details',
       component: RecipeDetails,
-    }  
+    }
+
   ]
 })
 

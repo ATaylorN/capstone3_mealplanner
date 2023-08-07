@@ -3,6 +3,7 @@ package com.techelevator.controller;
 import com.techelevator.dao.IngredientDao;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.RecipeIngredientListDTO;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -18,9 +19,10 @@ public class IngredientController {
     public IngredientController(IngredientDao ingredientDao){
         this.ingredientDao = ingredientDao;
     }
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "/recipe-ingredient-list", method = RequestMethod.POST)
     public int addRecipeIngredients(@RequestBody RecipeIngredientListDTO ingredients){
-        System.out.println(ingredients);
+        //System.out.println(ingredients);
         int rowsAdded = 0;
         int rowsToAdd = ingredients.getIngredientList().size();
         try{
@@ -30,6 +32,7 @@ public class IngredientController {
         }
         return rowsAdded;
     }
+    @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "", method = RequestMethod.POST)
     public int addIngredient (@RequestBody Ingredient ingredient){
         int newIngredientId;

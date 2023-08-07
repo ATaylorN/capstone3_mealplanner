@@ -9,4 +9,6 @@ public interface RecipeDao {
     int addRecipe (Recipe recipeToAdd);
     List<Recipe> getAllRecipes();
 
+    Recipe getRecipeById (int id);
+
 }

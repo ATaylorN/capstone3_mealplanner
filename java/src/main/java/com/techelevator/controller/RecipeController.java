@@ -4,6 +4,7 @@ import com.techelevator.dao.IngredientDao;
 import com.techelevator.dao.RecipeDao;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Recipe;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -52,4 +53,17 @@ public class RecipeController {
         return recipe;
     }
 
+    @RequestMapping(value = "/{id}" ,method = RequestMethod.PUT)
+    public Recipe updateRecipe(@PathVariable int id, @RequestBody Recipe recipeToUpdate) {
+        if (id < 0) {
+            throw new RuntimeException("Recipe not found");
+        }
+        recipeToUpdate.setId(id);
+        try {
+            Recipe recipe = recipeDao.updateRecipe(recipeToUpdate);
+            return recipe;
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Recipe not found");
+        }
+    }
 }

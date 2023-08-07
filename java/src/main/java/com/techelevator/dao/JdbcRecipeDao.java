@@ -22,12 +22,17 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public int addRecipe(Recipe recipeToAdd) {
         String sql = "INSERT INTO recipes (recipe_name, recipe_image, recipe_ingredients, instructions) VALUES (?, ?, ?, ?) RETURNING recipe_id;";
+        // TODO - add method that puts a row in recipe_ingredients, and call it here when adding a recipe.
+
         int recipeId;
         if (recipeToAdd.getImage() == null){
             recipeToAdd.setImage("");
         }
+
         try {
+            // create recipe, but don't do anything with ingredients yet!
             recipeId = jdbcTemplate.queryForObject(sql, int.class, recipeToAdd.getName(), recipeToAdd.getImage(), recipeToAdd.getIngredients(), recipeToAdd.getInstructions());
+            // once the recipe is created, add a row in the join table
             // TODO: Make specific exception types for DAO-related issues.
             // TODO: Think about what kind of exceptions we want to build.
         } catch (CannotGetJdbcConnectionException e) {
@@ -45,6 +50,7 @@ public class JdbcRecipeDao implements RecipeDao{
     public List<Recipe> getAllRecipes() {
         List<Recipe> recipes = new ArrayList<>();
         String sql = "SELECT recipe_id, recipe_name, recipe_image, recipe_ingredients, instructions FROM recipes";
+        // TODO: add a method that gets recipe ingredients from recipe_ingredients, call it here to build list of lists that represents a recipe's ingredients
         try {
             SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);
             while(rows.next()){

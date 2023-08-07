@@ -39,6 +39,4 @@ public class IngredientController {
         return ingredients;
     }
 
-
-
 }

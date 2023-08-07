@@ -1,7 +1,10 @@
 BEGIN TRANSACTION;
 
+DROP TABLE IF EXISTS recipe_ingredients;
 DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS ingredients;
+DROP TABLE IF EXISTS recipes;
+
 
 CREATE TABLE users (
 	user_id SERIAL,
@@ -16,18 +19,32 @@ CREATE TABLE ingredients (
 	ingredient_name varchar(50) NOT NULL UNIQUE,
 	ingredient_image varchar(200),
 	CONSTRAINT PK_ingredient PRIMARY KEY (ingredient_id)
-);
 
--- TODO: Create table for recipes
+);
 
 CREATE TABLE recipes (
 	recipe_id SERIAL,
 	recipe_name varchar (75) NOT NULL UNIQUE,
 	recipe_image varchar (200),
-	recipe_ingredients varchar (1000) NOT NULL,
+	recipe_ingredients varchar(1000),
 	instructions varchar (5000) NOT NULL,
 	CONSTRAINT PK_recipe PRIMARY KEY (recipe_id)
 );
+
+CREATE TABLE recipe_ingredients (
+    recipe_id int NOT NULL,
+    ingredient_id int NOT NULL,
+    quantity varchar(30) NOT NULL,
+    notes varchar(100), -- probably don't even worry abot this
+    -- TODO: Quantities can range in types. Weights, volumes, imperial units, metric units.
+    -- We could varchar the quantities for now, but this would make any kind of inventory calculation difficult.
+    -- To get around this problem, we can create a category table to represent different quantity types.
+    -- Could do this now, or later. Might be best to just get recipes working, then come back to it.
+    CONSTRAINT FK_recipe_ingredients_recipe FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id),
+    CONSTRAINT FK_recipe_ingredients_ingredient FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id)
+);
+
+-- TODO: create table to match users with their recipes
 
 -- TODO: Create table for meals
 

@@ -1,27 +1,30 @@
 package com.techelevator.model;
 
-import javax.lang.model.element.NestingKind;
 import java.util.List;
 
 public class Recipe {
     private int id;
     private String name;
     private String image;
-
+    private List<String> ingredientNames;
+    private List<String> ingredientNotes;
+    private List<String> ingredientQuantities;
     private String ingredients;
-
     private String instructions;
 
     public Recipe() {
     }
 
-    public Recipe(int id, String name, String image, String ingredients, String instructions){
+    public Recipe(int id, String name, String image, List<String> ingredientNames, List<String> ingredientNotes, List<String> ingredientQuantities, String instructions) {
         this.id = id;
         this.name = name;
         this.image = image;
-        this.ingredients = ingredients;
+        this.ingredientNames = ingredientNames;
+        this.ingredientNotes = ingredientNotes;
+        this.ingredientQuantities = ingredientQuantities;
         this.instructions = instructions;
     }
+
     public int getId() {
         return id;
     }
@@ -46,16 +49,40 @@ public class Recipe {
         this.image = image;
     }
 
+    public List<String> getIngredientNames() {
+        return ingredientNames;
+    }
+
+    public void setIngredientNames(List<String> ingredientNames) {
+        this.ingredientNames = ingredientNames;
+    }
+
+    public List<String> getIngredientNotes() {
+        return ingredientNotes;
+    }
+
+    public void setIngredientNotes(List<String> ingredientNotes) {
+        this.ingredientNotes = ingredientNotes;
+    }
+
+    public List<String> getIngredientQuantities() {
+        return ingredientQuantities;
+    }
+
+    public void setIngredientQuantities(List<String> ingredientQuantities) {
+        this.ingredientQuantities = ingredientQuantities;
+    }
+
+    public String getInstructions() {
+        return instructions;
+    }
+
     public String getIngredients() {
         return ingredients;
     }
 
     public void setIngredients(String ingredients) {
         this.ingredients = ingredients;
-    }
-
-    public String getInstructions() {
-        return instructions;
     }
 
     public void setInstructions(String instructions) {

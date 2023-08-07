@@ -37,7 +37,7 @@ public class JdbcIngredientDao implements IngredientDao{
 
         return ingredientId;
     }
-    public int addRecipeIngredients(List<Ingredient> ingredients, int recipeId){
+    public int addRecipeIngredients( List<Ingredient> ingredients, int recipeId){
         // Once we get our recipe ID back from the addRecipe call, we'll feed it to this method along with our ingredient list.
         int ingredientsToAdd = ingredients.size();
         int ingredientsAdded = 0;
@@ -58,7 +58,7 @@ public class JdbcIngredientDao implements IngredientDao{
             throw new RuntimeException("Invalid syntax.", e);
         }
 
-        return 0;
+        return ingredientsAdded;
     }
 
     public List<Ingredient> getAllIngredients(){

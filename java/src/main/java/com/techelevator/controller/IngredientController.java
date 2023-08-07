@@ -2,7 +2,9 @@ package com.techelevator.controller;
 
 import com.techelevator.dao.IngredientDao;
 import com.techelevator.model.Ingredient;
+import com.techelevator.model.RecipeIngredientListDTO;
 import org.springframework.web.bind.annotation.*;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,7 +18,18 @@ public class IngredientController {
     public IngredientController(IngredientDao ingredientDao){
         this.ingredientDao = ingredientDao;
     }
-
+    @RequestMapping(value = "/recipe-ingredient-list", method = RequestMethod.POST)
+    public int addRecipeIngredients(@RequestBody RecipeIngredientListDTO ingredients){
+        System.out.println(ingredients);
+        int rowsAdded = 0;
+        int rowsToAdd = ingredients.getIngredientList().size();
+        try{
+            rowsAdded = ingredientDao.addRecipeIngredients(ingredients.getIngredientList(), ingredients.getRecipeId());
+        } catch (RuntimeException e){
+            throw new RuntimeException("Failed to add ingredient list rows.", e);
+        }
+        return rowsAdded;
+    }
     @RequestMapping(value = "", method = RequestMethod.POST)
     public int addIngredient (@RequestBody Ingredient ingredient){
         int newIngredientId;

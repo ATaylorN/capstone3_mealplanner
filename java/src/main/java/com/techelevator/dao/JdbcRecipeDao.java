@@ -89,6 +89,19 @@ public class JdbcRecipeDao implements RecipeDao{
         return null;
     }
 
+    @Override
+    public Recipe updateRecipe(Recipe recipe) {
+        Recipe updatedRecipe = null;
+        String sql = "UPDATE recipes " +
+                "SET recipe_name = ?, " +
+                "recipe_image = ?, " +
+                "recipe_ingredients = ?, " +
+                "instructions = ? " +
+                "WHERE recipe_id = ?";
+
+        return null;
+    }
+
 
     private Recipe mapRowToRecipe(SqlRowSet rows){
         Recipe newRecipe = new Recipe();

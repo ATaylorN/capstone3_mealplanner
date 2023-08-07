@@ -11,4 +11,6 @@ public interface RecipeDao {
 
     Recipe getRecipeById (int id);
 
+    Recipe updateRecipe (Recipe recipe);
+
 }

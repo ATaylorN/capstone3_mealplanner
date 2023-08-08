@@ -1,4 +1,5 @@
 <template>
+<div> <Header/>
   <div class="recipe-builder">
     <!-- 
           list of ingredients on one side
@@ -32,16 +33,20 @@
 
       <button>Save Recipe</button>
     </form>
-    
+    </div>
   </div>
 </template>
 
 <script>
 import ingredientService from "@/services/IngredientService.js";
 import recipeService from "@/services/RecipeService.js";
+import Header from '@/components/Header.vue'
 
 
 export default {
+  components: {
+    Header
+  },
   name: "recipe-builder",
   data() {
     return {

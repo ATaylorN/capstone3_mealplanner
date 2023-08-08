@@ -19,7 +19,7 @@
       <div v-show="searched && filteredIngredientList.length > 0" class="filteredList">
           <div class="ingredient-card" v-for="ingredient in filteredIngredientList" :key="ingredient.id">
               <p class="ingredient-name"> {{ingredient.name}} </p>
-              <img class="ingredient-image" :src="ingredient.image" alt="">
+              <img id="ingredient-image" :src="ingredient.image" alt="" class="img-rounded">
           </div>
       </div>
    
@@ -35,7 +35,7 @@
     <ul class="ingredient-search-results">
         <li v-for="foundIngredient in searchResults" :key="foundIngredient.index">
             <span> {{foundIngredient.name}} </span>
-            <img :src="foundIngredient.image" :alt="foundIngredient.name">            
+            <img :src="foundIngredient.image" :alt="foundIngredient.name" class="img-rounded">            
         </li>
     </ul>          
   </div>
@@ -172,6 +172,22 @@ export default {
 </script>
 
 <style>
+#search-input{
+    color: black;
+}
+
+.search-input{
+    border-style: solid;
+    border-color: black;
+    color: white;
+    background-color: #4a180c;
+    text-align: center;
+    padding: 10px;
+
+}
+.search-button{
+    color: black;
+}
 .container{
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr;
@@ -198,7 +214,6 @@ div.search-input{
 }
 .search-field{
     border: none;
-    
 }
 
 .ingredient-card{
@@ -208,14 +223,13 @@ div.search-input{
     align-items: center;
     margin: 5rem;
 }
-.ingredient-image{
+#ingredient-image{
     max-height: 200px; 
     max-width: 200px;        
 }
 
 .list-display{
     grid-area: display;
-    
 }
 
 .filteredList{
@@ -228,8 +242,6 @@ div.search-input{
     background-color: #4a180c;
     color: white;
     margin-top: 50px;
-    
-    
 }
 .no-ingredients{
     grid-area: nf;

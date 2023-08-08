@@ -5,10 +5,9 @@
       <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"> Menu </button>
         <ul class="dropdown-menu">
-          <li> <router-link :to="{ name: 'ingredients' }">Build a Recipe</router-link>&nbsp;|&nbsp; </li>
-          <li> <router-link :to="{ name: 'user-recipe-details' }">View Recipes</router-link>&nbsp;|&nbsp;</li>
+          <li> <router-link :to="{ name: 'user-recipe-details' }">View Your Recipes</router-link>&nbsp;|&nbsp;</li>
           <li> <router-link :to="{ name: 'build-recipe' }">Build a Recipe</router-link>&nbsp;|&nbsp; </li>
-          <li> <router-link :to="{ name: 'recipes' }">View Recipes</router-link>&nbsp;|&nbsp;</li>
+          <li> <router-link :to="{ name: 'recipes' }">View All Recipes</router-link>&nbsp;|&nbsp;</li>
           <li> <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;</li>
           <li> <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link> </li>
         </ul>

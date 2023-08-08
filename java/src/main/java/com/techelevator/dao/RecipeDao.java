@@ -6,7 +6,7 @@ import java.util.List;
 
 public interface RecipeDao {
 
-    int addRecipe (Recipe recipeToAdd);
+    int addRecipe (Recipe recipeToAdd, int userId);
     List<Recipe> getAllRecipes();
 
     Recipe getRecipeById (int id);

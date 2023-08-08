@@ -1,5 +1,5 @@
 <template>
-  <div class="container">
+  <div class="recipe-builder">
     <!-- 
           list of ingredients on one side
           recipe form on the other, with element to display added ingredients
@@ -97,7 +97,7 @@ export default {
 </script>
 
 <style>
-div.container {
+div.recipe-builder {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "ingredients recipe";

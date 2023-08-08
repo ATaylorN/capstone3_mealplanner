@@ -76,6 +76,11 @@ const router = new Router({
       path: '/recipes/:id',
       name: 'recipe-details',
       component: RecipeDetails,
+    },
+    {
+      path: '/user/:id/recipes',
+      name: 'user-recipe-details',
+      component: 
     }
 
   ]

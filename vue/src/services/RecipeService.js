@@ -9,5 +9,9 @@ export default{
     },
     getRecipeById(id){
         return axios.get(`/recipes/${id}`); 
+    },
+
+    listRecipesByUser(id){
+        return axios.get(`/user/${id}`);
     }
 }

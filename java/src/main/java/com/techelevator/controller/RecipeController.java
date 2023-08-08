@@ -39,7 +39,7 @@ public class RecipeController {
 
     @PreAuthorize("isAuthenticated()")
     @ResponseStatus(HttpStatus.CREATED)
-    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/user/{id}/recipes", method = RequestMethod.GET)
     public List<Recipe> getAllRecipesByUserId(int userId) {
         List<Recipe> recipes = new ArrayList<>();
         try {

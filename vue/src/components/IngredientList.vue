@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-      <Header id="header" />
+      <Header id="header"/>
       <div class="search-input">
           <!-- 
               Need to make the input box invisible so that the span text matches up with the input text seamlessly. 
@@ -215,6 +215,7 @@ div.search-input{
 
 .list-display{
     grid-area: display;
+    
 }
 
 .filteredList{
@@ -222,13 +223,14 @@ div.search-input{
     flex-wrap: wrap;
     flex-direction: row;
     grid-area: display; 
+    border-style: solid;
+    border-color: black;
+    background-color: #4a180c;
+    color: white;
+    margin-top: 50px;
+    
     
 }
-/* 
-.search-button{
-    display: inline-block;
-} */
-
 .no-ingredients{
     grid-area: nf;
 }

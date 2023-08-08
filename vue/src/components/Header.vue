@@ -44,7 +44,7 @@ export default {
 }
 .header-container nav {
   display: flex;
-  flex-basis: 30%;
+  flex-basis: 20%;
   justify-content: space-between;
   padding-right: 10px;
 }

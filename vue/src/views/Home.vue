@@ -19,20 +19,23 @@ export default {
 </script>
 
 <style>
-template{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-areas: "header header header header"
-                        ". welcome welcome ."
-                        "footer footer footer footer";
+body{
+background-image: url('@/Images/BackgroundImage.png');
+background-repeat: no-repeat;
+height: 100%;
+background-size: cover;
 }
-header {
-  grid-area: header;
+.welcome {
+  background-color:#4a180c;
+  color: white;
+  margin: 150px;
+  border-style: solid;
+  border-color: black;
+  text-align: center;
+  padding-top: 50px;
+  padding-bottom: 50px;
+  
 }
 
-welcome {
-  grid-area: welcome;
-  text-align: center;
-}
 
 </style>

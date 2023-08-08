@@ -1,5 +1,6 @@
 <template>
   <div>
+      <Header />
       <table>
           <tr>
               <th>Recipe Name</th>
@@ -14,6 +15,9 @@
               <td class = "recipe-image-container">
                 <img class = "recipe-image" :src="recipe.image" alt="">
               </td>
+              <td>
+                  <router-link :to="{name: 'recipe-details', params: {id: recipe.id}}">View Full Recipe</router-link>
+              </td>
           </tr>
       </table>
   </div>
@@ -21,12 +25,13 @@
 
 <script>
 
-import RecipeService from '../services/RecipeService.js'
+import RecipeService from '../services/RecipeService.js';
+import Header from '../components/Header.vue'
 
 export default {
     name: 'user-recipe-list',
     components: {
-       
+       Header
     },
     data() {
         return {

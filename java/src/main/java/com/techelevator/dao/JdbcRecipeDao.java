@@ -91,7 +91,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public Recipe getRecipeById(int id) {
         Recipe recipe = null;
-        String sql = "SELECT recipe_id, recipe_name, recipe_image, recipe_ingredients, instructions " +
+        String sql = "SELECT recipe_id, user_id, recipe_name, recipe_image, recipe_ingredients, instructions " +
                 "FROM recipes " +
                 "WHERE recipe_id = ?";
         try {

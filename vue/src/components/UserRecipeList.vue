@@ -5,10 +5,15 @@
               <th>Recipe Name</th>
               <th>Image</th>
           </tr>
-          <tr v-for="recipe in recipes" :key="recipe.userId">
+          <tr v-for="recipe in recipes" :key="recipe.id">
               <td class="recipe-name">
-                  <router-link :to=""></router-link>
-              </td>    
+                  <router-link :to="{name: 'user-recipe-details'}">
+                      {{recipe.name}}
+                  </router-link>
+              </td>
+              <td class = "recipe-image-container">
+                <img class = "recipe-image" :src="recipe.image" alt="">
+              </td>
           </tr>
       </table>
   </div>
@@ -31,7 +36,8 @@ export default {
 
     created() {
         RecipeService.listRecipesByUser().then(response => {
-            if(response.data === 200) {
+        
+            if(response.status === 200) {
                 this.recipes = response.data;
             }
         }).catch (error => {
@@ -43,5 +49,9 @@ export default {
 </script>
 
 <style>
+.recipe-image{
+    max-height: 350px;
+    max-width: 350px;
+}
 
 </style>

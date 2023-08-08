@@ -11,7 +11,10 @@ export default{
         return axios.get(`/recipes/${id}`); 
     },
 
-    listRecipesByUser(id){
-        return axios.get(`/user/${id}`);
-    }
+    listRecipesByUser(){
+        return axios.get('/recipes/user/recipes');
+    },
+    updateRecipe(id, recipe){
+        return axios.put(`/recipes/${id}`, recipe);
+    },
 }

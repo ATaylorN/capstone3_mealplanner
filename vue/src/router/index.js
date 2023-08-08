@@ -9,6 +9,7 @@ import Ingredients from '../views/Ingredients.vue';
 import Recipe from '../views/Recipe.vue'
 import RecipeDetails from '../views/RecipeDetails.vue';
 import RecipeBuilder from '../views/RecipeBuilder.vue';
+import UserRecipeDetails from '../views/UserRecipeDetails.vue';
 
 Vue.use(Router)
 
@@ -78,9 +79,12 @@ const router = new Router({
       component: RecipeDetails,
     },
     {
-      path: '/user/:id/recipes',
+      path: '/user/recipes',
       name: 'user-recipe-details',
-      component: 
+      component: UserRecipeDetails,
+      meta: {
+        requiresAuth: true
+      }
     }
 
   ]

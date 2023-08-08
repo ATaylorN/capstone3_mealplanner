@@ -3,7 +3,7 @@
     <!-- 
           list of ingredients on one side
           recipe form on the other, with element to display added ingredients
-       -->
+    -->
     <ul class="ingredients">
       <li v-for="ingredient in ingredients" :key="ingredient.id">
         <span @click="addNewIngredientToRecipe(ingredient)">
@@ -36,9 +36,9 @@
 </template>
 
 <script>
-import ingredientService from "@/services/IngredientService.js";
-import recipeService from "@/services/RecipeService.js";
-
+import ingredientService from '@/services/IngredientService.js';
+import recipeService from '@/services/RecipeService.js';
+import IngredientList from '@/components/IngredientList.js'
 export default {
   name: "recipe-builder",
   data() {
@@ -46,9 +46,46 @@ export default {
       ingredients: [],
       newRecipe: {},
       newRecipeIngredients: [],
+      searchInputValue: "",
+      searchTerm: "",
+      autoCompleteSuggestion: "",
+      newIngredient: {
+          name: "",
+      },
+      potentialSuggestions: [],
+      searched: false,
+      searchResults: [],
+      newIngredients: [],   
     };
   },
+  computed:{
+        filteredIngredientList(){
+            return this.ingredients.filter(ingredient => {
+                return ingredient.name.includes(this.searchTerm); 
+            }); 
+        },
+
+  },
   methods: {
+    runSearch(){
+    this.searchTerm = this.searchInputValue + this.autoCompleteSuggestion;
+    this.autoCompleteSuggestion = "";
+    this.searchInputValue = "";  
+    this.searched = true;
+    },
+    suggestSearchTerm(){
+    // when the user types something in the search box, try to auto-complete
+    this.potentialSuggestions = this.filteredIngredientList.filter(ingredient => {
+            return (ingredient.name.substring(0, this.searchInputValue.length) === this.searchInputValue);
+        }); 
+      if(this.potentialSuggestions.length > 0 && this.searchInputValue !== ""){
+              this.autoCompleteSuggestion = this.potentialSuggestions[0].name.substring(this.searchInputValue.length);
+                                          
+      } else {
+          this.autoCompleteSuggestion = "";
+          this.potentialSuggestions = [];
+      }
+    },
     addRecipe() {
       console.log(this.newRecipe);
       let newRecipeId = null;
@@ -73,7 +110,7 @@ export default {
           } 
         })
         .catch((error) => {
-          console.error(error.status);
+          console.error(error);
         });
     },
     addNewIngredientToRecipe(ingredient) {

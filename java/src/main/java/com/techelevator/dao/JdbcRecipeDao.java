@@ -20,18 +20,18 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
-    public int addRecipe(Recipe recipeToAdd) {
-        String sql = "INSERT INTO recipes (recipe_name, recipe_image, recipe_ingredients, instructions) VALUES (?, ?, ?, ?) RETURNING recipe_id;";
+    public int addRecipe(Recipe recipeToAdd, int userId) {
+        String sql = "INSERT INTO recipes (user_id, recipe_name, recipe_image, recipe_ingredients, instructions) VALUES (?, ?, ?, ?, ?) RETURNING recipe_id;";
         // TODO - add method that puts a row in recipe_ingredients, and call it here when adding a recipe.
 
         int recipeId;
         if (recipeToAdd.getImage() == null){
             recipeToAdd.setImage("");
         }
-
+        recipeToAdd.setUserId(userId);
         try {
             // create recipe, but don't do anything with ingredients yet!
-            recipeId = jdbcTemplate.queryForObject(sql, int.class, recipeToAdd.getName(), recipeToAdd.getImage(), recipeToAdd.getIngredients(), recipeToAdd.getInstructions());
+            recipeId = jdbcTemplate.queryForObject(sql, int.class, recipeToAdd.getUserId(), recipeToAdd.getName(), recipeToAdd.getImage(), recipeToAdd.getIngredients(), recipeToAdd.getInstructions());
             // once the recipe is created, add a row in the join table
             // TODO: Make specific exception types for DAO-related issues.
             // TODO: Think about what kind of exceptions we want to build.

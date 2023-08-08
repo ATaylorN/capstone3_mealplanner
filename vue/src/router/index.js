@@ -5,7 +5,6 @@ import Login from '../views/Login.vue'
 import Logout from '../views/Logout.vue'
 import Register from '../views/Register.vue'
 import store from '../store/index'
-import Ingredients from '../views/Ingredients.vue';
 import Recipe from '../views/Recipe.vue'
 import RecipeDetails from '../views/RecipeDetails.vue';
 import RecipeBuilder from '../views/RecipeBuilder.vue';
@@ -35,9 +34,9 @@ const router = new Router({
       }
     },
     {
-      path: "/ingredients",
-      name: "ingredients",
-      component: Ingredients,
+      path: "/build-recipe",
+      name: "build-recipe",
+      component: RecipeBuilder,
     },
     {
       path: "/login",

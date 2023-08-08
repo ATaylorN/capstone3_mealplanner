@@ -3,22 +3,21 @@
     <Header id="header" />
     <div class="container">
       <table class="recipe-table">
-        <tr>
+        <!-- <tr>
           <th>Recipe Name</th>
           <th>Image</th>
-        </tr>
-        <tr v-for="recipe in recipes" :key="recipe.id">
+        </tr> -->
+        <main class="list-display">
+        <div v-for="recipe in recipes" :key="recipe.id">
           <td class="recipe-name">
-            <router-link
-              :to="{ name: 'recipe-details', params: { id: recipe.id } }"
-            >
+            <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }"> 
               {{ recipe.name }}
             </router-link>
-          </td>
           <td class="recipe-image-container">
             <img class="recipe-image" :src="recipe.image" alt="" />
           </td>
-        </tr>
+        </div>
+        </main>
       </table>
     </div>
   </div>

@@ -27,8 +27,12 @@
 
 <script>
 import RecipeService from "../services/RecipeService";
+import Header from '@/components/Header.vue';
 export default {
   name: "updateRecipe",
+  components: {
+    Header
+  },
   data() {
     return {
       name: "",
@@ -47,7 +51,7 @@ export default {
       };
       RecipeService.updateRecipe(this.$route.params.id, recipe).then((response) => {
         if (response.status === 200) {
-          this.$router.push(`/${recipe.id}`);
+          this.$router.push({ path: `/recipes/${this.$route.params.id}` });
         }
       });
     },

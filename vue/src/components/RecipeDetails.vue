@@ -1,13 +1,29 @@
 <template>
   <div>
-      {{recipe.name}}, {{recipe.image}}, {{recipe.instructions}}, {{recipe.ingredients}}
+<Header />
+      <h2>
+          {{recipe.name}}
+      </h2>
+      <div>
+          <img class="recipe-image" :src="recipe.image" alt="">
+          <body>
+              {{recipe.ingredients}}
+          </body>
+          <body>
+              {{recipe.instructions}}
+          </body>
+      </div>
   </div>
 </template>
 
 <script>
 import RecipeService from '@/services/RecipeService.js';
+import Header from '@/components/Header.vue';
 export default {
     name: "RecipeDetails",
+    components: {
+        Header
+    },
     data(){
        return {
            recipe: {}           

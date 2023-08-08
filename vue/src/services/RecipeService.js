@@ -9,5 +9,8 @@ export default{
     },
     getRecipeById(id){
         return axios.get(`/recipes/${id}`); 
-    }
+    },
+    updateRecipe(id, recipe){
+        return axios.put(`/recipes/${id}`, recipe);
+    },
 }

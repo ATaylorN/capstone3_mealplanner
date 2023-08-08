@@ -37,6 +37,19 @@ public class RecipeController {
         return newRecipeId;
     }
 
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.CREATED)
+    @RequestMapping(value = "/user/{id}", method = RequestMethod.GET)
+    public List<Recipe> getAllRecipesByUserId(int userId) {
+        List<Recipe> recipes = new ArrayList<>();
+        try {
+            recipes = recipeDao.getAllRecipesByUserId(userId);
+        } catch (RuntimeException e){
+            throw new RuntimeException("Couldn't get recipes!");
+        }
+        return recipes;
+    }
+
     @RequestMapping(value = "", method = RequestMethod.GET)
     public List<Recipe> getAllRecipes(){
         List<Recipe> recipes = new ArrayList<Recipe>();

@@ -31,7 +31,13 @@
           <input type="text" v-model="newIngredient.name" placeholder="Ingredient Name">
           <button @click.prevent="addIngredient()">Find More Ingredients</button>
       <!-- </form> -->
-    </div>      
+    </div>
+    <ul class="ingredient-search-results">
+        <li v-for="foundIngredient in searchResults" :key="foundIngredient.index">
+            <span> {{foundIngredient.name}} </span>
+            <img :src="foundIngredient.image" :alt="foundIngredient.name">            
+        </li>
+    </ul>          
   </div>
   </div>
 </template>
@@ -99,10 +105,39 @@ export default {
         // Call Spoonacular API to retrieve ingredient name, ID, image. 
         searchIngredients(){
             // if we don't return a satisfactory response from the database, search. 
-            spoonacularService.searchIngredients(this.newIngredient.name,  process.env.SPOONACULAR_API_KEY)
+            spoonacularService.searchIngredients(this.newIngredient.name,  process.env.VUE_APP_SPOONACULAR_API_KEY)
                 .then(response => {
-                    this.searchResults = response.data.results;
-                    console.log(this.searchResults); 
+                    // reformat the results, we don't want their poison noodles. 
+                    response.data.results.forEach(ingredient => {
+                        let newIngredient = {
+                            name: ingredient.name, 
+                            image: 'https://spoonacular.com/cdn/ingredients_250x250/' + ingredient.image
+                        }
+                        this.searchResults.push(newIngredient);
+      
+                        // put new ingredient in database. (null constraint shouldn't blow up server)
+                        ingredientService.addIngredient(newIngredient)
+                            .then(response => {
+                                console.log(response.status);
+                            })
+                            .catch(error => {
+                                if (error.response){
+                                    console.log("Got a response back for " + error.response.data)
+                                }
+                                if(error.request){
+                                    console.log("Rejected " + error.request.data)
+                                }
+                                
+                            })                                                    
+                        //console.log(this.searchResults);  
+                                          
+                    });
+                    // add everything to the database that doesn't collide with a name. 
+                    // name collisions should be automatically rejected. hopefully. 
+                    // but... should we even try to add them? 
+                    // who cares let's just try it
+
+
                 })
                 .catch(error => {
                     if (error.response){

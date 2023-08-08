@@ -1,9 +1,8 @@
 import axios from 'axios';
 
-
 export default{
-    searchIngredients(queryString){
-        return axios.get(`https://api.spoonacular.com/food/ingredients/search?query=${queryString}`)
+    searchIngredients(q, k){
+        return axios.get(`https://api.spoonacular.com/food/ingredients/search?query=${q}&apiKey=${k}`)
     }
 
 }

@@ -5,6 +5,10 @@
           {{recipe.name}}
       </h2>
       <div>
+          <router-link to="/recipes/:id/update" tag="button">Update
+          </router-link>
+      </div>
+      <div>
           <img class="recipe-image" :src="recipe.image" alt="">
           <body>
               {{recipe.ingredients}}

@@ -9,6 +9,9 @@ import Recipe from '../views/Recipe.vue'
 import RecipeDetails from '../views/RecipeDetails.vue';
 import RecipeBuilder from '../views/RecipeBuilder.vue';
 import UserRecipeDetails from '../views/UserRecipeDetails.vue';
+import RecipeUpdate from '../views/RecipeUpdate.vue'
+//import { component } from 'vue/types/umd'
+
 
 Vue.use(Router)
 
@@ -84,6 +87,11 @@ const router = new Router({
       meta: {
         requiresAuth: true
       }
+    },
+    {
+      path: '/recipes/:id/update',
+      name: 'recipe-update',
+      component: RecipeUpdate,
     }
 
   ]

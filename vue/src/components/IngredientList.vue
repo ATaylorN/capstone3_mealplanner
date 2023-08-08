@@ -1,9 +1,19 @@
 <template>
   <div class="container">
       <Header id="header" />
-      <div class="search-input">                    
-        <span class=search-input-label>Search for Ingredients: </span><input class="search-text" type="text" v-model="searchInputValue" @keyup="suggestSearchTerm()"> <span class="autocomplete-suggestion">{{ autoCompleteSuggestion }} </span>
-        <button class="search-button" @click="runSearch()">Search</button>
+      <div class="search-input">
+          <!-- 
+              Need to make the input box invisible so that the span text matches up with the input text seamlessly. 
+              Hide the input box, make it so that clicking the span puts focus in it, then bind the span's value to the input value.
+              Need to draw a border around a fixed-length area to simulate an input box. 
+            -->
+        <span> Search for Ingredients:</span> 
+         <div class=search-input-block>
+        <span class="search-text"> {{searchInputValue}} </span><span class="autocomplete-suggestion">{{ autoCompleteSuggestion }}</span>        
+        </div><button class="search-button" @click="runSearch()">Search</button>
+        <input id="search-input" class="search-field" type="text" v-model="searchInputValue" @keyup="suggestSearchTerm()">
+        
+        
       </div>
     <main class="list-display">    
       <div v-show="searched && filteredIngredientList.length > 0" class="filteredList">
@@ -17,10 +27,10 @@
     <div class="no-ingredients" v-show="filteredIngredientList.length === 0" > 
     <span>No Ingredients Found.</span>
     <div class="add-ingredient-container">
-      <form v-show="filteredIngredientList.length === 0" class="add-ingredient" @submit="addIngredient()">
+      <!-- <form v-show="filteredIngredientList.length === 0" class="add-ingredient"> -->
           <input type="text" v-model="newIngredient.name" placeholder="Ingredient Name">
-          <button>Add Ingredient</button>
-      </form>
+          <button @click.prevent="addIngredient()">Find More Ingredients</button>
+      <!-- </form> -->
     </div>      
   </div>
   </div>
@@ -28,6 +38,7 @@
 
 <script>
 import ingredientService from '@/services/IngredientService.js';
+import spoonacularService from '@/services/SpoonacularService.js';
 import Header from '@/components/Header';
 export default {
     name: "ingredient-list",
@@ -46,7 +57,8 @@ export default {
             },
             potentialSuggestions: [],
             searched: false,
-           
+            searchResults: [],
+            newIngredients: [],           
         }
     },
     computed:{
@@ -78,10 +90,33 @@ export default {
             }
         },
         addIngredient(){
-            ingredientService.addIngredient(this.newIngredient)
-                .catch(error => {
-                    console.error(error);
+            this.searchIngredients();
+            // ingredientService.addIngredient(this.newIngredient)
+            //     .catch(error => {
+            //         console.error(error);
+            //     })
+        },
+        // Call Spoonacular API to retrieve ingredient name, ID, image. 
+        searchIngredients(){
+            // if we don't return a satisfactory response from the database, search. 
+            spoonacularService.searchIngredients(this.newIngredient.name,  process.env.SPOONACULAR_API_KEY)
+                .then(response => {
+                    this.searchResults = response.data.results;
+                    console.log(this.searchResults); 
                 })
+                .catch(error => {
+                    if (error.response){
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        console.log(error.request);
+
+                    } else {
+                        console.log('Error', error.message);
+                    }
+                    
+                });
         }
     },
     created(){
@@ -115,8 +150,20 @@ export default {
     grid-area: header;
 }
 
+.search-button{
+    display: inline-block;
+}
+
+.autocomplete-suggestion {
+    color: grey; 
+}
+
 div.search-input{
     grid-area: search;
+}
+.search-field{
+    border: none;
+    
 }
 
 .ingredient-card{

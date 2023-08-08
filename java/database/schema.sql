@@ -24,7 +24,8 @@ CREATE TABLE ingredients (
 );
 
 CREATE TABLE recipes (
-	recipe_id SERIAL,
+	recipe_id SERIAL NOT NULL,
+	user_id int NOT NULL,
 	recipe_name varchar (75) NOT NULL UNIQUE,
 	recipe_image varchar (200),
 	recipe_ingredients varchar(1000),

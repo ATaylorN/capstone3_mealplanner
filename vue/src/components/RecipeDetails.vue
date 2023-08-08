@@ -5,7 +5,7 @@
           {{recipe.name}}
       </h2>
       <div>
-          <router-link to="/recipes/:id/update" tag="button">Update
+          <router-link :to="{ name: 'recipe-update', params: {id: recipe.id} }" tag="button">Update
           </router-link>
       </div>
       <div>

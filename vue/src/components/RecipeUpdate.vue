@@ -45,7 +45,7 @@ export default {
         ingredients: this.ingredients,
         instructions: this.instructions,
       };
-      RecipeService.updateRecipe(recipe.id, recipe).then((response) => {
+      RecipeService.updateRecipe(this.$route.params.id, recipe).then((response) => {
         if (response.status === 200) {
           this.$router.push(`/${recipe.id}`);
         }

@@ -1,5 +1,9 @@
 <template>
-  <div></div>
+  <form v-on:submit.prevent>
+      <div class="field">
+          <label for=""></label>
+      </div>
+  </form>
 </template>
 
 <script>

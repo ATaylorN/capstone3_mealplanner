@@ -21,7 +21,8 @@ public class RecipeController {
     private UserDao userDao;
 
     public RecipeController(RecipeDao recipeDao, UserDao userDao){
-        this.recipeDao = recipeDao;this.userDao = userDao;
+        this.recipeDao = recipeDao;
+        this.userDao = userDao;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -35,6 +36,21 @@ public class RecipeController {
             throw new RuntimeException("Unable to add recipe!", e);
         }
         return newRecipeId;
+    }
+
+    @CrossOrigin
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/user/recipes", method = RequestMethod.GET)
+    public List<Recipe> getAllRecipesByUserId(Principal principal) {
+        int userId = userDao.findIdByUsername(principal.getName());
+        List<Recipe> recipes = new ArrayList<>();
+        try {
+            recipes = recipeDao.getAllRecipesByUserId(userId);
+        } catch (RuntimeException e){
+            throw new RuntimeException("Couldn't get recipes!");
+        }
+        return recipes;
     }
 
     @RequestMapping(value = "", method = RequestMethod.GET)

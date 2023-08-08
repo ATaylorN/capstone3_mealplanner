@@ -68,6 +68,27 @@ public class JdbcRecipeDao implements RecipeDao{
     }
 
     @Override
+    public List<Recipe> getAllRecipesByUserId(int userId) {
+        List<Recipe> recipes = new ArrayList<>();
+        String sql = "SELECT recipe_id, user_id, recipe_name, recipe_image, recipe_ingredients, instructions FROM recipes WHERE user_id = ?;";
+        try {
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, userId);
+            while (rows.next()){
+                recipes.add(mapRowToRecipe(rows));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+
+        return recipes;
+
+    }
+
+    @Override
     public Recipe getRecipeById(int id) {
         Recipe recipe = null;
         String sql = "SELECT recipe_id, recipe_name, recipe_image, recipe_ingredients, instructions " +
@@ -120,6 +141,7 @@ public class JdbcRecipeDao implements RecipeDao{
     private Recipe mapRowToRecipe(SqlRowSet rows){
         Recipe newRecipe = new Recipe();
         newRecipe.setId(rows.getInt("recipe_id"));
+        newRecipe.setUserId(rows.getInt("user_id"));
         newRecipe.setName(rows.getString("recipe_name"));
         newRecipe.setImage(rows.getString("recipe_image"));
         newRecipe.setIngredients(rows.getString("recipe_ingredients"));

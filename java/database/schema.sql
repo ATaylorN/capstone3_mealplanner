@@ -24,13 +24,14 @@ CREATE TABLE ingredients (
 );
 
 CREATE TABLE recipes (
-	recipe_id SERIAL NOT NULL,
+	recipe_id SERIAL,
 	user_id int NOT NULL,
 	recipe_name varchar (75) NOT NULL UNIQUE,
 	recipe_image varchar (200),
 	recipe_ingredients varchar(1000),
 	instructions varchar (5000) NOT NULL,
-	CONSTRAINT PK_recipe PRIMARY KEY (recipe_id)
+	CONSTRAINT PK_recipe PRIMARY KEY (recipe_id),
+	CONSTRAINT FK_user_id FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
 CREATE TABLE recipe_ingredients (

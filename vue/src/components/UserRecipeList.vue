@@ -17,7 +17,7 @@
               </td>
               <td>
                   <button>
-                  <router-link :to="{name: 'recipe-details', params: {id: recipe.id}}">View Full Recipe</router-link>
+                  <router-link :recipeId="recipe.id" :to="{name: 'recipe-details', params: {id: recipe.id} }">View Full Recipe</router-link>
                   </button>
               </td>
           </tr>

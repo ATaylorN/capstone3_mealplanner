@@ -16,7 +16,7 @@
         <div class="add-ingredient-container">
       <!-- <form v-show="filteredIngredientList.length === 0" class="add-ingredient"> -->
           <input type="text" v-model="newIngredient.name" placeholder="Ingredient Name">
-          <button @click.prevent="addIngredient()">Find More Ingredients</button>
+          <button @click.prevent="listIngredients()">Find More Ingredients</button>
           <button @click.prevent="clearIngredients()">Clear Ingredient List</button>
       <!-- </form> -->
     </div>
@@ -56,9 +56,14 @@
         v-model="newRecipe.ingredients"
         placeholder="Ingredients"
       />
-
       <button>Save Recipe</button>
     </form>
+          <ul class="new-recipe-ingredient-list">
+        <li v-for="newIngredient in newRecipeIngredients" :key="newIngredient.id" class="new-recipe-ingredient">
+          <span> {{ newIngredient.name }}</span>
+          <button @click="removeIngredientFromRecipe(newIngredient)"> Remove </button>
+        </li>
+      </ul>
     </div>
   </div>
   </div>
@@ -107,6 +112,7 @@ export default {
     this.searchInputValue = "";  
     this.searched = true;
     },
+
     suggestSearchTerm(){
     // when the user types something in the search box, try to auto-complete
     this.potentialSuggestions = this.filteredIngredientList.filter(ingredient => {
@@ -121,12 +127,10 @@ export default {
       }
     },
     
-    addIngredient(){
+    listIngredients(){
+      // Unify the buttons/searching functionality. 
     this.searchIngredients();
-    // ingredientService.addIngredient(this.newIngredient)
-    //     .catch(error => {
-    //         console.error(error);
-    //     })
+    
     },
     addRecipe() {
       console.log(this.newRecipe);
@@ -163,22 +167,21 @@ export default {
           }
         });
     },
-            searchIngredients(){
-            // if we don't return a satisfactory response from the database, search. 
-            spoonacularService.searchIngredients(this.newIngredient.name,  process.env.VUE_APP_SPOONACULAR_API_KEY)
+      searchIngredients(){
+        spoonacularService.searchIngredients(this.newIngredient.name,  process.env.VUE_APP_SPOONACULAR_API_KEY)
                 .then(response => {
-                    // reformat the results, we don't want their poison noodles. 
                     response.data.results.forEach(ingredient => {
                         let newIngredient = {
                             name: ingredient.name, 
                             image: 'https://spoonacular.com/cdn/ingredients_250x250/' + ingredient.image
                         }
+
                         this.searchResults.unshift(newIngredient);
-      
-                        // put new ingredient in database. (null constraint shouldn't blow up server)
+
                         ingredientService.addIngredient(newIngredient)
                             .then(response => {
                                 console.log(response.status);
+                                this.searchResults[this.searchResults.indexOf(newIngredient)].id = response.data;
                             })
                             .catch(error => {
                                 if (error.response){
@@ -215,14 +218,22 @@ export default {
         },
 
     addNewIngredientToRecipe(ingredient) {
-      console.log(ingredient.name);
-      this.newRecipeIngredients.push(ingredient);
+      if (this.newRecipeIngredients.indexOf(ingredient) == -1){
+        this.newRecipeIngredients.unshift(ingredient);
+      }
+      
     },
     clearIngredients(){
       this.ingredients = [];
       this.searchResults = [];
-    }
-  },
+    },
+    removeIngredientFromRecipe(ing){
+      // locate the item in the array and remove it. 
+      this.newRecipeIngredients = this.newRecipeIngredients.filter(ingredient => {
+        return ingredient.id != ing.id; 
+      })
+    },
+  },  
   created() {
     ingredientService
       .getAllIngredients()
@@ -243,5 +254,12 @@ div.recipe-builder {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "ingredients recipe";
+}
+.new-recipe-ingredient-list{
+  list-style: none;
+}
+
+.new-recipe-ingredient{
+  background: wheat;
 }
 </style>

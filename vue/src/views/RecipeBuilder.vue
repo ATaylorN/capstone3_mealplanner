@@ -1,5 +1,6 @@
 <template>
-<div> <Header/>
+<div> 
+  <Header/>
   <div class="recipe-builder">
     <!-- 
           list of ingredients on one side
@@ -59,6 +60,7 @@
       <button>Save Recipe</button>
     </form>
     </div>
+  </div>
   </div>
 </template>
 

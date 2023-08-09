@@ -108,6 +108,14 @@ public class JdbcIngredientDao implements IngredientDao{
         return recipeIngredients;
     }
 
+    @Override
+    public int deleteIngredientsByRecipeId(RecipeIngredientListDTO recipeIngredientListDTO) {
+        int recipeId = recipeIngredientListDTO.getRecipeId();
+        String sql = "delete from recipe_ingredients where recipe_id = ?;";
+        int rowsRemoved = jdbcTemplate.update(sql, recipeId);
+        return rowsRemoved;
+    }
+
     private Ingredient mapRowToIngredient(SqlRowSet rows){
         Ingredient newIngredient = new Ingredient();
         newIngredient.setId(rows.getInt("ingredient_id"));

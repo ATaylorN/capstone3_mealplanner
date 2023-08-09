@@ -4,6 +4,7 @@ import com.techelevator.dao.IngredientDao;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.RecipeIngredientListDTO;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
@@ -61,6 +62,17 @@ public class IngredientController {
             throw new RuntimeException("Couldn't get ingredients!");
         }
         return ingredients;
+    }
+
+    @PreAuthorize("isAuthenticated()")
+    @ResponseStatus(HttpStatus.OK)
+    @RequestMapping(value = "/recipe-ingredient-list", method = RequestMethod.PUT)
+    public void deleteIngredientsByRecipeId(@RequestBody RecipeIngredientListDTO recipeIngredientListDTO){
+        int rowsRemoved = ingredientDao.deleteIngredientsByRecipeId(recipeIngredientListDTO);
+        if (rowsRemoved > 0){
+            ingredientDao.addRecipeIngredients
+                    (recipeIngredientListDTO.getIngredientList(), recipeIngredientListDTO.getRecipeId());
+        }
     }
 
 }

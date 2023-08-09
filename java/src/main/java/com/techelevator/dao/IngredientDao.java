@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Ingredient;
+import com.techelevator.model.RecipeIngredientListDTO;
 
 import java.util.List;
 
@@ -22,5 +23,7 @@ public interface IngredientDao {
     int getIngredientIdByName(String ingredientName);
 
     List<Ingredient> getIngredientsForRecipe(int recipeId);
+
+    int deleteIngredientsByRecipeId (RecipeIngredientListDTO recipeIngredientListDTO);
 
 }

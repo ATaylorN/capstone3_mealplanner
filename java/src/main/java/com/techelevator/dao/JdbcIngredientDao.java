@@ -60,7 +60,20 @@ public class JdbcIngredientDao implements IngredientDao{
 
         return ingredientsAdded;
     }
-
+    public int getIngredientIdByName(String ingredientName){
+        int ingredientId;
+        String sql = "SELECT ingredient_id FROM ingredients WHERE ingredient_name = ?;";
+        try {
+            ingredientId = jdbcTemplate.queryForObject(sql, int.class, ingredientName);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+        return ingredientId;
+    }
     public List<Ingredient> getAllIngredients(){
         List<Ingredient> ingredients = new ArrayList<Ingredient>();
         String sql = "SELECT ingredient_id, ingredient_name, ingredient_image FROM ingredients;";

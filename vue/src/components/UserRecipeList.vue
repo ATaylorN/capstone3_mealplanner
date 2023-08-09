@@ -40,8 +40,7 @@ export default {
     },
 
     created() {
-        RecipeService.listRecipesByUser().then(response => {
-        
+        RecipeService.listRecipesByUser().then(response => {        
             if(response.status === 200) {
                 this.recipes = response.data;
             }

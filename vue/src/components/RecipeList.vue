@@ -2,7 +2,7 @@
     <div class="container">
         <h1>Recipes</h1>
         <div class="recipeList">
-          <RecipeDetails v-for="recipe in recipes" :key="recipe.id"/>
+          <RecipeDetails v-for="recipe in recipes" :key="recipe.id" v-bind:recipeId='recipe.id'/>
 
         </div>
 
@@ -41,7 +41,7 @@ export default {
 
   created() {
     RecipeService.listRecipes()
-      .then((response) => {
+      .then(response => {
         if (response.status === 200) {
           this.recipes = response.data;
         }

@@ -11,10 +11,6 @@
       <input name="image" type="text" v-model="image" />
     </div>
     <div class="field">
-      <label for="ingredients">ingredients</label>
-      <input name="ingredients" type="text" v-model="ingredients" />
-    </div>
-    <div class="field">
       <label for="instructions">instructions</label>
       <input name="instructions" type="text" v-model="instructions" />
     </div>
@@ -22,6 +18,9 @@
       <button type="submit" v-on:click="updateRecipe()">Update</button>
     </div>
   </form>
+  <ul class="ingredients">
+    
+  </ul>
   </div>
 </template>
 
@@ -58,6 +57,13 @@ export default {
     },
   },
   created(){
+    RecipeService.getRecipeById(this.$route.params.id)
+      .then(response =>{
+        console.log(response.data);
+        this.name = response.data.name;
+        this.instructions = response.data.instructions;
+        this.image = response.data.image;
+      })
     // on create, pull in current recipe data + ingredients for recipe. 
     // update getRecipeById to return a list of ingredients   
     // once we've got all the data on the page, we can make edits and return the object back

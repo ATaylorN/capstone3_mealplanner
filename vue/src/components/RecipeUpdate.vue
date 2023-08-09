@@ -60,11 +60,9 @@ export default {
   },
   created(){
     // on create, pull in current recipe data + ingredients for recipe. 
-    // this will need a new DAO method that returns the list of ingredients for a recipe.     
+    // update getRecipeById to return a list of ingredients   
     // once we've got all the data on the page, we can make edits and return the object back
     // we'll have to add and/or delete rows from the recipe_ingredients table if modifications are made. 
-    
-  
   }
 };
 </script>

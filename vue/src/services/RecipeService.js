@@ -17,4 +17,7 @@ export default{
     updateRecipe(id, recipe){
         return axios.put(`/recipes/${id}`, recipe);
     },
+    getRecipeIngredients(recipeId){
+        return axios.get(`/recipes/${recipeId}/ingredients`)
+    }
 }

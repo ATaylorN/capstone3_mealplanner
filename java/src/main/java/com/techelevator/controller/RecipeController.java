@@ -5,6 +5,7 @@ import com.techelevator.dao.RecipeDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.Recipe;
+import com.techelevator.model.RecipeIngredientListDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -19,10 +20,11 @@ import java.util.List;
 public class RecipeController {
     private RecipeDao recipeDao;
     private UserDao userDao;
-
-    public RecipeController(RecipeDao recipeDao, UserDao userDao){
+    private IngredientDao ingredientDao;
+    public RecipeController(RecipeDao recipeDao, UserDao userDao, IngredientDao ingredientDao){
         this.recipeDao = recipeDao;
         this.userDao = userDao;
+        this.ingredientDao = ingredientDao;
     }
 
     @PreAuthorize("isAuthenticated()")
@@ -69,10 +71,24 @@ public class RecipeController {
         Recipe recipe = null;
         try{
             recipe = recipeDao.getRecipeById(id);
+            // need to get a list of ingredients here.
         } catch (RuntimeException e){
             throw new RuntimeException("Recipe not found");
         }
         return recipe;
+    }
+    @RequestMapping(value="/{recipeId}/ingredients", method = RequestMethod.GET)
+    public RecipeIngredientListDTO getRecipeIngredients(@PathVariable int recipeId){
+        RecipeIngredientListDTO recipeIngredients = new RecipeIngredientListDTO();
+        recipeIngredients.setRecipeId(recipeId);
+        List<Ingredient> ingredients = new ArrayList<>();
+        try{
+           ingredients = ingredientDao.getIngredientsForRecipe(recipeId);
+        } catch (RuntimeException e){
+            throw new RuntimeException("Failed to get recipe ingredients.");
+        }
+        recipeIngredients.setIngredientList(ingredients);
+        return recipeIngredients;
     }
 
     @RequestMapping(value = "/{id}" ,method = RequestMethod.PUT)
@@ -83,6 +99,7 @@ public class RecipeController {
         recipeToUpdate.setId(id);
         try {
             Recipe recipe = recipeDao.updateRecipe(recipeToUpdate);
+            // need to take a list of ingredients here.
             return recipe;
         } catch (RuntimeException e) {
             throw new RuntimeException("Recipe not found");

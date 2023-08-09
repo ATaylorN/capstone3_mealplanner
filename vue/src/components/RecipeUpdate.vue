@@ -5,7 +5,7 @@
     <section class="ingredient-data">
       <!-- list of ingredients to pick goes here -->
       <ul>
-        <li v-for="ingredient in browseIngredientList" :key="ingredient.id">
+        <li v-for="ingredient in browseIngredientList" :key="ingredient.id" @click="addNewIngredientToRecipe(ingredient)">
           <span> {{ingredient.name}} </span>
         </li>
       </ul>
@@ -28,8 +28,9 @@
         <button type="submit" v-on:click="updateRecipe()">Update</button>
       </div>
     </form>
+    <span>List o' Ingredients</span>
     <ul class="ingredients">
-      <li v-for="ingredient in ingredientList" :key="ingredient.id">
+      <li v-for="ingredient in ingredientList" :key="ingredient.id" @click="removeIngredientFromRecipe(ingredient)">
         <span> {{ingredient.name}} </span>      
       </li>
     </ul>
@@ -69,14 +70,29 @@ export default {
       RecipeService.updateRecipe(this.$route.params.id, recipe)
       .then((response) => {
         if (response.status === 200) {
-          
+          IngredientService.updateRecipeIngredients(this.ingredientList, this.$route.params.id)
+            .then(response => {
+              if (response.status === 200){
+                console.log('yay it worked')
+              }
+            })
           this.$router.push({ path: `/recipes/${this.$route.params.id}` });
         }
       });
     },
-    getIngredientsToBrowse(){
+    removeIngredientFromRecipe(ing){
+      // locate the item in the array and remove it. 
+      this.ingredientList = this.ingredientList.filter(ingredient => {
+        return ingredient.id != ing.id; 
+      })
+    },
+      addNewIngredientToRecipe(ingredient) {
+      if (this.ingredientList.indexOf(ingredient) == -1){
+        this.ingredientList.push(ingredient);
+      }
+      
+    },
 
-    }
   },
   created(){
     RecipeService.getRecipeById(this.$route.params.id)

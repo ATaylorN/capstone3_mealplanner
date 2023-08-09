@@ -3,12 +3,10 @@
       <h2 class="recipeName">
           {{recipe.name}}
       </h2>
-      <div class="updateBtn">
-          <router-link :recipeData="recipe" :to="{ name: 'recipe-update', params: {id: recipe.id} }" tag="button">Update
-          </router-link>
+      <div class="updateBtn">                   
       </div>
       <div>
-          <img id="recipeImage" :src="recipe.image" alt="" class="img-rounded">
+          <img id="recipeImage" :src="recipe.image" alt="" class="img-rounded">          
           <div > Ingredients: 
               <ul class="ingredientsList">
                   <li class="ingredient" v-for="ingredient in recipe.ingredients.ingredientList" :key="ingredient.id">
@@ -36,7 +34,7 @@ export default {
        }
     },
     created(){
-        RecipeService.getRecipeById(this.$route.params.id)
+        RecipeService.getRecipeById(this.recipeId)
         .then(response => {   
             // add 404 push if recipe not found.
             // shouldn't happen since we're getting ID off thing that exists, but nice to have         

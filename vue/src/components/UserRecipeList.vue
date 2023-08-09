@@ -1,27 +1,11 @@
 <template>
   <div>
       <Header />
-      <table>
-          <tr>
-              <th>Recipe Name</th>
-              <th>Image</th>
-          </tr>
-          <tr v-for="recipe in recipes" :key="recipe.id" class="recipesList">
-              <td class="recipe-name">
-                  <router-link :to="{name: 'recipe-details', params: {id: recipe.id}}">
-                      {{recipe.name}}
-                  </router-link>
-              </td>
-              <td class = "recipe-image-container">
-                <img id = "recipe-image" :src="recipe.image" alt="" class="img-rounded">
-              </td>
-              <td>
-                  <button>
-                  <router-link :recipeId="recipe.id" :to="{name: 'recipe-details', params: {id: recipe.id} }">View Full Recipe</router-link>
-                  </button>
-              </td>
-          </tr>
-      </table>
+          <div v-for="recipe in recipes" :key="recipe.id" class="recipesList" >
+                  <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button">View Details</router-link>
+                  <router-link :to="{ name: 'recipe-update', params: {id: recipe.id} }" tag="button">Update</router-link> 
+                  <RecipeDetails :recipeId ="recipe.id" />                
+          </div>
   </div>
 </template>
 
@@ -29,18 +13,24 @@
 
 import RecipeService from '../services/RecipeService.js';
 import Header from '../components/Header.vue'
+import RecipeDetails from '@/components/RecipeDetails'; 
 
 export default {
     name: 'user-recipe-list',
     components: {
-       Header
+       Header,
+       RecipeDetails
     },
     data() {
         return {
             recipes: []
         }
     },
-
+    methods:{
+        goToRecipe(recipeId){
+            this.$router.push({name: 'recipe-details', params:{id: recipeId}})
+        }
+    },
     created() {
         RecipeService.listRecipesByUser().then(response => {        
             if(response.status === 200) {
@@ -60,7 +50,7 @@ export default {
     max-width: 350px;
 }
 
-.recipesList {
+/* .recipesList {
     display: flex;
     flex-direction: column;
     border-style: solid;
@@ -70,6 +60,6 @@ export default {
     padding: 10px;
     text-align: center;
     margin: 50px;
-}
+} */
 
 </style>

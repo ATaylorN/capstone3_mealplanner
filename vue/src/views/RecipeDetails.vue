@@ -1,7 +1,7 @@
 <template>
   <div>
       <Header />
-      <RecipeDetails />
+      <RecipeDetails :recipeId="$route.params.id" />
       
   </div>
 </template>
@@ -10,11 +10,12 @@
 import RecipeDetails from '@/components/RecipeDetails'; 
 import Header from '../components/Header.vue';
 export default {
-    name: 'RecipeDetailView', 
+    name: 'RecipeDetailView',         
     components: {
         RecipeDetails,
         Header
     }
+
 }
 </script>
 

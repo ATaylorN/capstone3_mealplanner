@@ -5,9 +5,9 @@
       </h2>
       <div class="updateBtn">                   
       </div>
-      <div>
+      <div class="container">
           <img id="recipeImage" :src="recipe.image" alt="" class="img-rounded">          
-          <div > Ingredients: 
+          <div > <h3>Ingredients:</h3>  
               <ul class="ingredientsList">
                   <li class="ingredient" v-for="ingredient in recipe.ingredients.ingredientList" :key="ingredient.id">
                       <span>{{ingredient.name}}</span>
@@ -16,6 +16,7 @@
               </ul>
           </div>
           <div class="instructions">
+              <h3>Instructions:</h3>
               {{recipe.instructions}}
           </div>
       </div>
@@ -75,18 +76,31 @@ export default {
 
 #recipeImage {
     max-height: 400px;
-    max-width: 400px;
+    max-width: 460px;
+    grid-area: image;
 }
 
 .ingredientsList{
     list-style: none;
     background-color: white;
     background-image: none;
+    grid-area: ingredients;
+    border-radius: 6px;
 }
 
 .instructions {
     background-image: none;
     background-color: white;
-    color: black
+    color: black;
+    grid-area: instructions;
+    border-radius: 6px;
+}
+
+.container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas: 
+        "image instructions"
+        "ingredients instructions"
 }
 </style>

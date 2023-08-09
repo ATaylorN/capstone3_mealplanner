@@ -16,7 +16,9 @@
                 <img class = "recipe-image" :src="recipe.image" alt="">
               </td>
               <td>
+                  <button>
                   <router-link :to="{name: 'recipe-details', params: {id: recipe.id}}">View Full Recipe</router-link>
+                  </button>
               </td>
           </tr>
       </table>

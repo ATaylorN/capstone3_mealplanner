@@ -61,7 +61,7 @@
           <ul class="new-recipe-ingredient-list">
         <li v-for="newIngredient in newRecipeIngredients" :key="newIngredient.id" class="new-recipe-ingredient">
           <span> {{ newIngredient.name }}</span>
-          <button @click="removeIngredientFromRecipe(newIngredient.id)"> Remove </button>
+          <button @click="removeIngredientFromRecipe(newIngredient)"> Remove </button>
         </li>
       </ul>
     </div>
@@ -218,17 +218,19 @@ export default {
         },
 
     addNewIngredientToRecipe(ingredient) {
-      console.log(ingredient.name);
-      this.newRecipeIngredients.push(ingredient);
+      if (this.newRecipeIngredients.indexOf(ingredient) == -1){
+        this.newRecipeIngredients.unshift(ingredient);
+      }
+      
     },
     clearIngredients(){
       this.ingredients = [];
       this.searchResults = [];
     },
-    removeIngredientFromRecipe(id){
+    removeIngredientFromRecipe(ing){
       // locate the item in the array and remove it. 
       this.newRecipeIngredients = this.newRecipeIngredients.filter(ingredient => {
-        return ingredient.id != id; 
+        return ingredient.id != ing.id; 
       })
     },
   },  

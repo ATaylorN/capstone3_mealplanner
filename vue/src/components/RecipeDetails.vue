@@ -4,7 +4,7 @@
           {{recipe.name}}
       </h2>
       <div class="updateBtn">
-          <router-link :to="{ name: 'recipe-update', params: {id: recipe.id} }" tag="button">Update
+          <router-link :recipeData="recipe" :to="{ name: 'recipe-update', params: {id: recipe.id} }" tag="button">Update
           </router-link>
       </div>
       <div>
@@ -31,7 +31,7 @@ export default {
        }
     },
     created(){
-        RecipeService.getRecipeById(this.recipeId)
+        RecipeService.getRecipeById(this.$route.params.id)
         .then(response => {   
             // add 404 push if recipe not found.
             // shouldn't happen since we're getting ID off thing that exists, but nice to have         

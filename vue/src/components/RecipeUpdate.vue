@@ -1,7 +1,6 @@
 <template>
-<div>
+<div class="recipe-updater">
   <Header id="hdr" />
-  <div class="recipe-updater">
     <section class="ingredient-data">
       <!-- list of ingredients to pick goes here -->
       <ul>
@@ -11,31 +10,32 @@
       </ul>
     </section>
     <section class="recipe-data">
-    <form v-on:submit.prevent>
+    <form v-on:submit.prevent class="recipe-inputs">
       <div class="field">
-        <label for="name">Name</label>
+        <label for="name">Recipe Name: </label>
         <input name="name" type="text" v-model="name" />
       </div>
       <div class="field">
-        <label for="image">image</label>
+        <label for="image">Recipe Image Link: </label>
         <input name="image" type="text" v-model="image" />
       </div>
       <div class="field">
-        <label for="instructions">instructions</label>
+        <label for="instructions">Preparation Instructions: </label>
         <input name="instructions" type="text" v-model="instructions" />
       </div>
       <div class="actions">
         <button type="submit" v-on:click="updateRecipe()">Update</button>
       </div>
     </form>
-    <span>List o' Ingredients</span>
+    <div class="recipe-ingredients">
+    <span >List o' Ingredients</span>
     <ul class="ingredients">
       <li v-for="ingredient in ingredientList" :key="ingredient.id" @click="removeIngredientFromRecipe(ingredient)">
         <span> {{ingredient.name}} </span>      
       </li>
     </ul>
+    </div>
       </section>
-  </div>
   </div>
 </template>
 
@@ -126,17 +126,64 @@ export default {
 .recipe-updater{
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-areas: "ingredients recipe"; 
-  background: wheat;
+  grid-template-rows: .2fr .1fr .7fr;
+  grid-template-areas: "header header"
+                        ". . "
+                       "ingredients recipe"; 
+  gap: 10px; 
 
+}
+#hdr{
+  grid-area: header; 
+}
+
+section {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  color: white; 
+}
+button {
+  color: black;
+}
+form {
+  padding: 20px
 }
 
 section.recipe-data{
   grid-area: recipe;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas: "form list";
+  background-color:#4a180c;
 }
+section.recipe-data form.recipe-inputs{
+  grid-area: form
+}
+
+
+section.recipe-data div.recipe-ingredients{
+  grid-area: list;
+  display: flex; 
+  flex-direction: column; 
+  justify-content: flex-start;
+  
+
+}
+.recipe-ingredients ul {
+  list-style: none;
+  padding: 0px 0px 5px 0px;
+  margin: 0px;  
+}
+.recipe-ingredients ul li {
+  margin: 5px;
+}
+
+
 
 section.ingredient-data{
   grid-area: ingredients;
+  background-color:#4a180c;
 }
 
 </style>

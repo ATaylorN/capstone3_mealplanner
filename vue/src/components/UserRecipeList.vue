@@ -6,14 +6,14 @@
               <th>Recipe Name</th>
               <th>Image</th>
           </tr>
-          <tr v-for="recipe in recipes" :key="recipe.id">
+          <tr v-for="recipe in recipes" :key="recipe.id" class="recipesList">
               <td class="recipe-name">
-                  <router-link :to="{name: 'user-recipe-details'}">
+                  <router-link :to="{name: 'recipe-details', params: {id: recipe.id}}">
                       {{recipe.name}}
                   </router-link>
               </td>
               <td class = "recipe-image-container">
-                <img class = "recipe-image" :src="recipe.image" alt="">
+                <img id = "recipe-image" :src="recipe.image" alt="" class="img-rounded">
               </td>
               <td>
                   <button>
@@ -55,9 +55,21 @@ export default {
 </script>
 
 <style>
-.recipe-image{
+#recipe-image{
     max-height: 350px;
     max-width: 350px;
+}
+
+.recipesList {
+    display: flex;
+    flex-direction: column;
+    border-style: solid;
+    border-color: black;
+    background-color: #4a180c;
+    color: white;
+    padding: 10px;
+    text-align: center;
+    margin: 50px;
 }
 
 </style>

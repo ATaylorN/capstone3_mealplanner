@@ -49,7 +49,7 @@ public class JdbcRecipeDao implements RecipeDao{
     @Override
     public List<Recipe> getAllRecipes() {
         List<Recipe> recipes = new ArrayList<>();
-        String sql = "SELECT recipe_id, recipe_name, recipe_image, recipe_ingredients, instructions FROM recipes";
+        String sql = "SELECT recipe_id, user_id, recipe_name, recipe_image, recipe_ingredients, instructions FROM recipes";
         // TODO: add a method that gets recipe ingredients from recipe_ingredients, call it here to build list of lists that represents a recipe's ingredients
         try {
             SqlRowSet rows = jdbcTemplate.queryForRowSet(sql);

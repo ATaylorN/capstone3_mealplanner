@@ -25,6 +25,14 @@ public class IngredientController {
         //System.out.println(ingredients);
         int rowsAdded = 0;
         int rowsToAdd = ingredients.getIngredientList().size();
+        // At this point, if we're adding recipe ingredients that were brought in from the API search, we don't have IDs for those ingredients.
+        // We have to get each ingredient's ID before we can actually try to add them to the recipe_ingredient table.
+        // They've been added to the ingredient table, so the data is there - we just need an intermediate call to a mapper method in the DAO that will put IDs on each thing.
+        for (Ingredient ingredient : ingredients.getIngredientList()){
+            if(ingredient.getId() == 0){
+               ingredient.setId(ingredientDao.getIngredientIdByName(ingredient.getName()));
+            }
+        }
         try{
             rowsAdded = ingredientDao.addRecipeIngredients(ingredients.getIngredientList(), ingredients.getRecipeId());
         } catch (RuntimeException e){

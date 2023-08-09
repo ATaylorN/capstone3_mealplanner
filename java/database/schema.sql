@@ -38,7 +38,7 @@ CREATE TABLE recipe_ingredients (
     recipe_id int NOT NULL,
     ingredient_id int NOT NULL,
     quantity varchar(30),
-    notes varchar(100), -- probably don't even worry abot this
+    notes varchar(100),
     -- TODO: Quantities can range in types. Weights, volumes, imperial units, metric units.
     -- We could varchar the quantities for now, but this would make any kind of inventory calculation difficult.
     -- To get around this problem, we can create a category table to represent different quantity types.

@@ -66,6 +66,8 @@
 import ingredientService from '@/services/IngredientService.js';
 import recipeService from '@/services/RecipeService.js';
 import spoonacularService from '@/services/SpoonacularService.js'
+import Header from '@/components/Header.vue'
+
 export default {
   components: {
     Header

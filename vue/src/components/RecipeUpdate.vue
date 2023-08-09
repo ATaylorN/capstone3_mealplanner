@@ -1,21 +1,22 @@
 <template>
 <div>
   <Header />
+  <router-link :to="{name: 'recipe-details', params: {id: this.$route.params.id}}" tag="button">Go Back to Recipe</router-link>
   <form v-on:submit.prevent>
     <div class="field">
       <label for="name">Name</label>
       <input name="name" type="text" v-model="name" />
     </div>
     <div class="field">
-      <label for="image">image</label>
+      <label for="image">Image</label>
       <input name="image" type="text" v-model="image" />
     </div>
     <div class="field">
-      <label for="ingredients">ingredients</label>
+      <label for="ingredients">Ingredients</label>
       <input name="ingredients" type="text" v-model="ingredients" />
     </div>
     <div class="field">
-      <label for="instructions">instructions</label>
+      <label for="instructions">Instructions</label>
       <input name="instructions" type="text" v-model="instructions" />
     </div>
     <div class="actions">

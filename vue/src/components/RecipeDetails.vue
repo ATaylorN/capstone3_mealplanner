@@ -24,13 +24,14 @@ import RecipeService from '@/services/RecipeService.js';
 
 export default {
     name: "RecipeDetails",
+    props: ['recipeId'],
     data(){
        return {
            recipe: {}           
        }
     },
     created(){
-        RecipeService.getRecipeById(this.$route.params.id)
+        RecipeService.getRecipeById(this.recipeId)
         .then(response => {   
             // add 404 push if recipe not found.
             // shouldn't happen since we're getting ID off thing that exists, but nice to have         

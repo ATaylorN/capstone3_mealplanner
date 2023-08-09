@@ -1,6 +1,5 @@
 <template>
   <div>
-<Header />
       <h2>
           {{recipe.name}}
       </h2>
@@ -22,12 +21,9 @@
 
 <script>
 import RecipeService from '@/services/RecipeService.js';
-import Header from '@/components/Header.vue';
+
 export default {
     name: "RecipeDetails",
-    components: {
-        Header
-    },
     data(){
        return {
            recipe: {}           

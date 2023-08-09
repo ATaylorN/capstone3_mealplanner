@@ -8,7 +8,7 @@
     -->
     <div class="ingredients-section">
       <span> Search for Ingredients:</span> 
-         <div class=search-input-block>
+         <div class="search-input-block">
         <span class="search-text"> {{searchInputValue}} </span><span class="autocomplete-suggestion">{{ autoCompleteSuggestion }}</span>        
         </div><button class="search-button" @click="runSearch()">Search</button>
         <input id="search-input" class="search-field" type="text" v-model="searchInputValue" @keyup="suggestSearchTerm()">
@@ -33,11 +33,7 @@
         <span @click="addNewIngredientToRecipe(ingredient)">
           {{ ingredient.name }}
         </span>
-        <img
-          @click="addNewIngredientToRecipe(ingredient)"
-          :src="ingredient.image"
-          alt=""
-        />
+        <img @click="addNewIngredientToRecipe(ingredient)" :src="ingredient.image" alt="" class="img-rounded"/>
       </li>
     </ul>
 
@@ -45,18 +41,10 @@
     <div class="recipe-data-section">
     <form @submit.prevent="addRecipe()" class="add-recipe">
       <input type="text" v-model="newRecipe.name" placeholder="Recipe Name" />
-      <input
-        type="text"
-        v-model="newRecipe.instructions"
-        placeholder="Prep Instructions"
-      />
+      <input type="text" v-model="newRecipe.instructions" placeholder="Prep Instructions"/>
       <input type="text" v-model="newRecipe.image" placeholder="Image Link" />
-      <input
-        type="text"
-        v-model="newRecipe.ingredients"
-        placeholder="Ingredients"
-      />
-      <button>Save Recipe</button>
+      <input type="text" v-model="newRecipe.ingredients" placeholder="Ingredients"/>
+      <button class="saveBtn">Save Recipe</button>
     </form>
           <ul class="new-recipe-ingredient-list">
         <li v-for="newIngredient in newRecipeIngredients" :key="newIngredient.id" class="new-recipe-ingredient">
@@ -254,6 +242,55 @@ div.recipe-builder {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "ingredients recipe";
+  gap: 20px;
+}
+
+.saveBtn{
+  color: black;
+}
+
+.new-recipe-ingredient{
+  color: black;
+}
+.add-recipe{
+  color: black;
+}
+.ingredients-section{
+  margin-top: 50px;
+  margin-left: 10px;
+  grid-area: ingredients;
+  align-content: center;
+  border-style: solid;
+  border-color: black;
+  background-color: #4a180c;
+  color: white;
+}
+
+.add-ingredient-container{
+  color: black;
+}
+.search-field{
+  color: black;
+}
+.search-button{
+  color: black;
+}
+.ingredients{
+  display: flex;
+  flex-direction: column;
+  list-style-type: none;
+  gap: 40px;
+}
+
+.recipe-data-section{
+  margin-top: 50px;
+  margin-right: 10px;
+  align-content: center;
+  border-style: solid;
+  border-color: black;
+  background-color: #4a180c;
+  color: white;
+  grid-area: recipe;
 }
 .new-recipe-ingredient-list{
   list-style: none;
@@ -261,5 +298,10 @@ div.recipe-builder {
 
 .new-recipe-ingredient{
   background: wheat;
+}
+
+img{
+  max-width: 200px;
+  max-height: 200px;
 }
 </style>

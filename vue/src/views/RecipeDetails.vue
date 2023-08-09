@@ -1,15 +1,19 @@
 <template>
   <div>
+      <Header />
       <RecipeDetails />
+      
   </div>
 </template>
 
 <script>
 import RecipeDetails from '@/components/RecipeDetails'; 
+import Header from '../components/Header.vue';
 export default {
     name: 'RecipeDetailView', 
     components: {
-        RecipeDetails
+        RecipeDetails,
+        Header
     }
 }
 </script>

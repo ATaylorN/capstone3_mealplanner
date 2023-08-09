@@ -21,5 +21,6 @@ public interface IngredientDao {
 
     int getIngredientIdByName(String ingredientName);
 
+    List<Ingredient> getIngredientsForRecipe(int recipeId);
 
 }

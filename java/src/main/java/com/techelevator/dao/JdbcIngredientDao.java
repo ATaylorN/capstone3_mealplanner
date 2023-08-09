@@ -1,5 +1,6 @@
 package com.techelevator.dao;
 import com.techelevator.model.Ingredient;
+import com.techelevator.model.RecipeIngredientListDTO;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -91,6 +92,20 @@ public class JdbcIngredientDao implements IngredientDao{
         }
 
         return ingredients;
+    }
+
+    public List<Ingredient> getIngredientsForRecipe(int recipeId){
+        List<Ingredient> recipeIngredients = new ArrayList<>();
+        String sql = "SELECT ingredient_id, ingredient_name, ingredient_image FROM ingredients WHERE ingredient_id IN (SELECT DISTINCT ingredient_id FROM recipe_ingredients WHERE recipe_id = ?)";
+        try{
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, recipeId);
+            while (rows.next()){
+                recipeIngredients.add(mapRowToIngredient(rows));
+            }
+        } catch (RuntimeException e){
+            throw new RuntimeException("Failed to get recipe's ingredients");
+        }
+        return recipeIngredients;
     }
 
     private Ingredient mapRowToIngredient(SqlRowSet rows){

@@ -9,12 +9,17 @@
       </div>
       <div>
           <img id="recipeImage" :src="recipe.image" alt="" class="img-rounded">
-          <body class="ingredientsList">
-              {{recipe.ingredients}}
-          </body>
-          <body class="instructions">
+          <div > Ingredients: 
+              <ul class="ingredientsList">
+                  <li class="ingredient" v-for="ingredient in recipe.ingredients.ingredientList" :key="ingredient.id">
+                      <span>{{ingredient.name}}</span>
+                      <span> ingredient image placeholder: {{ingredient.image}} </span>                                           
+                  </li>
+              </ul>
+          </div>
+          <div class="instructions">
               {{recipe.instructions}}
-          </body>
+          </div>
       </div>
   </div>
 </template>
@@ -35,7 +40,15 @@ export default {
         .then(response => {   
             // add 404 push if recipe not found.
             // shouldn't happen since we're getting ID off thing that exists, but nice to have         
-            this.recipe = response.data;             
+            this.recipe = response.data;
+            RecipeService.getRecipeIngredients(this.recipe.id)
+                .then(response => {
+                    this.recipe.ingredients = response.data;
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+
         })
         .catch(error =>{
             console.error(error)
@@ -58,12 +71,17 @@ export default {
     color: black;
 }
 
+.ingredient{
+    color: black;
+}
+
 #recipeImage {
     max-height: 400px;
     max-width: 400px;
 }
 
 .ingredientsList{
+    list-style: none;
     background-color: white;
     background-image: none;
 }
@@ -71,5 +89,6 @@ export default {
 .instructions {
     background-image: none;
     background-color: white;
+    color: black
 }
 </style>

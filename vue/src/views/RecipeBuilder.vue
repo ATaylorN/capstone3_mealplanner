@@ -20,13 +20,13 @@
           <button @click.prevent="clearIngredients()">Clear Ingredient List</button>
       <!-- </form> -->
     </div>
+    
     <ul class="ingredient-search-results">
         <li v-for="foundIngredient in searchResults" :key="foundIngredient.index">
             <span @click="addNewIngredientToRecipe(foundIngredient)"> {{foundIngredient.name}} </span>
             <img @click="addNewIngredientToRecipe(foundIngredient)" :src="foundIngredient.image" :alt="foundIngredient.name" class="img-rounded">            
         </li>
-    </ul>    
-
+    </ul>
 
     <ul class="ingredients">
       <li v-for="ingredient in ingredients" :key="ingredient.id">

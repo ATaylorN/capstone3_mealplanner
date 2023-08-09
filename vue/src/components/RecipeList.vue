@@ -7,18 +7,6 @@
           <RecipeDetails v-bind:recipeId='recipe.id'/>
           </div>      
         </div>
-
-
-      <!-- <table class="recipe-table">
-       <th>Recipe</th>
-        <tr v-for="recipe in recipes" :key="recipe.id">
-          <tr class="recipe-name">
-            <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }"> 
-              {{ recipe.name }}
-            </router-link> </tr>
-           <tr> <img class="recipe-image" :src="recipe.image" alt="" />
-        </tr>
-      </table> -->
     </div>
 </template>
 

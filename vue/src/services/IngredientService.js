@@ -18,6 +18,13 @@ export default{
         recipeId: recipeId
       }
       return axios.post('/ingredients/recipe-ingredient-list', messageBody);
+    },
+    updateRecipeIngredients(ingredientList, recipeId){
+      let messageBody = {
+        ingredientList: ingredientList, 
+        recipeId: recipeId
+      }
+      return axios.put('/ingredients/recipe-ingredient-list', messageBody);
     }
 }
 /*

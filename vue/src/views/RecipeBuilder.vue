@@ -7,26 +7,26 @@
           recipe form on the other, with element to display added ingredients
     -->
     <div class="ingredients-section">
-      <span> Search for Ingredients:</span> 
          <div class="search-input-block">
         <span class="search-text"> {{searchInputValue}} </span><span class="autocomplete-suggestion">{{ autoCompleteSuggestion }}</span>        
-        </div><button class="search-button" @click="runSearch()">Search</button>
-        <input id="search-input" class="search-field" type="text" v-model="searchInputValue" @keyup="suggestSearchTerm()">
+        <input id="search-input" class="search-field" type="text" placeholder="Search for Ingredients" v-model="searchInputValue" @keyup="suggestSearchTerm()">
+        <button class="search-button" @click="runSearch()">Search</button> 
+        </div>
     
         <div class="add-ingredient-container">
       <!-- <form v-show="filteredIngredientList.length === 0" class="add-ingredient"> -->
-          <input type="text" v-model="newIngredient.name" placeholder="Ingredient Name">
+          <input class="ingredientSearch" type="text" v-model="newIngredient.name" placeholder="Ingredient Name">
           <button @click.prevent="listIngredients()">Find More Ingredients</button>
           <button @click.prevent="clearIngredients()">Clear Ingredient List</button>
       <!-- </form> -->
     </div>
+    
     <ul class="ingredient-search-results">
         <li v-for="foundIngredient in searchResults" :key="foundIngredient.index">
             <span @click="addNewIngredientToRecipe(foundIngredient)"> {{foundIngredient.name}} </span>
             <img @click="addNewIngredientToRecipe(foundIngredient)" :src="foundIngredient.image" :alt="foundIngredient.name" class="img-rounded">            
         </li>
-    </ul>    
-
+    </ul>
 
     <ul class="ingredients">
       <li v-for="ingredient in ingredients" :key="ingredient.id">
@@ -238,6 +238,7 @@ export default {
 </script>
 
 <style>
+
 div.recipe-builder {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -271,6 +272,12 @@ div.recipe-builder {
 }
 .search-field{
   color: black;
+  font-size: 16px;
+}
+
+.ingredientSearch {
+  color: black;
+  font-size: 16px;
 }
 .search-button{
   color: black;
@@ -301,7 +308,7 @@ div.recipe-builder {
 }
 
 img{
-  max-width: 200px;
-  max-height: 200px;
+  max-width: 400px;
+  max-height: 400px;
 }
 </style>

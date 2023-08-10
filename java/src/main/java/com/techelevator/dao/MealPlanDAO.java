@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Ingredient;
+import com.techelevator.model.Meal;
 import com.techelevator.model.MealPlan;
 
 import java.time.LocalDate;
@@ -14,5 +15,5 @@ public interface MealPlanDAO {
     List<MealPlan>getUserMealPlansForDateRange(LocalDate startDate, LocalDate endDate);
     int addMealPlan(MealPlan mealPlan);
     int getIngredientsByMealPlan(List<Ingredient> ingredients);
-    void deleteMealPlan();
+    void deleteMealPlan(MealPlan mealPlan);
 }

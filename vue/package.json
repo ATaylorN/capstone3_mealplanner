@@ -10,6 +10,7 @@
   "dependencies": {
     "axios": "^0.21.1",
     "core-js": "^3.9.1",
+    "sortablejs": "^1.15.0",
     "vue": "^2.6.12",
     "vue-router": "^3.5.1",
     "vuedraggable": "^2.24.3",

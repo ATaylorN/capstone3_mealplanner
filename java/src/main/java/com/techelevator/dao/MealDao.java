@@ -14,7 +14,7 @@ public interface MealDao {
 
     Meal updateMeal(Meal meal);
 
-    void deleteMeal(int mealId);
+    int deleteMeal(int mealId);
 
     int addRecipesToMeal(List<Integer> recipeIds, int mealId);
 

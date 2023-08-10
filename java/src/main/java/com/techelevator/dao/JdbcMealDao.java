@@ -68,7 +68,23 @@ public class JdbcMealDao implements MealDao {
 
     @Override
     public Meal updateMeal(Meal meal) {
-        return null;
+        Meal updatedMeal = null;
+        String sql = "UPDATE meals SET meal_name = ?, user_id = ?, meal_type = ? WHERE meal_id = ?;";
+        try {
+            int numOfRows = jdbcTemplate.update(sql, meal.getMealId());
+            if (numOfRows == 0) {
+                throw new RuntimeException("No rows affected, expected at least one.");
+            } else {
+                updatedMeal = getMealById(meal.getMealId());
+            }
+        }  catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+        return updatedMeal;
     }
 
     @Override

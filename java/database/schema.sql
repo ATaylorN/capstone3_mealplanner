@@ -90,6 +90,5 @@ CREATE TABLE meal_plans (
 
 -- TODO: Create table for user ingredient inventory
 
-SELECT * FROM meal_recipes
 
 COMMIT TRANSACTION;

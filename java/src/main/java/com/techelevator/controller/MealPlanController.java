@@ -1,7 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.MealDao;
-import com.techelevator.dao.MealPlanDAO;
+import com.techelevator.dao.MealPlanDao;
 import com.techelevator.dao.RecipeDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Meal;
@@ -24,10 +24,10 @@ public class MealPlanController {
     private RecipeDao recipeDao;
     private UserDao userDao;
     private MealDao mealDao;
-    private MealPlanDAO mealPlanDao;
+    private MealPlanDao mealPlanDao;
 //TODO: Verify that MealPlanDaos and the associated methods are named this way. Double-check that your methods still make sense
 
-    public MealPlanController(RecipeDao recipeDao, UserDao userDao, MealDao mealDao, MealPlanDAO mealPlanDao){
+    public MealPlanController(RecipeDao recipeDao, UserDao userDao, MealDao mealDao, MealPlanDao mealPlanDao){
         this.recipeDao = recipeDao;
         this.userDao = userDao;
         this.mealDao = mealDao;

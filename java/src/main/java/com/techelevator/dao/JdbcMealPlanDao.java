@@ -12,7 +12,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcMealPlanDao implements MealPlanDAO {
+public class JdbcMealPlanDao implements MealPlanDao {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -127,7 +127,7 @@ public class JdbcMealPlanDao implements MealPlanDAO {
     @Override
     public int getIngredientsByMealPlan(List<Ingredient> ingredients) {
         return 0;
-    } 
+    }
 
     @Override
     public void deleteMealPlan(MealPlan mealPlan) {

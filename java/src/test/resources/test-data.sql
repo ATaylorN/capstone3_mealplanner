@@ -16,4 +16,6 @@ INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Southern dinner', 1, '
 INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Boss breakfast', 1, 'breakfast');
 INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Power lunch', 2, 'lunch');
 
+
+
 COMMIT TRANSACTION;

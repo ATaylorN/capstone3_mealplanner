@@ -39,6 +39,16 @@ public class JdbcMealDaoTests extends BaseDaoTests{
         assertMealsMatch(expectedMeal, actualMeal);
     }
 
+    @Test
+    public void add_recipes_to_meal_returns_correct_num_of_rows() {
+
+    }
+
+    @Test void deleted_meal_can_no_longer_be_retrieved() {
+        int rowsAffected = sut.deleteMeal(MEAL1.getMealId());
+       
+    }
+
     private void assertMealsMatch(Meal expected, Meal actual){
         Assert.assertEquals(expected.getMealId(), actual.getMealId());
         Assert.assertEquals(expected.getUserId(), actual.getUserId());

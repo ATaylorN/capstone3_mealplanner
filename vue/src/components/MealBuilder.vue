@@ -8,13 +8,16 @@
     -->
     <div class ="meal-builder-container">
       
-        <div class = "user-recipes-container">       
+        <div class = "user-recipes-container">
+          <draggable v-model="recipes" @start="drag=true" @end="drag=false" :click="handleMove">                           
           <figure class="recipe-card" v-for="recipe in recipes" :key="recipe.id">
             <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name">
             <span class="recipe-card-title">{{recipe.name}}</span>
           </figure>
+          </draggable>
         </div>
         <div class ="new-meal-editor">
+          <div id="add-recipe-box"></div>
 
         </div>
 
@@ -26,9 +29,13 @@
 
 import RecipeService from "@/services/RecipeService.js";
 import MealService from "@/services/MealService.js";
+import draggable from 'vuedraggable';
 
 export default {
   name: "meal-builder",
+  components: {
+    draggable
+  },
   data() {
     return {
       newMeal: {},
@@ -37,6 +44,9 @@ export default {
     };
   },
   methods: {
+    handleMove(event){
+      console.log(event.draggedContext.element.name);
+    }
   },
   created(){
     // get the user's recipes and meals 
@@ -86,6 +96,7 @@ export default {
   margin: 5rem;
   border-radius: 5rem;
 }
+
 .user-recipes-container{
   grid-area: userRecipes;
   display: flex; 

@@ -7,12 +7,14 @@ import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
+import org.springframework.stereotype.Component;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-public class JdbcMealPlanDao implements MealPlanDao {
+@Component
+public class JdbcMealPlanDao implements MealPlanDAO {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -127,7 +129,7 @@ public class JdbcMealPlanDao implements MealPlanDao {
     @Override
     public int getIngredientsByMealPlan(List<Ingredient> ingredients) {
         return 0;
-    }
+    } 
 
     @Override
     public void deleteMealPlan(MealPlan mealPlan) {

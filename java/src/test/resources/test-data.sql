@@ -15,6 +15,11 @@ INSERT INTO recipes (user_id, recipe_name, recipe_ingredients, instructions) VAL
 INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Southern dinner', 1, 'dinner');
 INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Boss breakfast', 1, 'breakfast');
 INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Power lunch', 2, 'lunch');
+INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Big breakfast', 2, 'breakfast');
+
+INSERT INTO meal_recipes(meal_id, recipe_id) VALUES (4, 2);
+
+INSERT INTO meal_plans(user_id, meal_id, plan_date) VALUES (1, 4, '2023-10-29');
 
 
 

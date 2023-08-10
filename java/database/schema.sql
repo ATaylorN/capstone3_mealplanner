@@ -1,13 +1,15 @@
 BEGIN TRANSACTION;
 
+--ROLLBACK
+
 DROP TABLE IF EXISTS meal_plans;
 DROP TABLE IF EXISTS meal_recipes;
+DROP TABLE IF EXISTS recipe_ingredients;
 DROP TABLE IF EXISTS meals;
 DROP TABLE IF EXISTS users_recipes;
-DROP TABLE IF EXISTS recipe_ingredients;
-DROP TABLE IF EXISTS users;
 DROP TABLE IF EXISTS ingredients;
 DROP TABLE IF EXISTS recipes;
+DROP TABLE IF EXISTS users;
 
 
 CREATE TABLE users (
@@ -50,6 +52,7 @@ CREATE TABLE recipe_ingredients (
     CONSTRAINT FK_recipe_ingredients_ingredient FOREIGN KEY (ingredient_id) REFERENCES ingredients(ingredient_id)
 );
 
+-- TODO: create table to match users with their recipes
 CREATE TABLE users_recipes (
 	user_id int NOT NULL,
 	recipe_id int NOT NULL,
@@ -57,11 +60,12 @@ CONSTRAINT FK_userIds FOREIGN KEY (user_id) REFERENCES users(user_id),
 CONSTRAINT FK_recipeIds FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 );
 
+-- TODO: Create table for meals
 CREATE TABLE meals (
 	meal_id SERIAL,
 	user_id int NOT NULL,
 	meal_type varchar (20),
-	CONSTRAINT PK_recipe PRIMARY KEY (meal_id),
+	CONSTRAINT PK_meals PRIMARY KEY (meal_id),
 	CONSTRAINT FK_userIds FOREIGN KEY (user_id) REFERENCES users(user_id)
 );
 
@@ -77,11 +81,14 @@ CREATE TABLE meal_plans (
 	meal_plan_id SERIAL,
 	user_id int NOT NULL,
 	meal_id int NOT NULL,
-	date DATE NOT NULL,
+	plan_date DATE NOT NULL,
 	CONSTRAINT PK_meal_plans PRIMARY KEY (meal_plan_id),
 	CONSTRAINT FK_userIds FOREIGN KEY (user_id) REFERENCES users(user_id),
 	CONSTRAINT FK_mealIds FOREIGN KEY (meal_id) REFERENCES meals(meal_id)
 );
+
+
+-- TODO: Create table for user ingredient inventory
 
 
 COMMIT TRANSACTION;

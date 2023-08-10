@@ -1,6 +1,9 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Meal;
+import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.jdbc.BadSqlGrammarException;
+import org.springframework.jdbc.CannotGetJdbcConnectionException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 
@@ -32,12 +35,35 @@ public class JdbcMealDao implements MealDao {
 
     @Override
     public Meal getMealById(int mealId) {
-        return null;
+        Meal meal = new Meal();
+        String sql = "SELECT meal_id, meal_name, user_id, meal_type FROM meals WHERE meal_id = ?";
+        try {
+            SqlRowSet row = jdbcTemplate.queryForRowSet(sql, mealId);
+            if (row.next()){
+                meal = mapRowToMeal(row);
+            }
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Could not find this meal.");
+        }
+        return meal;
     }
 
     @Override
-    public int addMeal(Meal meal) {
-        return 0;
+    public Meal addMeal(Meal meal) {
+        Meal newMeal = null;
+        String sql = "INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Breakfast when sick', 1, 'breakfast') RETURNING meal_id;";
+        try {
+            int mealId = jdbcTemplate.queryForObject(sql, int.class, meal.getMealName(), meal.getUserId(), meal.getMealType());
+            newMeal = getMealById(mealId);
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+
+        return newMeal;
     }
 
     @Override

@@ -7,9 +7,9 @@ import org.junit.Test;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 public class JdbcMealDaoTests extends BaseDaoTests{
-    protected static final Meal MEAL1 = new Meal(1, 1, "good dinner", "dinner" );
-    protected static final Meal MEAL2 = new Meal(2, 1, "decent lunch", "lunch");
-    protected static final Meal MEAL3 = new Meal(3, 2, "bad breakfast", "breakfast");
+    protected static final Meal MEAL1 = new Meal(1, 1, "Southern dinner", "dinner" );
+    protected static final Meal MEAL2 = new Meal(2, 1, "Boss breakfast", "breakfast");
+    protected static final Meal MEAL3 = new Meal(3, 2, "Power lunch", "lunch");
 
     private JdbcMealDao sut;
 
@@ -22,5 +22,27 @@ public class JdbcMealDaoTests extends BaseDaoTests{
     @Test
     public void getting_user_meals_returns_all_meals() {
         Assert.assertEquals("Wrong size for list",2, sut.getUserMeals(1).size());
+    }
+
+    @Test
+    public void getting_meal_by_id_returns_correct_meal() {
+        Meal actual = sut.getMealById(1);
+        assertMealsMatch(MEAL1, actual);
+    }
+
+    @Test
+    public void adding_meal_adds_meal_with_correct_values() {
+        Meal meal = new Meal(4, 1, "Breakfast when sick", "breakfast");
+        Meal actualMeal = sut.addMeal(meal);
+        Meal expectedMeal = sut.getMealById(actualMeal.getMealId());
+
+        assertMealsMatch(expectedMeal, actualMeal);
+    }
+
+    private void assertMealsMatch(Meal expected, Meal actual){
+        Assert.assertEquals(expected.getMealId(), actual.getMealId());
+        Assert.assertEquals(expected.getUserId(), actual.getUserId());
+        Assert.assertEquals(expected.getMealName(), actual.getMealName());
+        Assert.assertEquals(expected.getMealType(), actual.getMealType());
     }
 }

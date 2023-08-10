@@ -15,8 +15,9 @@
           </draggable>
 
         <div class ="new-meal-editor">
-          <draggable id="add-recipe-box" :list="newMeal.newMealRecipes"  @start="drag=true" @end="drag=false" group="recipeHolder">
-            <figure v-for="recipe in newMeal.newMealRecipes" :key="recipe.id">
+          <button @click="createMeal()"> MEAL MEAL MEAL MEAL MEAL </button>
+          <draggable id="add-recipe-box" :list="newMealRecipes"  @start="drag=true" @end="drag=false" group="recipeHolder">
+            <figure v-for="recipe in newMealRecipes" :key="recipe.id">
               <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name">
               <span class="recipe-card-title">{{recipe.name}}</span>
             </figure >            
@@ -24,8 +25,8 @@
           <div>
           <draggable id="meal-sortable" class="user-meals">
             <figure id="user-meal-list" v-for="meal in meals" :key="meal.id">
-              <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name">
-              <span class="recipe-card-title">{{recipe.name}}</span>
+              <img class="recipe-card-image" :src="meal.image" :alt="meal.name">
+              <span class="recipe-card-title">{{meal.name}}</span>
             </figure>
           </draggable>
           </div>
@@ -51,16 +52,36 @@ export default {
   data() {
     return {
       newMeal: {
-        newMealRecipes: []
+        mealName: "testMeal"
       },
+      newMealRecipes: [],
       recipes: [],
       meals: [], 
       
     };
   },
   methods: {
-    handleMove(event){
-      console.log(event.draggedContext.element.name);
+    createMeal(){
+      MealService.addMeal(this.newMeal)
+        .then(response => {
+          if(response.status === 201){
+            this.newMeal.id = response.data; 
+            MealService.addRecipesToMeal(this.newMealRecipes)
+              .then(response => {
+                console.log(response.status); 
+                console.log(response.data); 
+              })
+              .catch(error => {
+                console.log(error.message);
+                if(error.response){
+                  console.log(error.response.data);                  
+                }
+                if (error.request){
+                  console.log(error.request)
+                }
+              })
+          }
+        })
     }
   },
   created(){

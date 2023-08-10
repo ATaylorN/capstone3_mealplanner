@@ -6,6 +6,7 @@ import com.techelevator.dao.RecipeDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Meal;
 import com.techelevator.model.MealPlan;
+import com.techelevator.model.MealRecipeListDTO;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -40,11 +41,26 @@ public class MealPlanController {
         int newMealId;
         try{
             newMealId = mealDao.addMeal(meal).getMealId();
+
         } catch (RuntimeException e){
             throw new RuntimeException("Unable to add meal!", e);
         }
         return newMealId;
     }
+
+    @RequestMapping(value="/recipe-list", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public int addRecipesToMeal(@RequestBody MealRecipeListDTO mealRecipes){
+        int rowsToAdd = 0;
+        try{
+            rowsToAdd = mealDao.addRecipesToMeal(mealRecipes.getRecipeIds(), mealRecipes.getMealId());
+        } catch (RuntimeException e){
+            throw new RuntimeException("Unable to add recipes to meal!", e);
+        }
+        return rowsToAdd;
+    }
+
+
 
     @RequestMapping(value="/meal-plan", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)

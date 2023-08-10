@@ -6,6 +6,13 @@ export default {
     },
     getAllUserMeals(){
         return axios.get('/meals'); 
+    }, 
+    addRecipesToMeal(meal){
+       let messageBody = {
+            mealId: meal.id,               
+            recipes: meal.recipes
+        }
+        return axios.post("/meals/recipe-list", messageBody)
     }
     
 }

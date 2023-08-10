@@ -2,12 +2,15 @@ package com.techelevator.model;
 
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 
 public class Meal {
 
     private int mealId;
     private int userId;
     private String mealName;
+
     private String mealType;
 
     public Meal (){};

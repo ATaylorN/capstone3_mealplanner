@@ -9,7 +9,8 @@ import Recipe from '../views/Recipe.vue'
 import RecipeDetails from '../views/RecipeDetails.vue';
 import RecipeBuilder from '../views/RecipeBuilder.vue';
 import UserRecipeDetails from '../views/UserRecipeDetails.vue';
-import RecipeUpdate from '../views/RecipeUpdate.vue'
+import RecipeUpdate from '../views/RecipeUpdate.vue';
+import MealBuilder from '../views/MealBuilder.vue';
 //import { component } from 'vue/types/umd'
 
 
@@ -92,6 +93,11 @@ const router = new Router({
       path: '/recipes/:id/update',
       name: 'recipe-update',
       component: RecipeUpdate,
+    },
+    {
+      path: '/meal-builder',
+      name: 'meal-builder',
+      component: MealBuilder
     }
 
   ]

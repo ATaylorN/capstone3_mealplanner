@@ -1,20 +1,25 @@
 <template>
   <div>
-      <Header />
+      <Header class ="hdr" />
+      <MealBuilder />
   </div>
 </template>
 
 <script>
-import Header from '@/components/Header.vue'
+import Header from '@/components/Header.vue';
+import MealBuilder from '@/components/MealBuilder.vue';
 export default {
     name: 'MealBuilderView',
     components: {
-        Header
+        Header,
+        MealBuilder
     }
 
 }
 </script>
 
 <style>
-
+.hdr{
+    margin-bottom: 40px;
+}
 </style>

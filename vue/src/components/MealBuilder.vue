@@ -66,7 +66,11 @@ export default {
         .then(response => {
           if(response.status === 201){
             this.newMeal.id = response.data; 
-            MealService.addRecipesToMeal(this.newMealRecipes)
+            let mealDto = {
+              id: this.newMeal.id,
+              recipes: this.newMealRecipes
+            }
+            MealService.addRecipesToMeal(mealDto)
               .then(response => {
                 console.log(response.status); 
                 console.log(response.data); 

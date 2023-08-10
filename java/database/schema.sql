@@ -63,6 +63,7 @@ CONSTRAINT FK_recipeIds FOREIGN KEY (recipe_id) REFERENCES recipes(recipe_id)
 -- TODO: Create table for meals
 CREATE TABLE meals (
 	meal_id SERIAL,
+	meal_name varchar (50) NOT NULL,
 	user_id int NOT NULL,
 	meal_type varchar (20),
 	CONSTRAINT PK_meals PRIMARY KEY (meal_id),

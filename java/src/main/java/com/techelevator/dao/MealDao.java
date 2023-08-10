@@ -10,7 +10,7 @@ public interface MealDao {
 
     Meal getMealById (int mealId);
 
-    int addMeal(Meal meal);
+    Meal addMeal(Meal meal);
 
     Meal updateMeal(Meal meal);
 

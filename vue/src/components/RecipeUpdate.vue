@@ -21,14 +21,14 @@
       </div>
       <div class="field">
         <label for="instructions">Preparation Instructions: </label>
-        <input name="instructions" type="text" v-model="instructions" />
+        <input id="prep-instructions" name="instructions" type="text" v-model="instructions" />
       </div>
       <div class="actions">
         <button type="submit" v-on:click="updateRecipe()">Update</button>
       </div>
     </form>
     <div class="recipe-ingredients">
-    <span >List o' Ingredients</span>
+    <span >Your Ingredients</span>
     <ul class="ingredients">
       <li v-for="ingredient in ingredientList" :key="ingredient.id" @click="removeIngredientFromRecipe(ingredient)">
         <span> {{ingredient.name}} </span>      
@@ -153,15 +153,23 @@ form {
 section.recipe-data{
   grid-area: recipe;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 2fr 1fr;
   grid-template-areas: "form list";
   background-color:#4a180c;
 }
 section.recipe-data form.recipe-inputs{
-  grid-area: form
+  grid-area: form; 
+  display: flex; 
+  flex-direction: column; 
+  justify-content: flex-start;
+  color: black;  
+  
 }
 
-
+.recipe-inputs label{
+  color: white;
+  align-self: center;
+}
 section.recipe-data div.recipe-ingredients{
   grid-area: list;
   display: flex; 

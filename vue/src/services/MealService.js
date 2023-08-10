@@ -1,6 +1,6 @@
 import axios from "axios";
 
-export {
+export default {
     addMeal(meal){
         return axios.post('/meals', meal);
     },

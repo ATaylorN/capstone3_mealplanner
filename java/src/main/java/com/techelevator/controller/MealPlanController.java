@@ -105,14 +105,35 @@ public class MealPlanController {
     }
 
     @RequestMapping(value="/meal-plan&from={fromDate}&to={toDate}", method = RequestMethod.GET)
-    public List<MealPlan>getUserMealPlansForDateRange(@PathVariable LocalDate fromDate, @PathVariable LocalDate toDate, Principal principal){
-        return null;
+    public List<MealPlan>getUserMealPlansForDateRange(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate, Principal principal){
+        List<MealPlan> mealPlans = new ArrayList<>();
+        try{
+            mealPlans = mealPlanDao.getUserMealPlansForDateRange(startDate, endDate);
+        }catch (RuntimeException e){
+            throw new RuntimeException("Couldn't get meal plans for specified date range!");
+        }
+        return mealPlans;
     }
 
-    @RequestMapping(value="/meal-plan/{id}", method = RequestMethod.PUT)
-    public MealPlan updateMealPlan(MealPlan mealPlan, Principal principal){
-        return null;
-    }
+//    @RequestMapping(value="/meal-plan/{id}", method = RequestMethod.PUT)
+//    public MealPlan updateMealPlan(@PathVariable int id, @RequestBody MealPlan mealPlanToUpdate){
+//            if(id < 0){
+//                throw new RuntimeException("Meal plan not found");
+//            }
+//            mealPlanToUpdate.setId(id);
+//            try{
+//                MealPlan mealPlan = mealPlanDao.updateMealPlan(mealPlanToUpdate);
+//                return mealPlan;
+//            } catch (RuntimeException e ) {
+//                throw new RuntimeException("Meal plan not found!");
+//            }
+//    }
+
+    /*
+    We have an updateMealPlan method in the controller, but no updateMealPlan method
+    MealPlanDAO. It wasn't shown that we need it in the plan Ben drew out, but do
+    we need this?
+     */
 
     @RequestMapping(value="/meal/{id}", method = RequestMethod.PUT)
     public Meal updateMeal(@RequestBody Meal mealToUpdate, Principal principal){

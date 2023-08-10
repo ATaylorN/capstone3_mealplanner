@@ -1,5 +1,8 @@
 package com.techelevator.model;
 
+import org.springframework.stereotype.Component;
+
+
 public class Meal {
 
     private int mealId;

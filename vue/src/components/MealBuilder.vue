@@ -13,21 +13,22 @@
             <span class="recipe-card-title">{{recipe.name}}</span>
           </figure>
           </draggable>
-        <div class ="new-meal-editor">
 
-          <draggable id="add-recipe-box"  :list="newMeal.newMealRecipes"  @start="drag=true" @end="drag=false" group="recipeHolder">
+        <div class ="new-meal-editor">
+          <draggable id="add-recipe-box" :list="newMeal.newMealRecipes"  @start="drag=true" @end="drag=false" group="recipeHolder">
             <figure v-for="recipe in newMeal.newMealRecipes" :key="recipe.id">
               <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name">
               <span class="recipe-card-title">{{recipe.name}}</span>
-            </figure >
-          </draggable>
-          
-          <draggable id="meal-sortable">
+            </figure >            
+          </draggable>          
+          <div>
+          <draggable id="meal-sortable" class="user-meals">
             <figure id="user-meal-list" v-for="meal in meals" :key="meal.id">
               <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name">
               <span class="recipe-card-title">{{recipe.name}}</span>
             </figure>
           </draggable>
+          </div>
         </div>
 
     </div>
@@ -95,17 +96,18 @@ export default {
 .meal-builder-container{
     display: grid;
     grid-template-columns: .5fr 1.5fr;
-    grid-template-areas: "userRecipes newMeal"
-                        "userRecipes newMeal";
+    grid-template-areas: "userRecipes newMeal";
     gap: 20px; 
 }
 .new-meal-editor{
   grid-area: newMeal;
+  display: grid; 
+  grid-template-columns: 100%;
+  grid-template-rows: 1fr 2fr;
+  grid-template-areas: "addRecipeBox"
+                        "userMeals";
   background-color: #4a180c;
-  display: flex; 
-  justify-content: center;
-  flex-wrap: wrap;  
-  background-color: #4a180c;
+
   color: white;
   margin: 5rem;
   border-radius: 5rem;
@@ -114,8 +116,10 @@ export default {
 
 .user-recipes-container{
   grid-area: userRecipes;
+  min-width: 22rem;
+  max-height: 80%;
   display: flex; 
-  justify-content: space-between;
+  justify-content: center;
   flex-wrap: wrap;  
   background-color: #4a180c;
   color: white;
@@ -154,7 +158,7 @@ figure span {
   text-overflow: ellipsis;
 }
 #add-recipe-box{
-  justify-self: flex-start;
+  grid-area: addRecipeBox;
   width: 90%;
   min-height: 22rem;
   max-height: 24rem;
@@ -165,8 +169,10 @@ figure span {
   flex-direction: row;
   flex-wrap: wrap;
   align-items: center;
-  
-  
+    
 }
-
+.user-meals{
+  grid-area: userMeals;
+  display: flex;
+}
 </style>

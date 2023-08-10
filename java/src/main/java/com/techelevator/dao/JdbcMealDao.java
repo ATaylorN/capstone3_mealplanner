@@ -51,7 +51,7 @@ public class JdbcMealDao implements MealDao {
     @Override
     public Meal addMeal(Meal meal) {
         Meal newMeal = null;
-        String sql = "INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Breakfast when sick', 1, 'breakfast') RETURNING meal_id;";
+        String sql = "INSERT INTO meals(meal_name, user_id, meal_type) VALUES (?, ?, ?) RETURNING meal_id;";
         try {
             int mealId = jdbcTemplate.queryForObject(sql, int.class, meal.getMealName(), meal.getUserId(), meal.getMealType());
             newMeal = getMealById(mealId);
@@ -72,13 +72,44 @@ public class JdbcMealDao implements MealDao {
     }
 
     @Override
-    public void deleteMeal(int mealId) {
-
+    public int deleteMeal(int mealId) {
+        String sql1 = "DELETE FROM meal_plans WHERE meal_id = ?;";
+       int numOfRows1 = jdbcTemplate.update(sql1, mealId);
+        String sql2 = "DELETE FROM meal_recipes WHERE meal_id = ?;";
+       int numOfRows2 = jdbcTemplate.update(sql2, mealId);
+        String sql3 = "DELETE FROM meals WHERE meal_id = ?;";
+        int numOfRows3 = jdbcTemplate.update(sql3, mealId);
+        if (numOfRows1 == numOfRows2 && numOfRows1 == numOfRows3){
+            return numOfRows3;
+        }
+        return 0;
     }
 
     @Override
     public int addRecipesToMeal(List<Integer> recipeIds, int mealId) {
-        return 0;
+
+        //map row to meal_recipe for every recipeId in recipeIds List
+        //return number of rows inserted if number of insertions equals recipeIds.size()
+        int recipesToAdd = recipeIds.size();
+        int recipesAdded = 0;
+        String sql = "INSERT INTO meal_recipes(meal_id, recipe_id) VALUES (?, ?);";
+        try {
+            for (int recipeId : recipeIds){
+                jdbcTemplate.update(sql, mealId, recipeId);
+                recipesAdded++;
+            }
+            if (recipesAdded != recipesToAdd){
+                throw new RuntimeException("Didn't add the expected number of recipe IDs.");
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax in query statement.", e);
+        }
+
+        return recipesAdded;
     }
 
     private Meal mapRowToMeal(SqlRowSet rows){

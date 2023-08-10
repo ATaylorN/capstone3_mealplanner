@@ -51,7 +51,7 @@ public class JdbcMealDao implements MealDao {
     @Override
     public Meal addMeal(Meal meal) {
         Meal newMeal = null;
-        String sql = "INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Breakfast when sick', 1, 'breakfast') RETURNING meal_id;";
+        String sql = "INSERT INTO meals(meal_name, user_id, meal_type) VALUES (?, ?, ?) RETURNING meal_id;";
         try {
             int mealId = jdbcTemplate.queryForObject(sql, int.class, meal.getMealName(), meal.getUserId(), meal.getMealType());
             newMeal = getMealById(mealId);

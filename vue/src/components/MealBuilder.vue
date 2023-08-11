@@ -25,7 +25,7 @@
       </draggable>
 
       <div class="new-meal-editor">
-        <h2 class = "header">Drag recipes for your meal here</h2>
+        <h2 class = "meal-header">Drag recipes for your meal here</h2>
         <input type="text" v-model="newMeal.mealName" id="meal-name" placeholder="Name your meal">
         <button class="create-meal-button" @click="createMeal()">
           Create Meal
@@ -165,14 +165,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .meal-builder-container {
   display: grid;
   grid-template-columns: 0.5fr 1.5fr;
   grid-template-areas: "userRecipes newMeal";
   gap: 20px;
 }
-.header{
+.meal-header{
   grid-area: header;
   justify-self: center;
   padding-top: 5rem;
@@ -269,5 +269,6 @@ figure span {
 #meal-sortable {
   display: flex;
   flex-wrap: wrap;
-  padding-left: 4rem;}
+  padding-left: 5rem;
+  }
 </style>

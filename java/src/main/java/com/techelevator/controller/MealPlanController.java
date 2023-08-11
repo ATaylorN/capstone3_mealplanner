@@ -1,12 +1,13 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.MealDao;
-import com.techelevator.dao.MealPlanDAO;
+import com.techelevator.dao.MealPlanDao;
 import com.techelevator.dao.RecipeDao;
 import com.techelevator.dao.UserDao;
 import com.techelevator.model.Meal;
 import com.techelevator.model.MealPlan;
 import com.techelevator.model.MealRecipeListDTO;
+import com.techelevator.model.Recipe;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 @CrossOrigin
 @RequestMapping(value="/meals")
 public class MealPlanController {
@@ -25,10 +26,10 @@ public class MealPlanController {
     private RecipeDao recipeDao;
     private UserDao userDao;
     private MealDao mealDao;
-    private MealPlanDAO mealPlanDao;
+    private MealPlanDao mealPlanDao;
 //TODO: Verify that MealPlanDaos and the associated methods are named this way. Double-check that your methods still make sense
 
-    public MealPlanController(RecipeDao recipeDao, UserDao userDao, MealDao mealDao, MealPlanDAO mealPlanDao){
+    public MealPlanController(RecipeDao recipeDao, UserDao userDao, MealDao mealDao, MealPlanDao mealPlanDao){
         this.recipeDao = recipeDao;
         this.userDao = userDao;
         this.mealDao = mealDao;
@@ -98,7 +99,16 @@ public class MealPlanController {
         }
         return mealPlans;
     }
-
+    @RequestMapping(value = "/{id}/recipes", method = RequestMethod.GET)
+    public List<Recipe> getRecipesByMealId(@RequestParam int id) {
+        List<Recipe> mealRecipes = new ArrayList<>();
+        try{
+           mealRecipes = getRecipesByMealId(id);
+        } catch (RuntimeException e){
+            throw new RuntimeException("Couldn't get the recipes for the given meal.");
+        }
+        return mealRecipes;
+    }
     @RequestMapping(value="/meal-plan", method = RequestMethod.DELETE)
     public void deleteMealPlan(int mealPlanId, Principal principal){
 
@@ -115,19 +125,19 @@ public class MealPlanController {
         return mealPlans;
     }
 
-//    @RequestMapping(value="/meal-plan/{id}", method = RequestMethod.PUT)
-//    public MealPlan updateMealPlan(@PathVariable int id, @RequestBody MealPlan mealPlanToUpdate){
-//            if(id < 0){
-//                throw new RuntimeException("Meal plan not found");
-//            }
-//            mealPlanToUpdate.setId(id);
-//            try{
-//                MealPlan mealPlan = mealPlanDao.updateMealPlan(mealPlanToUpdate);
-//                return mealPlan;
-//            } catch (RuntimeException e ) {
-//                throw new RuntimeException("Meal plan not found!");
-//            }
-//    }
+    @RequestMapping(value="/meal-plan/{id}", method = RequestMethod.PUT)
+    public MealPlan updateMealPlan(@PathVariable int id, @RequestBody MealPlan mealPlanToUpdate){
+            if(id < 0){
+                throw new RuntimeException("Meal plan not found");
+            }
+            mealPlanToUpdate.setId(id);
+            try{
+                MealPlan mealPlan = mealPlanDao.updateMealPlan(mealPlanToUpdate);
+                return mealPlan;
+            } catch (RuntimeException e ) {
+                throw new RuntimeException("Meal plan not found!");
+            }
+    }
 
     /*
     We have an updateMealPlan method in the controller, but no updateMealPlan method

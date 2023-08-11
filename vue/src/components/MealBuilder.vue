@@ -250,14 +250,14 @@ figure span {
 }
 .new-meal-editor input{
   border-radius: 5px;
-  margin-left: 10rem;
-  margin-right: 10rem;
+  margin-left: 7rem;
+  margin-right: 14rem;
 }
 .create-meal-button {
   height: 50px;
   border-radius: 5px;
-  margin-left: 10rem;
-  margin-right: 10rem;
+  margin-left: 7rem;
+  margin-right: 14rem;
 }
 .user-meals {
   grid-area: userMeals;

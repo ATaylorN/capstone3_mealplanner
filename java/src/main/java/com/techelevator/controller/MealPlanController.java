@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
-@PreAuthorize("isAuthenticated()")
+//@PreAuthorize("isAuthenticated()")
 @CrossOrigin
 @RequestMapping(value="/meals")
 public class MealPlanController {
@@ -125,19 +125,19 @@ public class MealPlanController {
         return mealPlans;
     }
 
-//    @RequestMapping(value="/meal-plan/{id}", method = RequestMethod.PUT)
-//    public MealPlan updateMealPlan(@PathVariable int id, @RequestBody MealPlan mealPlanToUpdate){
-//            if(id < 0){
-//                throw new RuntimeException("Meal plan not found");
-//            }
-//            mealPlanToUpdate.setId(id);
-//            try{
-//                MealPlan mealPlan = mealPlanDao.updateMealPlan(mealPlanToUpdate);
-//                return mealPlan;
-//            } catch (RuntimeException e ) {
-//                throw new RuntimeException("Meal plan not found!");
-//            }
-//    }
+    @RequestMapping(value="/meal-plan/{id}", method = RequestMethod.PUT)
+    public MealPlan updateMealPlan(@PathVariable int id, @RequestBody MealPlan mealPlanToUpdate){
+            if(id < 0){
+                throw new RuntimeException("Meal plan not found");
+            }
+            mealPlanToUpdate.setId(id);
+            try{
+                MealPlan mealPlan = mealPlanDao.updateMealPlan(mealPlanToUpdate);
+                return mealPlan;
+            } catch (RuntimeException e ) {
+                throw new RuntimeException("Meal plan not found!");
+            }
+    }
 
     /*
     We have an updateMealPlan method in the controller, but no updateMealPlan method

@@ -20,6 +20,7 @@ INSERT INTO meals(meal_name, user_id, meal_type) VALUES ('Big breakfast', 2, 'br
 INSERT INTO meal_recipes(meal_id, recipe_id) VALUES (4, 2);
 
 INSERT INTO meal_plans(user_id, meal_id, plan_date) VALUES (1, 4, '2023-10-29');
+INSERT INTO meal_plans(user_id, meal_id, plan_date) VALUES (1, 3, '2024-12-13');
 
 
 

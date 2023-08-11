@@ -9,6 +9,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -94,7 +95,7 @@ public class JdbcMealPlanDao implements MealPlanDao {
                 "FROM meal_plans " +
                 "WHERE plan_date >= ? AND plan_date <= ?";
         try {
-            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, startDate, endDate);
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, Date.valueOf(startDate), Date.valueOf(endDate));
             while (rows.next()){
                 mealPlans.add(mapRowToMealPlan(rows));
             }
@@ -148,7 +149,24 @@ public class JdbcMealPlanDao implements MealPlanDao {
     @Override
     public MealPlan updateMealPlan(MealPlan mealPlan) {
         MealPlan updatedMealPlan = null;
-        return null;
+        String sql = "UPDATE meal_plans " +
+                "SET plan_date = ? " +
+                "WHERE meal_plan_id = ?;";
+        try {
+            int numberOfRows = jdbcTemplate.update(sql, Date.valueOf(mealPlan.getDateToCook()), mealPlan.getId());
+            if (numberOfRows == 0) {
+                throw new RuntimeException("Zero rows affected, expected at least one");
+            } else {
+                updatedMealPlan = getMealPlanById(mealPlan.getId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+        return updatedMealPlan;
     }
 
     private MealPlan mapRowToMealPlan(SqlRowSet rows){

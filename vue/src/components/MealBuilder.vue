@@ -26,7 +26,7 @@
 
       <div class="new-meal-editor">
         <h2 class = "header">Drag recipes for your meal here</h2>
-        <input type="text" id="meal-name" placeholder="Name your meal">
+        <input type="text" v-model="newMeal.mealName" id="meal-name" placeholder="Name your meal">
         <button class="create-meal-button" @click="createMeal()">
           Create Meal
         </button>
@@ -89,7 +89,7 @@ export default {
         if (response.status === 201) {
           this.newMeal.id = response.data;
           let mealDto = {
-            id: this.newMeal.id,
+            id: this.newMeal.id,            
             recipes: this.newMealRecipes,
           };
           MealService.addRecipesToMeal(mealDto)
@@ -98,6 +98,10 @@ export default {
               console.log(response.data);
               this.newMealRecipes = [];
               this.newMeal = {};
+              MealService.getAllUserMeals()
+                .then(response => {
+                  this.meals = response.data; 
+                })
             })
             .catch((error) => {
               console.log(error.message);
@@ -187,7 +191,9 @@ export default {
   margin: 5rem;
   border-radius: 5rem;
 }
-
+input{
+  color: black;
+}
 .user-recipes-container {
   grid-area: userRecipes;
   min-width: 22rem;

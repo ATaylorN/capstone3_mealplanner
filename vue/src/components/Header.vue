@@ -5,12 +5,12 @@
       <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"> Menu </button>
         <ul class="dropdown-menu">
-          <li> <router-link :to="{ name: 'user-recipe-details' }">View Your Recipes</router-link>&nbsp;|&nbsp;</li>
-          <li> <router-link :to="{ name: 'build-recipe' }">Build Recipe</router-link>&nbsp;|&nbsp; </li>
-          <li> <router-link :to="{ name: 'recipes' }">View All Recipes</router-link>&nbsp;|&nbsp;</li>
-          <li> <router-link :to="{ name: 'meal-builder'}">Build Meal</router-link>&nbsp;|&nbsp;</li>
-          <li> <router-link :to="{ name: 'meal-planner'}">Create Meal Plan</router-link>&nbsp;|&nbsp;</li>
-          <li> <router-link v-bind:to="{ name: 'home' }">Home</router-link>&nbsp;|&nbsp;</li>
+          <li> <router-link :to="{ name: 'user-recipe-details' }">View Your Recipes</router-link></li>
+          <li> <router-link :to="{ name: 'build-recipe' }">Build Recipe</router-link></li>
+          <li> <router-link :to="{ name: 'recipes' }">View All Recipes</router-link></li>
+          <li> <router-link :to="{ name: 'meal-builder'}">Build Meal</router-link></li>
+          <li> <router-link :to="{ name: 'meal-planner'}">Create Meal Plan</router-link></li>
+          <li> <router-link v-bind:to="{ name: 'home' }">Home</router-link></li>
           <li> <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link> </li>
         </ul>
         </div>

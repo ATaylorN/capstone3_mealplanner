@@ -20,13 +20,9 @@
 
 <script>
 export default {
-  name: "Header",
-  data() {
-    return {
-      hamburger: false,
-    };
-  },
-};
+  name: "Header"
+}
+
 </script>
 
 <style>

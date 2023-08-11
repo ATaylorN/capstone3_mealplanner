@@ -266,4 +266,8 @@ figure span {
 .meal-card {
   max-height: 5rem;
 }
+#meal-sortable {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 4rem;}
 </style>

@@ -17,8 +17,11 @@ export default {
     getMealRecipes(id){
         return axios.get(`/meals/${id}/recipes`)
     },
-    addMealPlan(mealPlan){
+    addMealPlan(mealPlan){        
         return axios.post("/meals/meal-plan", mealPlan)
+    },
+    getMealPlans(){
+        return axios.get("/meals/meal-plan/")
     }
 
 }

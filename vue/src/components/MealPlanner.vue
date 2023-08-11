@@ -22,9 +22,6 @@
                   <span></span>
               </div>
             </draggable>
-            
-
-           
           </div>
       </section>
     <draggable class="trash" group="mealplan" :list="trashmode">
@@ -82,6 +79,14 @@ export default {
                     displayDate: d.format('M/D'),
                     mealPlans: []
                 }
+                this.mealPlans.forEach(mp => {
+                    //console.log("mp: " + mp.dateToCook)
+                    //console.log("cal: " + calendarSlot.date)
+                    if (mp.dateToCook == calendarSlot.date){
+                        calendarSlot.mealPlans.push(mp)
+                    }
+                })
+
                 this.dateSlots.push(calendarSlot)
             }
         },
@@ -132,7 +137,22 @@ export default {
         // get meals.
         MealService.getAllUserMeals()
             .then(response => {
-                this.mealsToDrag = response.data;                 
+                this.mealsToDrag = response.data;
+                MealService.getMealPlans()
+                    .then(response => {
+                        this.mealPlans = response.data; 
+                        console.log(this.mealPlans)
+                        this.buildCalendar();
+                    })
+                    .catch(error => {
+                    console.log(error.message);
+                    if(error.response){
+                    console.log(error.response.data);                  
+                    }
+                    if (error.request){
+                    console.log(error.request)
+                    }
+            })                 
             })
             .catch(error => {
                 console.log(error.message);
@@ -143,7 +163,7 @@ export default {
                   console.log(error.request)
                 }
             })
-        this.buildCalendar(); 
+         
     }
 }
 </script>

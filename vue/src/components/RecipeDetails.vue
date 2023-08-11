@@ -60,7 +60,11 @@ export default {
 </script>
 
 <style>
+.recipeName {
+    padding: 4rem 2rem 4rem 2rem;
+}
 .container {
+    justify-content: space-around;
     display: grid;
     grid-template-rows: 1fr 1fr;
     grid-template-areas: 
@@ -69,7 +73,7 @@ export default {
     height: 100vh;
 }
 .recipeContainer{
-     border-radius: 8px;
+    border-radius: 8px;
     align-content: center;
     border-style: solid;
     border-color: black;
@@ -114,7 +118,7 @@ height: 30rem;
 }
 
 .instructions {
-
+    padding: 2rem 4rem 2rem 4rem;
     background-image: none;
     background-color: white;
     color: black;
@@ -123,5 +127,8 @@ height: 30rem;
     height: 90vh;
 }
 
+.instructions h3{
+    padding-bottom: 2rem;
+}
 
 </style>

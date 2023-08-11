@@ -1,10 +1,10 @@
 <template>
   <div>
-      <Header />
-          <div v-for="recipe in recipes" :key="recipe.id" class="recipesList" >
-                  <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button">View Details</router-link>
-                  <router-link :to="{ name: 'recipe-update', params: {id: recipe.id} }" tag="button">Update</router-link> 
+      <!-- <Header /> -->
+          <div v-for="recipe in recipes" :key="recipe.id" class="recipesList" > 
                   <RecipeDetails :recipeId ="recipe.id" />                
+                  <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button">View Details</router-link>
+                  <router-link :to="{ name: 'recipe-update', params: {id: recipe.id} }" tag="button">Update</router-link>
           </div>
   </div>
 </template>
@@ -12,13 +12,13 @@
 <script>
 
 import RecipeService from '../services/RecipeService.js';
-import Header from '../components/Header.vue'
+// import Header from '../components/Header.vue'
 import RecipeDetails from '@/components/RecipeDetails'; 
 
 export default {
     name: 'user-recipe-list',
     components: {
-       Header,
+    //    Header,
        RecipeDetails
     },
     data() {

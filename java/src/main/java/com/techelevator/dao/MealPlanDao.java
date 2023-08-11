@@ -15,4 +15,5 @@ public interface MealPlanDao {
     int addMealPlan(MealPlan mealPlan);
     int getIngredientsByMealPlan(List<Ingredient> ingredients);
     void deleteMealPlan(MealPlan mealPlan);
+    MealPlan updateMealPlan(MealPlan mealPlan);
 }

@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcMealPlanDao implements MealPlanDAO {
+public class JdbcMealPlanDao implements MealPlanDao {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -143,6 +143,12 @@ public class JdbcMealPlanDao implements MealPlanDAO {
         } catch (BadSqlGrammarException e) {
             throw new RuntimeException("Invalid syntax.", e);
         }
+    }
+
+    @Override
+    public MealPlan updateMealPlan(MealPlan mealPlan) {
+        MealPlan updatedMealPlan = null;
+        return null;
     }
 
     private MealPlan mapRowToMealPlan(SqlRowSet rows){

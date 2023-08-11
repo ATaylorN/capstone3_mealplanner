@@ -1,13 +1,13 @@
 <template>
+
   <div class="recipeContainer">
-      <h2 class="recipeName">
-          {{recipe.name}}
-      </h2>
-      <div class="updateBtn">                   
-      </div>
+      <h2 class="recipeName"> {{recipe.name}} </h2>
+      
       <div class="container">
           <img id="recipeImage" :src="recipe.image" alt="" class="img-rounded">          
-          <div class ="ingredients-container"> <h3>Ingredients:</h3>  
+         
+          <div class ="ingredients-container"> 
+              <h3>Ingredients:</h3>  
               <ul class="ingredientsList">
                   <li class="ingredient" v-for="ingredient in recipe.ingredients.ingredientList" :key="ingredient.id">
                       <span>{{ingredient.name}}</span>
@@ -15,12 +15,15 @@
                   </li>
               </ul>
           </div>
+         
           <div class="instructions">
               <h3>Instructions:</h3>
               {{recipe.instructions}}
           </div>
+
       </div>
   </div>
+
 </template>
 
 <script>
@@ -57,11 +60,20 @@ export default {
 </script>
 
 <style>
+.container {
+    display: grid;
+    grid-template-rows: 1fr 1fr;
+    grid-template-areas: 
+        "image instructions"
+        "ingredients instructions";
+    height: 100vh;
+}
 .recipeContainer{
+     border-radius: 8px;
     align-content: center;
     border-style: solid;
     border-color: black;
-    margin-top: 50px;
+    margin-top: 10rem;
     background-color: #4a180c;
     color: white;
     text-align: center;
@@ -71,7 +83,7 @@ export default {
 }
 
 .ingredient{
-    color: black;
+    color: black;    
 }
 
 #recipeImage {
@@ -82,8 +94,9 @@ export default {
 }
 
 .ingredientsList{
-    display: block;
+    /* border: 5px solid yellow; */
     list-style: none;
+    padding: 2rem;
     background-color: white;
     background-image: none;
     height: 50vh;
@@ -92,14 +105,16 @@ export default {
 }
 
 .ingredients-container{
+    /* border: 5px solid yellow; */
 grid-area: ingredients;
 display: flex;
 flex-direction: column;
-width: 30vw;
-height: 30vh;
+width: 45rem;
+height: 30rem;
 }
 
 .instructions {
+
     background-image: none;
     background-color: white;
     color: black;
@@ -108,12 +123,5 @@ height: 30vh;
     height: 90vh;
 }
 
-.container {
-    display: grid;
-    grid-template-rows: 1fr 1fr;
-    grid-template-areas: 
-        "image instructions"
-        "ingredients instructions";
-    height: 100vh;
-}
+
 </style>

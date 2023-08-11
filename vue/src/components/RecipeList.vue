@@ -3,8 +3,7 @@
         <div class="recipeList">
           <div class="recipe" v-for="recipe in recipes" :key="recipe.id">          
           <RecipeDetails v-bind:recipeId='recipe.id'/>
-
-          <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button">View Recipe</router-link>
+        <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button">View Recipe</router-link>
           </div>      
         </div>
     </div>

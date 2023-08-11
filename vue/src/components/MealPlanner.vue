@@ -40,7 +40,8 @@ export default {
             let d = moment();
             for (let i = 0; i < 35; i++ ) {
                 let calendarSlot = {
-                    date: d.add(1, 'days').format('mm dd')          
+                    date: d.add(1, 'days').format('MM/D'),
+                    meals: []          
                 }
                 this.dateSlots.push(calendarSlot)
             }

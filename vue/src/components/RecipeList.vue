@@ -52,4 +52,8 @@ export default {
     max-height: 350px;
     max-width: 350px;
 }
+
+h1 {
+  
+}
 </style>

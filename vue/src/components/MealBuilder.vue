@@ -26,6 +26,7 @@
 
       <div class="new-meal-editor">
         <h2 class = "header">Drag recipes for your meal here</h2>
+        <input type="text" id="meal-name" placeholder="Name your meal">
         <button class="create-meal-button" @click="createMeal()">
           Create Meal
         </button>

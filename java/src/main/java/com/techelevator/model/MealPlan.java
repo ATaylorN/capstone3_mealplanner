@@ -16,6 +16,12 @@ public class MealPlan {
         this.dateToCook = dateToCook;
     }
 
+    public MealPlan(int plannedMealId, LocalDate dateToCook){
+        this.dateToCook = dateToCook;
+        this.plannedMealId = plannedMealId;
+    }
+
+
     public int getUserId() {
         return userId;
     }

@@ -66,7 +66,7 @@ public class MealPlanController {
     @RequestMapping(value="/meal-plan", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public int addMealPlan(@RequestBody MealPlan mealPlan, Principal principal){
-        mealPlan.setId(userDao.findIdByUsername(principal.getName()));
+        mealPlan.setUserId(userDao.findIdByUsername(principal.getName()));
         int newMealPlanId;
         try{
             newMealPlanId = mealPlanDao.addMealPlan(mealPlan);

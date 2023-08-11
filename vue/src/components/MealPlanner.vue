@@ -1,30 +1,37 @@
 <template>
   <div class="meal-planner">
-      <section class="calendar-container">
-          
-            <ul>             
-                <li class="calendar-square" v-for="(calendarSlot, index) in dateSlots" :key="index">
-                    <span class="date"> {{calendarSlot.displayDate}} </span>
-                    <draggable :group="mealplan" :list="dateSlots" >
-                        <div class="meal-plan-card-holder">         
-                            <span> meals go here once we got em</span>                   
-                        </div>                        
-                    </draggable>
-                </li>
-            </ul>
-          
-      </section>
+        
+      <section class="calendar-container">               
+            <ul>                                 
+                <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id">
+                    <draggable :list="calendarSlot.mealPlans" group="mealplan"  draggable=".meal" @change="setDate($event, calendarSlot.date)">                                      
+                            <span slot="header"> {{calendarSlot.displayDate}} </span>
+                            <span class="meal" v-for="mealPlan in calendarSlot.mealPlans" :key="mealPlan.mealId"> {{ mealPlan.mealName }}</span>
+                    </draggable>                                                 
+                </li>                                
+            </ul>           
+    </section>
+    
 
       <section class="meal-list">
-          <ul class="meals">
-            <draggable :group="{name: 'mealplan', pull: 'clone' }"> 
-              <li class="meal-card" v-for="meal in meals" :key="meal.id">
-                  <span> meal name here</span>
-              </li>
+          <div @click="readCalendar()"> save save go go </div>
+          <div class="meals">
+            <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false"> 
+              <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
+                  <span :mealId="meal.mealId" > {{meal.mealName}} </span>
+                  <span></span>
+              </div>
             </draggable>
-          </ul>
+            
+
+           
+          </div>
       </section>
-    
+    <draggable class="trash" group="mealplan" :list="trashmode">
+    <div >
+        trash
+    </div>
+     </draggable>
 
   </div>
 </template>
@@ -46,8 +53,23 @@ export default {
     data(){
         return {
             dateSlots: [],
-            meals: [],
+            mealsToDrag: [],
             mealPlans: [],
+            trashmode: []
+        }
+    },
+    computed:{
+        getMealPlanForDate(){
+            let string = "";
+            let plansForDate = this.mealPlans.filter(mealPlan => {
+                console.log(mealPlan)
+                return mealPlan.dateToCook == this.calendarSlot.date;
+            })
+            plansForDate.forEach(plan =>{
+                string += plan.mealName + '\n'
+            })
+            console.log(string);
+            return string;
         }
     },
     methods: {
@@ -55,20 +77,62 @@ export default {
             let d = moment();
             for (let i = 0; i < 28; i++ ) {
                 let calendarSlot = {
-                    date: d.add(1, 'days').format('YYYY/MM/DD'),
-                    displayDate: d.add(1, 'days').format('M/D'),
-                    meals: []          
+                    id: i, 
+                    date: d.add(1, 'days').format('YYYY-MM-DD'),
+                    displayDate: d.format('M/D'),
+                    mealPlans: []
                 }
                 this.dateSlots.push(calendarSlot)
             }
-        }        
+        },
+        readCalendar(){
+            let mealPlans = [];
+            this.dateSlots.forEach(slot =>{
+                if (slot.mealPlans.length > 0){                    
+                    slot.mealPlans.forEach(mealPlan => { 
+                        mealPlans.push( {plannedMealId: Number(mealPlan.mealId), dateToCook: mealPlan.dateToCook}); 
+                    });
+                }
+            console.log(mealPlans);
+            });
+            mealPlans.forEach(mealPlan => {
+                MealService.addMealPlan(mealPlan)
+                    .then(response => {
+                        console.log(response.status)
+                    })
+                    .catch(error => {
+                        if(error.response){
+                        console.log(error.response)
+                        }
+                        if(error.request){
+                        console.log(error.request)
+                        }
+                    });
+            })
+        },
+
+        setDate(event, date){                                                         
+                // let mealDate = event.to.firstChild.getAttribute("date");
+                // let mealPlanToEdit = event.item.firstChild.getAttribute("mealId");
+                // console.log(event);
+                // console.log(date)
+                // console.log(event.added.element)
+                if(event.added){
+                event.added.element.dateToCook = date; 
+                } else if (event.moved){
+                    event.moved.element.dateToCook = date; 
+                }
+                
+                console.log(this.mealPlans);
+            },
+
     },
     
     created(){
         // get meals.
         MealService.getAllUserMeals()
             .then(response => {
-                this.meals = response.data;                 
+                this.mealsToDrag = response.data;                 
             })
             .catch(error => {
                 console.log(error.message);
@@ -108,31 +172,42 @@ ul{
     padding: 0;
 }
 
-ul li.calendar-square:first-child{
-    background-color: lightblue;
-}
+
 
 li {
     height: 15rem;
     width: 15rem; 
     border: 1px solid black;
 }
+
+
 .meal-planner{
     display: grid; 
     grid-template-columns: 1fr 3fr 1fr;
     grid-template-rows: 1fr 1fr;
     row-gap: 5rem;
     grid-template-areas: ". mid ."
-                         ". lowerMid ."
+                         ". lowerMid trash"
 }
 
 li span{
 margin: 2px;
-
 }
+
+.trash{
+    grid-area: trash;
+    color: black;
+    height: 5rem;
+    width: 5rem;
+    border: 1px solid black; 
+    background-color: brown;
+}
+
+
 .meal-list{
     grid-area: lowerMid;
     background-color: wheat;
+    color: black; 
 }
 
 </style>

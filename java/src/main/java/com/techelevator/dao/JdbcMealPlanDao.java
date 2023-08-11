@@ -111,7 +111,7 @@ public class JdbcMealPlanDao implements MealPlanDao {
 
     @Override
     public int addMealPlan(MealPlan mealPlan) {
-        String sql = "INSERT INTO INSERT INTO meal_plans (user_id, meal_id, plan_date) " +
+        String sql = "INSERT INTO meal_plans (user_id, meal_id, plan_date) " +
                 "VALUES (?, ?, ?) RETURNING meal_plan_id";
         int mealPlanId;
         try {

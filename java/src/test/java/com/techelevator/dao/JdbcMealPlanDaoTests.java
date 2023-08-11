@@ -39,6 +39,16 @@ public class JdbcMealPlanDaoTests extends BaseDaoTests{
         assertMealPlansMatch(mealPlan, actualMealPlan);
 
     }
+    @Test
+    public void add_meal_plan_has_expected_results() {
+        MealPlan mealPlan = new MealPlan(1, 0, 1, LocalDate.of(2023, 12, 1));
+        int actualMealPlanId = sut.addMealPlan(mealPlan);
+        MealPlan actualMealPlan = sut.getMealPlanById(actualMealPlanId);
+        MealPlan createdMealPlan = sut.getMealPlanById(mealPlan.getId());
+        assertMealPlansMatch(createdMealPlan, actualMealPlan);
+    }
+
+
 
     private void assertMealPlansMatch(MealPlan expected, MealPlan actual) {
         Assert.assertEquals(expected.getId(), actual.getId());

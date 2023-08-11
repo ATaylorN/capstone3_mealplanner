@@ -16,5 +16,5 @@ export default {
     },
     getMealRecipes(id){
         return axios.get(`/meals/${id}/recipes`)
-    }    
+    },    
 }

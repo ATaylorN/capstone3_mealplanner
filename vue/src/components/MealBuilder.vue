@@ -8,55 +8,32 @@
     -->
     <div class="meal-builder-container">
       <draggable
-        class="user-recipes-container"
-        :list="recipes"
-        @start="drag = true"
-        @end="drag = false"
-        group="recipeHolder"
-      >
+        class="user-recipes-container" :list="recipes" @start="drag = true" @end="drag = false" group="recipeHolder">
         <figure class="recipe-card" v-for="recipe in recipes" :key="recipe.id">
-          <img
-            class="recipe-card-image"
-            :src="recipe.image"
-            :alt="recipe.name"
-          />
+          <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name"/>
           <span class="recipe-card-title">{{ recipe.name }}</span>
         </figure>
       </draggable>
 
       <div class="new-meal-editor">
-        <h2 class = "header">Drag recipes for your meal here</h2>
+        <h2 class = "meal-header">Drag recipes for your meal here</h2>
         <input type="text" v-model="newMeal.mealName" id="meal-name" placeholder="Name your meal">
-        <button class="create-meal-button" @click="createMeal()">
-          Create Meal
-        </button>
-        <draggable
-          id="add-recipe-box"
-          :list="newMealRecipes"
-          @start="drag = true"
-          @end="drag = false"
-          group="recipeHolder"
-        >
+        <button class="create-meal-button" @click="createMeal()">Create Meal</button>
+        
+        <draggable id="add-recipe-box" :list="newMealRecipes" @start="drag = true" @end="drag = false" group="recipeHolder">
           <figure v-for="recipe in newMealRecipes" :key="recipe.id">
-            <img
-              class="recipe-card-image"
-              :src="recipe.image"
-              :alt="recipe.name"
-            />
+            <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name"/>
             <span class="recipe-card-title">{{ recipe.name }}</span>
           </figure>
         </draggable>
+
         <div>
           <draggable id="meal-sortable" class="user-meals">
-            <figure
-              class="meal-card"
-              id="user-meal-list"
-              v-for="meal in meals"
-              :key="meal.id"
-            >
+            <figure class="meal-card" id="user-meal-list" v-for="meal in meals" :key="meal.id">
               <span class="recipe-card-title">{{ meal.mealName }}</span>
             </figure>
           </draggable>
+          
         </div>
       </div>
     </div>
@@ -165,14 +142,14 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .meal-builder-container {
   display: grid;
   grid-template-columns: 0.5fr 1.5fr;
   grid-template-areas: "userRecipes newMeal";
   gap: 20px;
 }
-.header{
+.meal-header{
   grid-area: header;
   justify-self: center;
   padding-top: 5rem;
@@ -182,9 +159,9 @@ export default {
   display: grid;
   grid-template-columns: 100%;
   grid-template-rows: 1fr 2fr;
-  grid-template-areas:
-    "header" "addRecipeBox"
-    "userMeals";
+  grid-template-areas: "header"
+                        "addRecipeBox"
+                        "userMeals";
   background-color: #4a180c;
 
   color: white;
@@ -248,8 +225,16 @@ figure span {
   flex-wrap: wrap;
   align-items: center;
 }
+.new-meal-editor input{
+  border-radius: 5px;
+  margin-left: 7rem;
+  margin-right: 14rem;
+}
 .create-meal-button {
   height: 50px;
+  border-radius: 5px;
+  margin-left: 7rem;
+  margin-right: 14rem;
 }
 .user-meals {
   grid-area: userMeals;
@@ -258,4 +243,9 @@ figure span {
 .meal-card {
   max-height: 5rem;
 }
+#meal-sortable {
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 5rem;
+  }
 </style>

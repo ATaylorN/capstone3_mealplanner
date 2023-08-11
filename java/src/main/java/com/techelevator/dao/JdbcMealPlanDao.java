@@ -9,12 +9,13 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 @Component
-public class JdbcMealPlanDao implements MealPlanDAO {
+public class JdbcMealPlanDao implements MealPlanDao {
 
     private final JdbcTemplate jdbcTemplate;
 
@@ -94,7 +95,7 @@ public class JdbcMealPlanDao implements MealPlanDAO {
                 "FROM meal_plans " +
                 "WHERE plan_date >= ? AND plan_date <= ?";
         try {
-            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, startDate, endDate);
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, Date.valueOf(startDate), Date.valueOf(endDate));
             while (rows.next()){
                 mealPlans.add(mapRowToMealPlan(rows));
             }
@@ -110,7 +111,7 @@ public class JdbcMealPlanDao implements MealPlanDAO {
 
     @Override
     public int addMealPlan(MealPlan mealPlan) {
-        String sql = "INSERT INTO INSERT INTO meal_plans (user_id, meal_id, plan_date) " +
+        String sql = "INSERT INTO meal_plans (user_id, meal_id, plan_date) " +
                 "VALUES (?, ?, ?) RETURNING meal_plan_id";
         int mealPlanId;
         try {
@@ -143,6 +144,29 @@ public class JdbcMealPlanDao implements MealPlanDAO {
         } catch (BadSqlGrammarException e) {
             throw new RuntimeException("Invalid syntax.", e);
         }
+    }
+
+    @Override
+    public MealPlan updateMealPlan(MealPlan mealPlan) {
+        MealPlan updatedMealPlan = null;
+        String sql = "UPDATE meal_plans " +
+                "SET plan_date = ? " +
+                "WHERE meal_plan_id = ?;";
+        try {
+            int numberOfRows = jdbcTemplate.update(sql, Date.valueOf(mealPlan.getDateToCook()), mealPlan.getId());
+            if (numberOfRows == 0) {
+                throw new RuntimeException("Zero rows affected, expected at least one");
+            } else {
+                updatedMealPlan = getMealPlanById(mealPlan.getId());
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to server or database", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+        return updatedMealPlan;
     }
 
     private MealPlan mapRowToMealPlan(SqlRowSet rows){

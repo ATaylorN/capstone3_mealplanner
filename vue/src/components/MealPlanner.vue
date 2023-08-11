@@ -121,7 +121,9 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
+
+
 /* 
 Set the calendar to a grid containing five rows, seven columns.
 */

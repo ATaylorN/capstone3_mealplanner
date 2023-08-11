@@ -8,14 +8,14 @@
     -->
     <div class ="meal-builder-container">      
           <draggable class="user-recipes-container" :list="recipes" @start="drag=true" @end="drag=false" group="recipeHolder" >                           
-          <figure class="recipe-card" v-for="recipe in recipes" :key="recipe.id">
-            <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name">
-            <span class="recipe-card-title">{{recipe.name}}</span>
-          </figure>
+            <figure class="recipe-card" v-for="recipe in recipes" :key="recipe.id">
+              <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name">
+              <span class="recipe-card-title">{{recipe.name}}</span>
+            </figure>
           </draggable>
 
         <div class ="new-meal-editor">
-          <button @click="createMeal()"> MEAL MEAL MEAL MEAL MEAL </button>
+          <button @click="createMeal()"> Create Meal </button>
           <draggable id="add-recipe-box" :list="newMealRecipes"  @start="drag=true" @end="drag=false" group="recipeHolder">
             <figure v-for="recipe in newMealRecipes" :key="recipe.id">
               <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name">
@@ -24,9 +24,8 @@
           </draggable>          
           <div>
           <draggable id="meal-sortable" class="user-meals">
-            <figure id="user-meal-list" v-for="meal in meals" :key="meal.id">
-              <img class="recipe-card-image" :src="meal.image" :alt="meal.name">
-              <span class="recipe-card-title">{{meal.name}}</span>
+            <figure class="meal-card" id="user-meal-list" v-for="meal in meals" :key="meal.id">
+              <span class="recipe-card-title">{{meal.mealName}}</span>
             </figure>
           </draggable>
           </div>
@@ -42,8 +41,6 @@ import RecipeService from "@/services/RecipeService.js";
 import MealService from "@/services/MealService.js";
 import draggable from 'vuedraggable';
 
-
-
 export default {
   name: "meal-builder",
   components: {
@@ -52,7 +49,7 @@ export default {
   data() {
     return {
       newMeal: {
-        mealName: "testMeal"
+        mealName: ""
       },
       newMealRecipes: [],
       recipes: [],
@@ -74,6 +71,8 @@ export default {
               .then(response => {
                 console.log(response.status); 
                 console.log(response.data); 
+                this.newMealRecipes = [];
+                this.newMeal = {};
               })
               .catch(error => {
                 console.log(error.message);
@@ -86,6 +85,19 @@ export default {
               })
           }
         })
+    }, 
+    editMeal(){
+      /*
+      If the item we drag and drop into the box is a meal, here's what needs to happen: 
+      - The interface must let the user know that they're changing a meal rather than making a new one. 
+      - We need to break the meal down into its constituent recipies. 
+      - We need some kind of way to cancel the operation intuitively. 
+      Would be cool to like, show the recipies shlorping back into a meal. 
+      */
+      if(this.newMeal.mealName !== undefined){
+        // get constituent recipes from API and display them
+        MealService.getRecipesForMeal()
+      }
     }
   },
   created(){
@@ -98,9 +110,16 @@ export default {
             this.meals = response.data;             
           })
           .catch( error => {
-            console.log("no meals yet probably"); 
-            console.log(error);
-          })
+          if(error.response){
+          console.log(error.response.status);
+          console.log(error.response.data);          
+        }
+          if (error.request){
+            console.log(error.request.headers);
+            console.log(error.request)
+          }
+          console.log(error.message);
+            })
       })
       .catch(error => {
         if(error.response){
@@ -199,5 +218,8 @@ figure span {
 .user-meals{
   grid-area: userMeals;
   display: flex;
+}
+.meal-card{
+  max-height: 5rem;
 }
 </style>

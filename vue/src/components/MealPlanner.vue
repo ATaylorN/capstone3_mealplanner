@@ -1,21 +1,30 @@
 <template>
-  <div>
+  <div class="meal-planner">
       <section class="calendar-container">
-          <ul class="calendar-square" >
-              <li v-for="(calendarSlot, index) in dateSlots" :key="index">
-              <span class="date"> {{calendarSlot.date}} </span>
+          
+            <ul>             
+                <li class="calendar-square" v-for="(calendarSlot, index) in dateSlots" :key="index">
+                    <span class="date"> {{calendarSlot.displayDate}} </span>
+                    <draggable :group="mealplan" :list="dateSlots" >
+                        <div class="meal-plan-card-holder">         
+                            <span> meals go here once we got em</span>                   
+                        </div>                        
+                    </draggable>
+                </li>
+            </ul>
+          
+      </section>
+
+      <section class="meal-list">
+          <ul class="meals">
+            <draggable :group="{name: 'mealplan', pull: 'clone' }"> 
+              <li class="meal-card" v-for="meal in meals" :key="meal.id">
+                  <span> meal name here</span>
               </li>
+            </draggable>
           </ul>
       </section>
-      <draggable> </draggable>
-      <!-- <section class="user-meals-container">
-          <draggable class="meal-item">
-            <figure class="recipe-card" v-for="meal in meals" :key="meal.id">
-              <img class="recipe-card-image" :src="meal.image" :alt="meal.mealName">
-              <span class="recipe-card-title">{{meal.mealName}}</span>
-            </figure>
-          </draggable>
-      </section> -->
+    
 
   </div>
 </template>
@@ -29,18 +38,25 @@ export default {
     components: {
         draggable
     },
+    // when I drag a meal to a date, create a meal plan with the date of the slot that was given. 
+    // if I drag a meal out of the calendar, destroy the corresponding meal plan.
+    // if I drag a meal from one date slot to another, change the date instead of creating a new entry. 
+
+
     data(){
         return {
             dateSlots: [],
-            meals: []
+            meals: [],
+            mealPlans: [],
         }
     },
     methods: {
         buildCalendar(){
             let d = moment();
-            for (let i = 0; i < 35; i++ ) {
+            for (let i = 0; i < 28; i++ ) {
                 let calendarSlot = {
-                    date: d.add(1, 'days').format('MM/D'),
+                    date: d.add(1, 'days').format('YYYY/MM/DD'),
+                    displayDate: d.add(1, 'days').format('M/D'),
                     meals: []          
                 }
                 this.dateSlots.push(calendarSlot)
@@ -72,15 +88,49 @@ export default {
 /* 
 Set the calendar to a grid containing five rows, seven columns.
 */
-section {
+section.calendar-container {
+    grid-area: mid;
     background-color: wheat;
     color: black;
+    /* display: flex;
+    justify-content: center;
+    align-items: center; */
+    padding: 2rem;
 }
 ul{
     list-style: none; 
+    display: grid;
+    grid-template-rows: 11rem 11rem 11rem 11rem;
+    grid-template-columns: 11rem 11rem 11rem 11rem 11rem 11rem 11rem;
+    gap: 6rem;
+    padding: 0;
 }
-li {
 
+ul li.calendar-square:first-child{
+    background-color: lightblue;
+}
+
+li {
+    height: 15rem;
+    width: 15rem; 
+    border: 1px solid black;
+}
+.meal-planner{
+    display: grid; 
+    grid-template-columns: 1fr 3fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    row-gap: 5rem;
+    grid-template-areas: ". mid ."
+                         ". lowerMid ."
+}
+
+li span{
+margin: 2px;
+
+}
+.meal-list{
+    grid-area: lowerMid;
+    background-color: wheat;
 }
 
 </style>

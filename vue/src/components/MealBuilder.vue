@@ -242,8 +242,16 @@ figure span {
   flex-wrap: wrap;
   align-items: center;
 }
+.new-meal-editor input{
+  border-radius: 5px;
+  margin-left: 10rem;
+  margin-right: 10rem;
+}
 .create-meal-button {
   height: 50px;
+  border-radius: 5px;
+  margin-left: 10rem;
+  margin-right: 10rem;
 }
 .user-meals {
   grid-area: userMeals;

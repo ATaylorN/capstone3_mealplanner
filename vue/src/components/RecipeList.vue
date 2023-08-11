@@ -1,13 +1,14 @@
 <template>
     <div class="container">
-        <h1>Recipes</h1>
         <div class="recipeList">
           <div class="recipe" v-for="recipe in recipes" :key="recipe.id">          
-          <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button">View Recipe</router-link>
           <RecipeDetails v-bind:recipeId='recipe.id'/>
+
+          <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button">View Recipe</router-link>
           </div>      
         </div>
     </div>
+
 </template>
 
 <script>
@@ -53,7 +54,4 @@ export default {
     max-width: 350px;
 }
 
-h1 {
-  
-}
 </style>

@@ -7,6 +7,7 @@ import com.techelevator.dao.UserDao;
 import com.techelevator.model.Meal;
 import com.techelevator.model.MealPlan;
 import com.techelevator.model.MealRecipeListDTO;
+import com.techelevator.model.Recipe;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
@@ -98,7 +99,16 @@ public class MealPlanController {
         }
         return mealPlans;
     }
-
+    @RequestMapping(value = "/{id}/recipes", method = RequestMethod.GET)
+    public List<Recipe> getRecipesByMealId(@RequestParam int id) {
+        List<Recipe> mealRecipes = new ArrayList<>();
+        try{
+           mealRecipes = getRecipesByMealId(id);
+        } catch (RuntimeException e){
+            throw new RuntimeException("Couldn't get the recipes for the given meal.");
+        }
+        return mealRecipes;
+    }
     @RequestMapping(value="/meal-plan", method = RequestMethod.DELETE)
     public void deleteMealPlan(int mealPlanId, Principal principal){
 

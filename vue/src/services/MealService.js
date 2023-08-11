@@ -10,9 +10,11 @@ export default {
     addRecipesToMeal(meal){
        let messageBody = {
             mealId: meal.id,               
-            recipes: meal.recipes
-        }
+            recipes: meal.recipes,
+        }   
         return axios.post("/meals/recipe-list", messageBody)
-    }
-    
+    },
+    getMealRecipes(id){
+        return axios.get(`/meals/${id}/recipes`)
+    }    
 }

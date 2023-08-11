@@ -14,6 +14,7 @@
     
 
       <section class="meal-list">
+          <div @click="readCalendar()"> save save go go </div>
           <div class="meals">
             <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false"> 
               <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
@@ -77,13 +78,39 @@ export default {
             for (let i = 0; i < 28; i++ ) {
                 let calendarSlot = {
                     id: i, 
-                    date: d.add(1, 'days').format('YYYY/MM/DD'),
+                    date: d.add(1, 'days').format('YYYY-MM-DD'),
                     displayDate: d.format('M/D'),
                     mealPlans: []
                 }
                 this.dateSlots.push(calendarSlot)
             }
         },
+        readCalendar(){
+            let mealPlans = [];
+            this.dateSlots.forEach(slot =>{
+                if (slot.mealPlans.length > 0){                    
+                    slot.mealPlans.forEach(mealPlan => { 
+                        mealPlans.push( {plannedMealId: Number(mealPlan.mealId), dateToCook: mealPlan.dateToCook}); 
+                    });
+                }
+            console.log(mealPlans);
+            });
+            mealPlans.forEach(mealPlan => {
+                MealService.addMealPlan(mealPlan)
+                    .then(response => {
+                        console.log(response.status)
+                    })
+                    .catch(error => {
+                        if(error.response){
+                        console.log(error.response)
+                        }
+                        if(error.request){
+                        console.log(error.request)
+                        }
+                    });
+            })
+        },
+
         setDate(event, date){                                                         
                 // let mealDate = event.to.firstChild.getAttribute("date");
                 // let mealPlanToEdit = event.item.firstChild.getAttribute("mealId");
@@ -180,6 +207,7 @@ margin: 2px;
 .meal-list{
     grid-area: lowerMid;
     background-color: wheat;
+    color: black; 
 }
 
 </style>

@@ -26,20 +26,19 @@
       </ul>
     </section>
 
-    <section class="meal-list">
-      <div class="meals">
-        <draggable
-          :group="{ name: 'mealplan', pull: 'clone', put: false }"
-          :list="mealsToDrag"
-          @start="drag = true"
-          @end="drag = false"
-        >
-          <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
-            <span :mealId="meal.mealId"> {{ meal.mealName }} </span>
-            <span></span>
-          </div>
-        </draggable>
-      </div>
+      <section class="meal-list">
+          <div @click="readCalendar()"> save save go go </div>
+          
+            <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false"> 
+              <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
+                  <span :mealId="meal.mealId" > {{meal.mealName}} </span>
+                  <span></span>
+              </div>
+            </draggable>
+            
+
+           
+          
     </section>
     <draggable class="trash" group="mealplan" :list="trashmode">
       <div>trash</div>
@@ -82,53 +81,80 @@ export default {
       return string;
     },
   },
-  methods: {
-    buildCalendar() {
-      let d = moment();
-      for (let i = 0; i < 28; i++) {
-        let calendarSlot = {
-          id: i,
-          date: d.add(1, "days").format("YYYY/MM/DD"),
-          displayDate: d.format("M/D"),
-          mealPlans: [],
-        };
-        this.dateSlots.push(calendarSlot);
-      }
-    },
-    setDate(event, date) {
-      // let mealDate = event.to.firstChild.getAttribute("date");
-      // let mealPlanToEdit = event.item.firstChild.getAttribute("mealId");
-      // console.log(event);
-      // console.log(date)
-      // console.log(event.added.element)
-      if (event.added) {
-        event.added.element.dateToCook = date;
-      } else if (event.moved) {
-        event.moved.element.dateToCook = date;
-      }
+    methods: {
+        buildCalendar(){
+            let d = moment();
+            for (let i = 0; i < 28; i++ ) {
+                let calendarSlot = {
+                    id: i, 
+                    date: d.add(1, 'days').format('YYYY-MM-DD'),
+                    displayDate: d.format('M/D'),
+                    mealPlans: []
+                }
+                this.dateSlots.push(calendarSlot)
+            }
+        },
+        readCalendar(){
+            let mealPlans = [];
+            this.dateSlots.forEach(slot =>{
+                if (slot.mealPlans.length > 0){                    
+                    slot.mealPlans.forEach(mealPlan => { 
+                        mealPlans.push( {plannedMealId: Number(mealPlan.mealId), dateToCook: mealPlan.dateToCook}); 
+                    });
+                }
+            console.log(mealPlans);
+            });
+            mealPlans.forEach(mealPlan => {
+                MealService.addMealPlan(mealPlan)
+                    .then(response => {
+                        console.log(response.status)
+                    })
+                    .catch(error => {
+                        if(error.response){
+                        console.log(error.response)
+                        }
+                        if(error.request){
+                        console.log(error.request)
+                        }
+                    });
+            })
+        },
 
-      console.log(this.mealPlans);
-    },
-  },
+        setDate(event, date){                                                         
+                // let mealDate = event.to.firstChild.getAttribute("date");
+                // let mealPlanToEdit = event.item.firstChild.getAttribute("mealId");
+                // console.log(event);
+                // console.log(date)
+                // console.log(event.added.element)
+                if(event.added){
+                event.added.element.dateToCook = date; 
+                } else if (event.moved){
+                    event.moved.element.dateToCook = date; 
+                }
+                
+                console.log(this.mealPlans);
+            },
 
-  created() {
-    // get meals.
-    MealService.getAllUserMeals()
-      .then((response) => {
-        this.mealsToDrag = response.data;
-      })
-      .catch((error) => {
-        console.log(error.message);
-        if (error.response) {
-          console.log(error.response.data);
-        }
-        if (error.request) {
-          console.log(error.request);
-        }
-      });
-    this.buildCalendar();
-  },
-};
+    },
+    
+    created(){
+        // get meals.
+        MealService.getAllUserMeals()
+            .then(response => {
+                this.mealsToDrag = response.data;                 
+            })
+            .catch(error => {
+                console.log(error.message);
+                if(error.response){
+                  console.log(error.response.data);                  
+                }
+                if (error.request){
+                  console.log(error.request)
+                }
+            })
+        this.buildCalendar(); 
+    }
+}
 </script>
 
 <style scoped>

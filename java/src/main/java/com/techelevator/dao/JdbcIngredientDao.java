@@ -8,6 +8,8 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.support.rowset.SqlRowSet;
 import org.springframework.stereotype.Component;
 
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -114,6 +116,31 @@ public class JdbcIngredientDao implements IngredientDao{
         String sql = "delete from recipe_ingredients where recipe_id = ?;";
         int rowsRemoved = jdbcTemplate.update(sql, recipeId);
         return rowsRemoved;
+    }
+    @Override
+    public List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate date) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        String sql = "SELECT DISTINCT ingredient_name\n" +
+                "FROM ingredients\n" +
+                "JOIN recipe_ingredients ON recipe_ingredients.ingredient_id = ingredients.ingredient_id\n" +
+                "JOIN recipes ON recipes.recipe_id = recipe_ingredients.recipe_id\n" +
+                "JOIN meal_recipes ON meal_recipes.recipe_id = recipes.recipe_id\n" +
+                "JOIN meals ON meals.meal_id = meal_recipes.meal_id\n" +
+                "JOIN meal_plans ON meal_plans.meal_id = meals.meal_id\n" +
+                "WHERE meal_plans.plan_date = ?";
+        try {
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, Date.valueOf(date));
+            while(rows.next()){
+                ingredients.add(mapRowToIngredient(rows));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+        return ingredients;
     }
 
     private Ingredient mapRowToIngredient(SqlRowSet rows){

@@ -30,4 +30,5 @@ public class JdbcIngredientDaoTests extends BaseDaoTests{
     public void getting_ingredients_returns_all_ingredients() {
         Assert.assertEquals("Discrepancy in list size.",3, sut.getAllIngredients().size());
     }
+
 }

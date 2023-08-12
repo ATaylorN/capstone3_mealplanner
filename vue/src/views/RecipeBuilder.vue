@@ -391,7 +391,7 @@ div.recipe-builder {
   background: wheat;
 }
 
-img{
+.recipe-builder img{
   max-width: 10rem;
   max-height: 10rem;
 }

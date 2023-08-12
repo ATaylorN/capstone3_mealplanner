@@ -3,6 +3,7 @@ package com.techelevator.dao;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.RecipeIngredientListDTO;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface IngredientDao {
@@ -26,4 +27,5 @@ public interface IngredientDao {
 
     int deleteIngredientsByRecipeId (RecipeIngredientListDTO recipeIngredientListDTO);
 
+    List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate date);
 }

@@ -71,44 +71,22 @@
           </li>
         </ul>
       </div>
-      <div class="recipe-data-section">
-        <form @submit.prevent="addRecipe()" class="add-recipe">
-          <input
-            type="text"
-            v-model="newRecipe.name"
-            placeholder="Recipe Name"
-          />
-          <input
-            type="text"
-            v-model="newRecipe.instructions"
-            placeholder="Prep Instructions"
-          />
-          <input
-            type="text"
-            v-model="newRecipe.image"
-            placeholder="Image Link"
-          />
-          <input
-            type="text"
-            v-model="newRecipe.ingredients"
-            placeholder="Ingredients"
-          />
-          <button class="saveBtn">Save Recipe</button>
-        </form>
-        <ul class="new-recipe-ingredient-list">
-          <li
-            v-for="newIngredient in newRecipeIngredients"
-            :key="newIngredient.id"
-            class="new-recipe-ingredient"
-          >
-            <span> {{ newIngredient.name }}</span>
-            <button @click="removeIngredientFromRecipe(newIngredient)">
-              Remove
-            </button>
-          </li>
-        </ul>
-      </div>
+    <div class="recipe-data-section">
+    <form @submit.prevent="addRecipe()" class="add-recipe">
+      <input type="text" v-model="newRecipe.name" placeholder="Recipe Name" />
+      <input type="text" v-model="newRecipe.image" placeholder="Image Link" />
+      <input type="text" v-model="newRecipe.ingredients" placeholder="Ingredients"/>
+      <textarea name="instructions" id="prep-instructions" v-model="newRecipe.instructions" placeholder="Prep Instructions"/>
+      <button class="saveBtn">Save Recipe</button>
+    </form>
+          <ul class="new-recipe-ingredient-list">
+        <li v-for="newIngredient in newRecipeIngredients" :key="newIngredient.id" class="new-recipe-ingredient">
+          <span> {{ newIngredient.name }}</span>
+          <button @click="removeIngredientFromRecipe(newIngredient)"> Remove </button>
+        </li>
+      </ul>
     </div>
+  </div>
   </div>
 </template>
 
@@ -316,6 +294,9 @@ div.recipe-builder {
 
 .saveBtn {
   color: black;
+  margin-top: 1rem;
+  margin-left: 15rem;
+  margin-right: 15rem;
 }
 
 .new-recipe-ingredient {
@@ -323,8 +304,17 @@ div.recipe-builder {
 }
 .add-recipe {
   color: black;
+  display: grid;
+  margin: 2rem;
+  justify-items: center;
 }
-.ingredients-section {
+
+.add-recipe > input, textarea{
+  margin: .5rem;
+  border-radius: 5px;
+}
+
+.ingredients-section{
   margin-top: 50px;
   margin-left: 10px;
   grid-area: ingredients;
@@ -357,7 +347,13 @@ div.recipe-builder {
   gap: 40px;
 }
 
-.recipe-data-section {
+#prep-instructions{
+  height: 30rem;
+  width: 30rem;
+
+}
+
+.recipe-data-section{
   margin-top: 50px;
   margin-right: 10px;
   align-content: center;
@@ -375,8 +371,8 @@ div.recipe-builder {
   background: wheat;
 }
 
-img {
-  max-width: 400px;
-  max-height: 400px;
+img{
+  max-width: 10rem;
+  max-height: 10rem;
 }
 </style>

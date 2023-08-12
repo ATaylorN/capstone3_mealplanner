@@ -3,7 +3,7 @@
   <div class="recipeContainer">
       <h2 class="recipeName"> {{recipe.name}} </h2>
       
-      <div class="container">
+      <div class="recipe-body">
           <img id="recipeImage" :src="recipe.image" alt="" class="img-rounded">          
          
           <div class ="ingredients-container"> 
@@ -11,7 +11,7 @@
               <ul class="ingredientsList">
                   <li class="ingredient" v-for="ingredient in recipe.ingredients.ingredientList" :key="ingredient.id">
                       <span>{{ingredient.name}}</span>
-                      <span> ingredient image placeholder: {{ingredient.image}} </span>                                           
+                                                       
                   </li>
               </ul>
           </div>
@@ -59,18 +59,19 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 .recipeName {
     padding: 4rem 2rem 4rem 2rem;
 }
-.container {
+.recipe-body {
     justify-content: space-around;
     display: grid;
-    grid-template-rows: 1fr 1fr;
+    grid-template-rows: .5fr 1fr;
     grid-template-areas: 
         "image instructions"
         "ingredients instructions";
-    height: 100vh;
+    height: 80vh;
+    
 }
 .recipeContainer{
     border-radius: 8px;
@@ -78,6 +79,8 @@ export default {
     border-style: solid;
     border-color: black;
     margin-top: 10rem;
+    margin-left: 20rem;
+    margin-right: 20rem;
     background-color: #4a180c;
     color: white;
     text-align: center;
@@ -124,7 +127,14 @@ height: 30rem;
     color: black;
     grid-area: instructions;
     border-radius: 6px;
-    height: 90vh;
+    height: 70rem;
+    max-width: 50rem;
+    max-height: 60rem;
+    overflow: scroll;
+}
+
+.instructions::-webkit-scrollbar{
+    display: none;
 }
 
 .instructions h3{

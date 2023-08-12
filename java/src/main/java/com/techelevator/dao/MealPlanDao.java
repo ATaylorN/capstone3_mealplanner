@@ -16,4 +16,6 @@ public interface MealPlanDao {
     int getIngredientsByMealPlan(List<Ingredient> ingredients);
     void deleteMealPlan(MealPlan mealPlan);
     MealPlan updateMealPlan(MealPlan mealPlan);
+    List <MealPlan> getMealPlansByDate(LocalDate date);
+
 }

@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Ingredient;
+import com.techelevator.model.Meal;
 import com.techelevator.model.MealPlan;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.BadSqlGrammarException;
@@ -167,6 +168,27 @@ public class JdbcMealPlanDao implements MealPlanDao {
             throw new RuntimeException("Invalid syntax.", e);
         }
         return updatedMealPlan;
+    }
+
+    @Override
+    public List<MealPlan> getMealPlansByDate(LocalDate date) {
+        List<MealPlan> mealPlans = new ArrayList<>();
+        String sql = "SELECT meal_plan_id, user_id, meal_id, plan_date " +
+                "FROM meal_plans " +
+                "WHERE plan_date = ?;";
+        try {
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, Date.valueOf(date));
+            while (rows.next()){
+                mealPlans.add(mapRowToMealPlan(rows));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax.", e);
+        }
+        return mealPlans;
     }
 
     private MealPlan mapRowToMealPlan(SqlRowSet rows){

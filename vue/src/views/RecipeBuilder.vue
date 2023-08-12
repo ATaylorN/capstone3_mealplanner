@@ -1,43 +1,76 @@
 <template>
-<div> 
-  <Header/>
-  <div class="recipe-builder">
-    <!-- 
+  <div>
+    <Header />
+    <div class="recipe-builder">
+      <!-- 
           list of ingredients on one side
           recipe form on the other, with element to display added ingredients
     -->
-    <div class="ingredients-section">
-         <div class="search-input-block">
-        <span class="search-text"> {{searchInputValue}} </span><span class="autocomplete-suggestion">{{ autoCompleteSuggestion }}</span>        
-        <input id="search-input" class="search-field" type="text" placeholder="Search for Ingredients" v-model="searchInputValue" @keyup="suggestSearchTerm()">
-        <button class="search-button" @click="runSearch()">Search</button> 
+      <div class="ingredients-section">
+        <div class="search-input-block">
+          <span class="search-text"> {{ searchInputValue }} </span
+          ><span class="autocomplete-suggestion">{{
+            autoCompleteSuggestion
+          }}</span>
+          <input
+            id="search-input"
+            class="search-field"
+            type="text"
+            placeholder="Search for Ingredients"
+            v-model="searchInputValue"
+            @keyup="suggestSearchTerm()"
+          />
+          <button class="search-button" @click="runSearch()">Search</button>
         </div>
-    
+
         <div class="add-ingredient-container">
-      <!-- <form v-show="filteredIngredientList.length === 0" class="add-ingredient"> -->
-          <input class="ingredientSearch" type="text" v-model="newIngredient.name" placeholder="Ingredient Name">
-          <button @click.prevent="listIngredients()">Find More Ingredients</button>
-          <button @click.prevent="clearIngredients()">Clear Ingredient List</button>
-      <!-- </form> -->
-    </div>
-    
-    <ul class="ingredient-search-results">
-        <li v-for="foundIngredient in searchResults" :key="foundIngredient.index">
-            <span @click="addNewIngredientToRecipe(foundIngredient)"> {{foundIngredient.name}} </span>
-            <img @click="addNewIngredientToRecipe(foundIngredient)" :src="foundIngredient.image" :alt="foundIngredient.name" class="img-rounded">            
-        </li>
-    </ul>
+          <!-- <form v-show="filteredIngredientList.length === 0" class="add-ingredient"> -->
+          <input
+            class="ingredientSearch"
+            type="text"
+            v-model="newIngredient.name"
+            placeholder="Ingredient Name"
+          />
+          <button @click.prevent="listIngredients()">
+            Find More Ingredients
+          </button>
+          <button @click.prevent="clearIngredients()">
+            Clear Ingredient List
+          </button>
+          <!-- </form> -->
+        </div>
 
-    <ul class="ingredients">
-      <li v-for="ingredient in ingredients" :key="ingredient.id">
-        <span @click="addNewIngredientToRecipe(ingredient)">
-          {{ ingredient.name }}
-        </span>
-        <img @click="addNewIngredientToRecipe(ingredient)" :src="ingredient.image" alt="" class="img-rounded"/>
-      </li>
-    </ul>
+        <ul class="ingredient-search-results">
+          <li
+            v-for="foundIngredient in searchResults"
+            :key="foundIngredient.index"
+          >
+            <span @click="addNewIngredientToRecipe(foundIngredient)">
+              {{ foundIngredient.name }}
+            </span>
+            <img
+              @click="addNewIngredientToRecipe(foundIngredient)"
+              :src="foundIngredient.image"
+              :alt="foundIngredient.name"
+              class="img-rounded"
+            />
+          </li>
+        </ul>
 
-    </div>
+        <ul class="ingredients">
+          <li v-for="ingredient in ingredients" :key="ingredient.id">
+            <span @click="addNewIngredientToRecipe(ingredient)">
+              {{ ingredient.name }}
+            </span>
+            <img
+              @click="addNewIngredientToRecipe(ingredient)"
+              :src="ingredient.image"
+              alt=""
+              class="img-rounded"
+            />
+          </li>
+        </ul>
+      </div>
     <div class="recipe-data-section">
     <form @submit.prevent="addRecipe()" class="add-recipe">
       <input type="text" v-model="newRecipe.name" placeholder="Recipe Name" />
@@ -58,14 +91,14 @@
 </template>
 
 <script>
-import ingredientService from '@/services/IngredientService.js';
-import recipeService from '@/services/RecipeService.js';
-import spoonacularService from '@/services/SpoonacularService.js'
-import Header from '@/components/Header.vue'
+import ingredientService from "@/services/IngredientService.js";
+import recipeService from "@/services/RecipeService.js";
+import spoonacularService from "@/services/SpoonacularService.js";
+import Header from "@/components/Header.vue";
 
 export default {
   components: {
-    Header
+    Header,
   },
   name: "recipe-builder",
   data() {
@@ -77,48 +110,56 @@ export default {
       searchTerm: "",
       autoCompleteSuggestion: "",
       newIngredient: {
-          name: "",
+        name: "",
       },
       potentialSuggestions: [],
       searched: false,
       searchResults: [],
-      newIngredients: [],   
+      newIngredients: [],
     };
   },
-  computed:{
-        filteredIngredientList(){
-            return this.ingredients.filter(ingredient => {
-                return ingredient.name.includes(this.searchTerm); 
-            }); 
-        },
-
+  computed: {
+    filteredIngredientList() {
+      return this.ingredients.filter((ingredient) => {
+        return ingredient.name.includes(this.searchTerm);
+      });
+    },
   },
   methods: {
-    runSearch(){
-    this.searchTerm = this.searchInputValue + this.autoCompleteSuggestion;
-    this.autoCompleteSuggestion = "";
-    this.searchInputValue = "";  
-    this.searched = true;
+    runSearch() {
+      this.searchTerm = this.searchInputValue + this.autoCompleteSuggestion;
+      this.autoCompleteSuggestion = "";
+      this.searchInputValue = "";
+      this.searched = true;
     },
 
-    suggestSearchTerm(){
-    // when the user types something in the search box, try to auto-complete
-    this.potentialSuggestions = this.filteredIngredientList.filter(ingredient => {
-            return (ingredient.name.substring(0, this.searchInputValue.length) === this.searchInputValue);
-        }); 
-      if(this.potentialSuggestions.length > 0 && this.searchInputValue !== ""){
-              this.autoCompleteSuggestion = this.potentialSuggestions[0].name.substring(this.searchInputValue.length);
-                                          
+    suggestSearchTerm() {
+      // when the user types something in the search box, try to auto-complete
+      this.potentialSuggestions = this.filteredIngredientList.filter(
+        (ingredient) => {
+          return (
+            ingredient.name.substring(0, this.searchInputValue.length) ===
+            this.searchInputValue
+          );
+        }
+      );
+      if (
+        this.potentialSuggestions.length > 0 &&
+        this.searchInputValue !== ""
+      ) {
+        this.autoCompleteSuggestion =
+          this.potentialSuggestions[0].name.substring(
+            this.searchInputValue.length
+          );
       } else {
-          this.autoCompleteSuggestion = "";
-          this.potentialSuggestions = [];
+        this.autoCompleteSuggestion = "";
+        this.potentialSuggestions = [];
       }
     },
-    
-    listIngredients(){
-      // Unify the buttons/searching functionality. 
-    this.searchIngredients();
-    
+
+    listIngredients() {
+      // Unify the buttons/searching functionality.
+      this.searchIngredients();
     },
     addRecipe() {
       console.log(this.newRecipe);
@@ -128,7 +169,11 @@ export default {
         .then((response) => {
           if (response.status === 201) {
             newRecipeId = response.data;
-            ingredientService.addIngredientsToRecipeIngredientList(this.newRecipeIngredients, newRecipeId)
+            ingredientService
+              .addIngredientsToRecipeIngredientList(
+                this.newRecipeIngredients,
+                newRecipeId
+              )
               .then((response) => {
                 if (response.status === 201) {
                   console.log("ingredients added");
@@ -139,89 +184,91 @@ export default {
               });
             this.newRecipe = {};
             this.newRecipeIngredients = [];
-          } 
+          }
         })
         .catch((error) => {
-          if(error.response){
+          if (error.response) {
             console.log(error.response.status);
             console.log(error.response.data);
             console.log(error.response.headers);
-                        
-          } else if (error.request){
+          } else if (error.request) {
             console.log(error.request);
-            
           } else {
             console.log(error.message);
           }
         });
     },
-      searchIngredients(){
-        spoonacularService.searchIngredients(this.newIngredient.name,  process.env.VUE_APP_SPOONACULAR_API_KEY)
-                .then(response => {
-                    response.data.results.forEach(ingredient => {
-                        let newIngredient = {
-                            name: ingredient.name, 
-                            image: 'https://spoonacular.com/cdn/ingredients_250x250/' + ingredient.image
-                        }
+    searchIngredients() {
+      spoonacularService
+        .searchIngredients(
+          this.newIngredient.name,
+          process.env.VUE_APP_SPOONACULAR_API_KEY
+        )
+        .then((response) => {
+          response.data.results.forEach((ingredient) => {
+            let newIngredient = {
+              name: ingredient.name,
+              image:
+                "https://spoonacular.com/cdn/ingredients_250x250/" +
+                ingredient.image,
+            };
 
-                        this.searchResults.unshift(newIngredient);
+            this.searchResults.unshift(newIngredient);
 
-                        ingredientService.addIngredient(newIngredient)
-                            .then(response => {
-                                console.log(response.status);
-                                this.searchResults[this.searchResults.indexOf(newIngredient)].id = response.data;
-                            })
-                            .catch(error => {
-                                if (error.response){
-                                    console.log("Got a response back for " + error.response.data)
-                                }
-                                if(error.request){
-                                    console.log("Rejected " + error.request.data)
-                                }
-                                
-                            })                                                    
-                        //console.log(this.searchResults);  
-                                          
-                    });
-                    // add everything to the database that doesn't collide with a name. 
-                    // name collisions should be automatically rejected. hopefully. 
-                    // but... should we even try to add them? 
-                    // who cares let's just try it
-
-
-                })
-                .catch(error => {
-                    if (error.response){
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    
-                });
-        },
+            ingredientService
+              .addIngredient(newIngredient)
+              .then((response) => {
+                console.log(response.status);
+                this.searchResults[
+                  this.searchResults.indexOf(newIngredient)
+                ].id = response.data;
+              })
+              .catch((error) => {
+                if (error.response) {
+                  console.log("Got a response back for " + error.response.data);
+                }
+                if (error.request) {
+                  console.log("Rejected " + error.request.data);
+                }
+              });
+            //console.log(this.searchResults);
+          });
+          // add everything to the database that doesn't collide with a name.
+          // name collisions should be automatically rejected. hopefully.
+          // but... should we even try to add them?
+          // who cares let's just try it
+        })
+        .catch((error) => {
+          if (error.response) {
+            console.log(error.response.data);
+            console.log(error.response.status);
+            console.log(error.response.headers);
+          } else if (error.request) {
+            console.log(error.request);
+          } else {
+            console.log("Error", error.message);
+          }
+        });
+    },
 
     addNewIngredientToRecipe(ingredient) {
-      if (this.newRecipeIngredients.indexOf(ingredient) == -1){
+      if (this.newRecipeIngredients.indexOf(ingredient) == -1) {
         this.newRecipeIngredients.unshift(ingredient);
       }
-      
     },
-    clearIngredients(){
+    clearIngredients() {
       this.ingredients = [];
       this.searchResults = [];
     },
-    removeIngredientFromRecipe(ing){
-      // locate the item in the array and remove it. 
-      this.newRecipeIngredients = this.newRecipeIngredients.filter(ingredient => {
-        return ingredient.id != ing.id; 
-      })
+    removeIngredientFromRecipe(ing) {
+      // locate the item in the array and remove it.
+      this.newRecipeIngredients = this.newRecipeIngredients.filter(
+        (ingredient) => {
+          return ingredient.id != ing.id;
+        }
+      );
     },
-  },  
+  },
   created() {
     ingredientService
       .getAllIngredients()
@@ -238,7 +285,6 @@ export default {
 </script>
 
 <style>
-
 div.recipe-builder {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -246,17 +292,17 @@ div.recipe-builder {
   gap: 20px;
 }
 
-.saveBtn{
+.saveBtn {
   color: black;
   margin-top: 1rem;
   margin-left: 15rem;
   margin-right: 15rem;
 }
 
-.new-recipe-ingredient{
+.new-recipe-ingredient {
   color: black;
 }
-.add-recipe{
+.add-recipe {
   color: black;
   display: grid;
   margin: 2rem;
@@ -279,10 +325,10 @@ div.recipe-builder {
   color: white;
 }
 
-.add-ingredient-container{
+.add-ingredient-container {
   color: black;
 }
-.search-field{
+.search-field {
   color: black;
   font-size: 16px;
 }
@@ -291,10 +337,10 @@ div.recipe-builder {
   color: black;
   font-size: 16px;
 }
-.search-button{
+.search-button {
   color: black;
 }
-.ingredients{
+.ingredients {
   display: flex;
   flex-direction: column;
   list-style-type: none;
@@ -317,11 +363,11 @@ div.recipe-builder {
   color: white;
   grid-area: recipe;
 }
-.new-recipe-ingredient-list{
+.new-recipe-ingredient-list {
   list-style: none;
 }
 
-.new-recipe-ingredient{
+.new-recipe-ingredient {
   background: wheat;
 }
 

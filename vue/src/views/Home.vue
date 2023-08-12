@@ -69,6 +69,9 @@ background-size: cover;
 .top-section {
   grid-area: top;
 }
+.top-section h1{
+  font-family: 'Montserrat', sans-serif;
+}
 
 .top-section{
   display: grid;
@@ -95,6 +98,12 @@ background-size: cover;
   color: white;
   margin-bottom: 10rem;
 }
+.featured h1{
+  font-family: 'Montserrat', sans-serif;
+}
+.featured p{
+  font-family: 'Montserrat', sans-serif;
+}
 .card-container{
   display: flex;
   gap: 2rem;
@@ -118,6 +127,7 @@ p{
 
 .next-recipe p{
   text-align: center;
+  font-family: 'Montserrat', sans-serif;
 }
 .top-section{
   display: flex;

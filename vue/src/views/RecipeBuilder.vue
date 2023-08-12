@@ -284,7 +284,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 div.recipe-builder {
   display: grid;
   grid-template-columns: 1fr 1fr;

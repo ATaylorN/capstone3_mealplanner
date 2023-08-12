@@ -300,10 +300,15 @@ div.recipe-builder {
   margin-right: 15rem;
 }
 
-#find-ingredient, #clear-ingredients{
-  margin-top: 1rem;
-  margin-left: 35rem;
-  margin-right: 35rem;
+#clear-ingredients{
+  max-width: 10rem;
+  border-radius: 5px;
+  height: 7rem;
+  align-self: center;
+}
+#find-ingredient{
+  border-radius: 5px;
+ 
 }
 
 
@@ -315,6 +320,7 @@ div.recipe-builder {
   display: grid;
   margin: 2rem;
   justify-items: center;
+  
 }
 
 .add-recipe > input, textarea{
@@ -332,33 +338,38 @@ div.recipe-builder {
   background-color: #4a180c;
   color: white;
   padding-top: 5rem;
-  
+  display: flex; 
+  flex-direction: column; 
 }
 
 .add-ingredient-container {
-  color: black;
-  display: grid;
-  grid-template-areas: ;
-  
-  
+  color: black; 
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  height: 7rem;
+
 }
 .search-field {
   color: black;
   font-size: 16px;
-  margin: .5rem;
+  padding-right: 10px;
+  margin-right: 5px;
   border-radius: 5px;
+  
 }
 
 .ingredientSearch {
   color: black;
   font-size: 16px;
-  margin: .5rem;
   border-radius: 5px;
-  margin-right: 70rem;
   grid-area: search;
+  padding: 6px;
+  margin-right: 5px;
 }
 .search-button {
   color: black;
+  border-radius: 5px;
 }
 .ingredients {
   display: flex;
@@ -395,4 +406,5 @@ div.recipe-builder {
   max-width: 10rem;
   max-height: 10rem;
 }
+
 </style>

@@ -1,6 +1,7 @@
 <template>
   <div class="header-container">
     <img class="logo" src="@/Images/logo.png" alt="E-1337 Meal Planer">
+    <h1>E-1337 MEAL PLANNER</h1>
     <nav>
       <div class="dropdown">
       <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"> Menu </button>
@@ -29,6 +30,8 @@ export default {
 
 .logo {
   margin: auto;
+  max-width: 30rem;
+  padding: 2rem 2rem 2rem 6rem;
 }
 .header-container {
   background-color: #4a180c;
@@ -43,7 +46,7 @@ export default {
 }
 .header-container h1 {
   flex-basis: 80%;
-  text-align: center;
+  
 }
 .header-container nav {
   display: flex;

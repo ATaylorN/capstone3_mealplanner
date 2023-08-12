@@ -43,7 +43,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 #header{
     padding-bottom: 20px;
 }
@@ -51,6 +51,19 @@ export default {
 .recipe-image{
     max-height: 350px;
     max-width: 350px;
+}
+
+.recipeList{
+  grid-area: recipeList;
+  width: 150rem;
+
+ 
+}
+
+.container{
+  display: grid;
+   grid-template-columns: 1 fr;
+  grid-template-areas: "recipeList";
 }
 
 </style>

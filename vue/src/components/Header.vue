@@ -36,8 +36,7 @@ export default {
 .header-container {
   background-color: #4a180c;
   color: white;
-  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
-    "Lucida Sans", Arial, sans-serif;
+  font-family: 'Montserrat', sans-serif;
 }
 .header-container {
   display: flex;

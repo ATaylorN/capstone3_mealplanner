@@ -11,9 +11,7 @@
 
       <div class="my-plan">
         <h1>MY PLAN</h1>
-        <router-link :to="{ name: 'meal-planner'}" tag="button" class="mealbtn">
-          <img src="@/Images/calendarPlaceholder.png" alt="">
-        </router-link>
+        <img @click="sendToMealPlan()" src="@/Images/calendarPlaceholder.png" alt="My Meal Plan">
       </div>
 
     </div>
@@ -39,6 +37,11 @@ export default {
   name: "home",
   components:{
     Header
+  },
+  methods: {
+    sendToMealPlan() {
+      return this.$router.push({name: 'meal-planner'})
+    }
   }
 };
 </script>
@@ -75,7 +78,8 @@ background-size: cover;
 
 .top-section{
   display: grid;
-  justify-content: space-around;
+  justify-content: space-evenly;
+  padding-right: 10rem;
 }
 
 .next-recipe{

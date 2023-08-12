@@ -14,6 +14,7 @@
             @change="setDate($event, calendarSlot.date)"
           >
             <span slot="header"> {{ calendarSlot.displayDate }} </span>
+            <br>
             <span
               class="meal"
               v-for="mealPlan in calendarSlot.mealPlans"
@@ -67,20 +68,6 @@ export default {
       trashmode: [],
     };
   },
-  computed: {
-    getMealPlanForDate() {
-      let string = "";
-      let plansForDate = this.mealPlans.filter((mealPlan) => {
-        console.log(mealPlan);
-        return mealPlan.dateToCook == this.calendarSlot.date;
-      });
-      plansForDate.forEach((plan) => {
-        string += plan.mealName + "\n";
-      });
-      console.log(string);
-      return string;
-    },
-  },
     methods: {
         buildCalendar(){
             let d = moment();
@@ -95,6 +82,12 @@ export default {
                     //console.log("mp: " + mp.dateToCook)
                     //console.log("cal: " + calendarSlot.date)
                     if (mp.dateToCook == calendarSlot.date){
+                        let mealNameCheck = this.mealsToDrag.find(meal =>{
+                            
+                            return meal.mealId === mp.plannedMealId;
+                        });
+                        
+                        mp.mealName = mealNameCheck.mealName
                         calendarSlot.mealPlans.push(mp)
                     }
                 })

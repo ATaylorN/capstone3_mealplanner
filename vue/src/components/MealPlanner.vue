@@ -11,11 +11,12 @@
             :list="calendarSlot.mealPlans"
             group="mealplan"
             draggable=".meal"
-            @end="setDate($event, calendarSlot.date)"
+            @change="setDate($event, calendarSlot.date)"
           >          
             <span slot="header"> {{ calendarSlot.displayDate }} </span>
             <br>
-            <span :meal="mealPlan.mealName" class="meal" v-for="mealPlan in calendarSlot.mealPlans" :key="mealPlan.mealId"> 
+            <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
+                
                 {{ mealPlan.mealName }}
             </span>
           </draggable>
@@ -88,7 +89,7 @@ export default {
                     //console.log("cal: " + calendarSlot.date)
                     if (mp.dateToCook == calendarSlot.date){
                         let mealNameCheck = this.mealsToDrag.find(meal =>{                            
-                            return meal.mealId === mp.plannedMealId;
+                            return meal.mealId === mp.mealId;
                         });
                         
                         mp.mealName = mealNameCheck.mealName
@@ -104,7 +105,7 @@ export default {
             this.dateSlots.forEach(slot =>{
                 if (slot.mealPlans.length > 0){                    
                     slot.mealPlans.forEach(mealPlan => { 
-                        mealPlans.push( {plannedMealId: Number(mealPlan.mealId), dateToCook: mealPlan.dateToCook}); 
+                        mealPlans.push( {mealId: Number(mealPlan.mealId), dateToCook: mealPlan.dateToCook}); 
                     });
                 }
             console.log(mealPlans);
@@ -125,33 +126,16 @@ export default {
             })
         },
         setDate(event, date){                                                         
-
-                // if(event.added){
-                // console.log('added')
-                // event.added.element.dateToCook = date; 
-                // console.log(event.added.element)
-                // } else if (event.moved){
-                //     console.log('moved')
-                //     event.moved.dateToCook = date; 
-                // } else if (event.removed){
-                //     console.log('removed')
-                //     if (date){
-                //         console.log('Date: ' + date)
-                //         console.log('Before Change: ')
-                //         console.log(event.removed);                                                
-                //         event.removed.dateToCook = date;//.dateToCook = date; 
-                //         console.log('After Change: ')
-                //         console.log(event.removed)
-                //     }
-                    
-                // }
-                console.log(event);
-                console.log(date);
+                if(event.added){
+                console.log('added')
+                event.added.element.dateToCook = date; 
+                console.log(event.added.element)
+                } else if (event.moved){
+                    console.log('moved')
+                    event.moved.dateToCook = date; 
+                } 
                                 
             },
-        updateCalendarSlot(event){
-            console.log(event);
-        }
     },
     
     created(){

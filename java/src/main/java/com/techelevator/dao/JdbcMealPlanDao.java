@@ -115,7 +115,7 @@ public class JdbcMealPlanDao implements MealPlanDao {
                 "VALUES (?, ?, ?) RETURNING meal_plan_id";
         int mealPlanId;
         try {
-            mealPlanId = jdbcTemplate.queryForObject(sql, int.class, mealPlan.getUserId(), mealPlan.getPlannedMealId(), mealPlan.getDateToCook());
+            mealPlanId = jdbcTemplate.queryForObject(sql, int.class, mealPlan.getUserId(), mealPlan.getMealId(), mealPlan.getDateToCook());
             mealPlan.setId(mealPlanId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new RuntimeException("Unable to connect to the database.", e);
@@ -173,7 +173,7 @@ public class JdbcMealPlanDao implements MealPlanDao {
         MealPlan newMealPlan = new MealPlan();
         newMealPlan.setId(rows.getInt("meal_plan_id"));
         newMealPlan.setUserId(rows.getInt("user_id"));
-        newMealPlan.setPlannedMealId(rows.getInt("meal_id"));
+        newMealPlan.setMealId(rows.getInt("meal_id"));
         newMealPlan.setDateToCook(rows.getDate("plan_date").toLocalDate());
         return newMealPlan;
     }

@@ -34,7 +34,7 @@ public class JdbcMealPlanDaoTests extends BaseDaoTests{
         mealPlan.setId(2);
         mealPlan.setDateToCook(LocalDate.of(2025,10,10));
         mealPlan.setUserId(1);
-        mealPlan.setPlannedMealId(3);
+        mealPlan.setMealId(3);
         MealPlan actualMealPlan = sut.updateMealPlan(mealPlan);
         assertMealPlansMatch(mealPlan, actualMealPlan);
 
@@ -53,7 +53,7 @@ public class JdbcMealPlanDaoTests extends BaseDaoTests{
     private void assertMealPlansMatch(MealPlan expected, MealPlan actual) {
         Assert.assertEquals(expected.getId(), actual.getId());
         Assert.assertEquals(expected.getDateToCook(), actual.getDateToCook());
-        Assert.assertEquals(expected.getPlannedMealId(), actual.getPlannedMealId());
+        Assert.assertEquals(expected.getMealId(), actual.getMealId());
         Assert.assertEquals(expected.getUserId(), actual.getUserId());
     }
 }

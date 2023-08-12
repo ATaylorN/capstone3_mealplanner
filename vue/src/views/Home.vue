@@ -48,7 +48,9 @@ export default {
 
 <style>
 
-
+*{
+  font-family: 'Montserrat', sans-serif;;
+}
 
 body{
 background-image: url('@/Images/BackgroundImage.png');

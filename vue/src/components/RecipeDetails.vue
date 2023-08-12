@@ -71,28 +71,22 @@ export default {
         "image instructions"
         "ingredients instructions";
     height: 80vh;
-    
 }
 .recipeContainer{
     border-radius: 8px;
     align-content: center;
-    border-style: solid;
-    border-color: black;
     margin-top: 10rem;
-    margin-left: 20rem;
-    margin-right: 20rem;
+    margin-bottom: 2rem;
+    margin-right: auto;
+    margin-left: auto;
     background-color: #4a180c;
     color: white;
     text-align: center;
+    max-width: 1100px;
 }
-.updateBtn{
-    color: black;
-}
-
 .ingredient{
     color: black;    
 }
-
 #recipeImage {
     max-height: 400px;
     max-width: 460px;
@@ -121,7 +115,8 @@ height: 30rem;
 }
 
 .instructions {
-    padding: 2rem 4rem 2rem 4rem;
+    /* border: 5px solid yellow; */
+    padding: 2rem 2rem 2rem 2rem;
     background-image: none;
     background-color: white;
     color: black;

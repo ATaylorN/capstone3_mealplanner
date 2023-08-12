@@ -7,8 +7,8 @@
      Below the panel are inputs where the user can add a name, and a category for the meal as strings.        
     -->
     <div class="meal-builder-container">
-      <draggable
-        class="user-recipes-container" :list="recipes" @start="drag = true" @end="drag = false" group="recipeHolder">
+
+      <draggable class="user-recipes-container" :list="recipes" @start="drag = true" @end="drag = false" group="recipeHolder">
         <figure class="recipe-card" v-for="recipe in recipes" :key="recipe.id">
           <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name"/>
           <span class="recipe-card-title">{{ recipe.name }}</span>
@@ -16,12 +16,12 @@
       </draggable>
 
       <div class="new-meal-editor">
-        <h2 class = "meal-header">Drag recipes for your meal here</h2>
+        <h2 class = "meal-header">Drag Recipes to Add to Your Meal:</h2>
         <input type="text" v-model="newMeal.mealName" id="meal-name" placeholder="Name your meal">
         <button class="create-meal-button" @click="createMeal()">Create Meal</button>
         
         <draggable id="add-recipe-box" :list="newMealRecipes" @start="drag = true" @end="drag = false" group="recipeHolder">
-          <figure v-for="recipe in newMealRecipes" :key="recipe.id">
+          <figure class="recipe-card" v-for="recipe in newMealRecipes" :key="recipe.id">
             <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name"/>
             <span class="recipe-card-title">{{ recipe.name }}</span>
           </figure>
@@ -143,49 +143,46 @@ export default {
 </script>
 
 <style scoped>
+
 .meal-builder-container {
-  display: grid;
-  grid-template-columns: 0.5fr 1.5fr;
-  grid-template-areas: "userRecipes newMeal";
-  gap: 20px;
+  display: flex;
+  justify-content: center;
+
 }
 .meal-header{
   grid-area: header;
   justify-self: center;
-  padding-top: 5rem;
+  padding-top: 2rem;
 }
 .new-meal-editor {
+  max-height: 80vh;
   grid-area: newMeal;
   display: grid;
   grid-template-columns: 100%;
-  grid-template-rows: 1fr 2fr;
+  grid-template-rows: 1fr 2fr 0.5fr;
   grid-template-areas: "header"
                         "addRecipeBox"
                         "userMeals";
   background-color: #4a180c;
-
   color: white;
   margin: 5rem;
-  border-radius: 5rem;
+  border-radius: 20px;
 }
 input{
   color: black;
 }
 .user-recipes-container {
-  grid-area: userRecipes;
-  min-width: 22rem;
-  max-height: 80%;
-  display: flex;
+  max-height: 650px;
+  flex-direction: column;
   justify-content: center;
-  flex-wrap: wrap;
   background-color: #4a180c;
   color: white;
-  margin: 5rem;
-  border-radius: 5rem;
+  margin: 5rem 1rem 5rem 5rem;
+  border-radius: 20px;
   overflow: scroll;
+  overflow-x: hidden;
 }
-
-.user-recipes-container::-webkit-scrollbar{
+.user-recipes-container::-webkit-scrollbar {
   display: none;
 }
 
@@ -201,50 +198,63 @@ figure {
   height: 20rem;
   margin: 1rem;
   width: 20rem;
-  border-radius: 5rem;
-}
-figure img {
-  height: 15rem;
-  width: 15rem;
   border-radius: 10px;
 }
-h2 {
-  justify-self: flex-start;
-  order: -1;
-  flex-basis: 10%;
+.recipe-card img {
+  border: 2 solid white;
+  max-width: 190px;
+  max-height: auto;
+  border-radius: 4px;
 }
-figure span {
-  width: 90%;
+.recipe-card span {
+  max-width: 90%;
   text-align: center;
+  padding: 1rem 1rem 1rem 1rem;
   text-overflow: ellipsis;
 }
 #add-recipe-box {
   grid-area: addRecipeBox;
-  width: 90%;
-  min-height: 22rem;
-  max-height: 24rem;
-  border-radius: 5rem;
+  width: 90rem;
+  height: 24rem;
+  border-radius: 2rem;
   border: white 1px solid;
-  margin: 3rem;
+  max-width: 90rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  margin: auto;
   align-items: center;
+  overflow: auto;
 }
-.new-meal-editor input{
-  border-radius: 5px;
-  margin-left: 7rem;
-  margin-right: 14rem;
+
+#meal-name {
+  margin: 2rem 8rem 2rem 8rem;
+  font-size: 18px;
+  border-radius: 1rem;
 }
+
 .create-meal-button {
-  height: 50px;
-  border-radius: 5px;
-  margin-left: 7rem;
-  margin-right: 14rem;
+    padding: 1rem 2rem 1rem 2rem;
+    text-align: center;
+    font-size: 18px;
+    border-radius: 8px;
+    background-color: #86B775;
+    color: white;
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    margin: 0.2rem 8rem 2rem 8rem;
+  /* margin-left: 7rem;
+  margin-right: 14rem; */
+}
+.create-meal-button:hover{
+  background-color: darkgreen;
 }
 .user-meals {
   grid-area: userMeals;
   display: flex;
+  flex-wrap: wrap;
+  padding: 2rem 2rem 2rem 2rem;
+  justify-content: center;
 }
 .meal-card {
   max-height: 5rem;
@@ -253,5 +263,6 @@ figure span {
   display: flex;
   flex-wrap: wrap;
   padding-left: 5rem;
+  max-width: 100rem;
   }
 </style>

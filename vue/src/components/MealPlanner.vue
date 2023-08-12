@@ -1,21 +1,12 @@
 <template>
   <div class="meal-planner">
+
     <section class="calendar-container">
-      <ul>
-        <li
-          class="calendar-square"
-          v-for="calendarSlot in dateSlots"
-          :key="calendarSlot.id"
-        >
-          <draggable
-            :list="calendarSlot.mealPlans"
-            group="mealplan"
-            draggable=".meal"
-            @change="setDate($event, calendarSlot.date)"
-          >          
+      <ul class="mealplancalendar">
+        <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id">
+          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" @change="setDate($event, calendarSlot.date)">          
             <span slot="header"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
-                
                 {{ mealPlan.mealName }}
             </span>
           </draggable>
@@ -23,8 +14,10 @@
       </ul>
     </section>
 
+
       <section class="meal-list">
-          <div @click="readCalendar()"> save save go go </div>
+
+          <div class="saveBtn" @click="readCalendar()"> Save Meal Plan </div>
           
             <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false"> 
               <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
@@ -32,11 +25,10 @@
                   <span></span>
               </div>
             </draggable>
-            
-
-           
-          
+      
     </section>
+
+
     <draggable class="trash" group="mealplan" :list="trashmode">
       <div>trash</div>
     </draggable>
@@ -183,7 +175,7 @@ section.calendar-container {
     align-items: center; */
   padding: 2rem;
 }
-ul {
+.mealplancalendar {
   list-style: none;
   display: grid;
   grid-template-rows: 11rem 11rem 11rem 11rem;
@@ -210,7 +202,7 @@ ul {
     ". lowerMid trash";
 }
 
-li span {
+.mealplancalendar li span {
   margin: 2px;
 }
 

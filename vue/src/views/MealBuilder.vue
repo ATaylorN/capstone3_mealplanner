@@ -19,7 +19,5 @@ export default {
 </script>
 
 <style>
-.hdr{
-    margin-bottom: 40px;
-}
+
 </style>

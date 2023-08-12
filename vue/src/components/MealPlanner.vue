@@ -11,17 +11,13 @@
             :list="calendarSlot.mealPlans"
             group="mealplan"
             draggable=".meal"
-            @change="setDate($event, calendarSlot.date)"
-          >
+            @end="setDate($event, calendarSlot.date)"
+          >          
             <span slot="header"> {{ calendarSlot.displayDate }} </span>
             <br>
-            <span
-              class="meal"
-              v-for="mealPlan in calendarSlot.mealPlans"
-              :key="mealPlan.mealId"
-            >
-              {{ mealPlan.mealName }}</span
-            >
+            <span :meal="mealPlan.mealName" class="meal" v-for="mealPlan in calendarSlot.mealPlans" :key="mealPlan.mealId"> 
+                {{ mealPlan.mealName }}
+            </span>
           </draggable>
         </li>
       </ul>
@@ -68,6 +64,15 @@ export default {
       trashmode: [],
     };
   },
+//   computed: {
+//       getMealPlansForCalendarSlot(){
+//           return this.dateSlots.forEach(dateSlot => {
+//               dateSlot.mealPlans = this.mealPlans.filter(mealPlan =>{
+//                   return mealPlan.dateToCook == dateSlot.date; 
+//               })
+//           });
+//       }
+//   },
     methods: {
         buildCalendar(){
             let d = moment();
@@ -82,8 +87,7 @@ export default {
                     //console.log("mp: " + mp.dateToCook)
                     //console.log("cal: " + calendarSlot.date)
                     if (mp.dateToCook == calendarSlot.date){
-                        let mealNameCheck = this.mealsToDrag.find(meal =>{
-                            
+                        let mealNameCheck = this.mealsToDrag.find(meal =>{                            
                             return meal.mealId === mp.plannedMealId;
                         });
                         
@@ -120,22 +124,34 @@ export default {
                     });
             })
         },
-
         setDate(event, date){                                                         
-                // let mealDate = event.to.firstChild.getAttribute("date");
-                // let mealPlanToEdit = event.item.firstChild.getAttribute("mealId");
-                // console.log(event);
-                // console.log(date)
-                // console.log(event.added.element)
-                if(event.added){
-                event.added.element.dateToCook = date; 
-                } else if (event.moved){
-                    event.moved.element.dateToCook = date; 
-                }
-                
-                console.log(this.mealPlans);
-            },
 
+                // if(event.added){
+                // console.log('added')
+                // event.added.element.dateToCook = date; 
+                // console.log(event.added.element)
+                // } else if (event.moved){
+                //     console.log('moved')
+                //     event.moved.dateToCook = date; 
+                // } else if (event.removed){
+                //     console.log('removed')
+                //     if (date){
+                //         console.log('Date: ' + date)
+                //         console.log('Before Change: ')
+                //         console.log(event.removed);                                                
+                //         event.removed.dateToCook = date;//.dateToCook = date; 
+                //         console.log('After Change: ')
+                //         console.log(event.removed)
+                //     }
+                    
+                // }
+                console.log(event);
+                console.log(date);
+                                
+            },
+        updateCalendarSlot(event){
+            console.log(event);
+        }
     },
     
     created(){

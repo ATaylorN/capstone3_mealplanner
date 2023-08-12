@@ -182,7 +182,13 @@ input{
   color: white;
   margin: 5rem;
   border-radius: 5rem;
+  overflow: scroll;
 }
+
+.user-recipes-container::-webkit-scrollbar{
+  display: none;
+}
+
 .user-recipes-container h3 {
   justify-self: center;
 }

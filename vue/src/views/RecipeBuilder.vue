@@ -31,10 +31,10 @@
             v-model="newIngredient.name"
             placeholder="Ingredient Name"
           />
-          <button @click.prevent="listIngredients()">
-            Find More Ingredients
+          <button id="find-ingredient" @click.prevent="listIngredients()">
+            Find Ingredient
           </button>
-          <button @click.prevent="clearIngredients()">
+          <button id="clear-ingredients" @click.prevent="clearIngredients()">
             Clear Ingredient List
           </button>
           <!-- </form> -->
@@ -290,6 +290,7 @@ div.recipe-builder {
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "ingredients recipe";
   gap: 20px;
+  margin: 10rem;
 }
 
 .saveBtn {
@@ -298,6 +299,13 @@ div.recipe-builder {
   margin-left: 15rem;
   margin-right: 15rem;
 }
+
+#find-ingredient, #clear-ingredients{
+  margin-top: 1rem;
+  margin-left: 35rem;
+  margin-right: 35rem;
+}
+
 
 .new-recipe-ingredient {
   color: black;
@@ -323,19 +331,31 @@ div.recipe-builder {
   border-color: black;
   background-color: #4a180c;
   color: white;
+  padding-top: 5rem;
+  
 }
 
 .add-ingredient-container {
   color: black;
+  display: grid;
+  grid-template-areas: ;
+  
+  
 }
 .search-field {
   color: black;
   font-size: 16px;
+  margin: .5rem;
+  border-radius: 5px;
 }
 
 .ingredientSearch {
   color: black;
   font-size: 16px;
+  margin: .5rem;
+  border-radius: 5px;
+  margin-right: 70rem;
+  grid-area: search;
 }
 .search-button {
   color: black;

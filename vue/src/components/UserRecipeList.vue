@@ -1,6 +1,5 @@
 <template>
   <div>
-      <!-- <Header /> -->
           <div v-for="recipe in recipes" :key="recipe.id" class="recipesList" > 
                   <RecipeDetails :recipeId ="recipe.id" />                
                   <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button">View Details</router-link>
@@ -12,13 +11,11 @@
 <script>
 
 import RecipeService from '../services/RecipeService.js';
-// import Header from '../components/Header.vue'
 import RecipeDetails from '@/components/RecipeDetails'; 
 
 export default {
     name: 'user-recipe-list',
     components: {
-    //    Header,
        RecipeDetails
     },
     data() {

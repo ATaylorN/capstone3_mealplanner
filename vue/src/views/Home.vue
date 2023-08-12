@@ -11,7 +11,9 @@
 
       <div class="my-plan">
         <h1>MY PLAN</h1>
-        <img src="@/Images/calendarPlaceholder.png" alt="">
+        <router-link :to="{ name: 'meal-planner'}" tag="button">
+          <img src="@/Images/calendarPlaceholder.png" alt="">
+        </router-link>
       </div>
 
     </div>
@@ -44,7 +46,7 @@ export default {
 <style>
 body{
 background-image: url('@/Images/BackgroundImage.png');
-background-repeat: no-repeat;
+background-attachment: scroll;
 height: 100%;
 background-size: cover;
 }

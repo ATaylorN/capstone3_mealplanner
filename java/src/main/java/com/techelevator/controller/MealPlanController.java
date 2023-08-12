@@ -67,9 +67,19 @@ public class MealPlanController {
     @ResponseStatus(HttpStatus.CREATED)
     public int addMealPlan(@RequestBody MealPlan mealPlan, Principal principal){
         mealPlan.setUserId(userDao.findIdByUsername(principal.getName()));
+        if (mealPlan.getId() != 0){
+            try{
+                mealPlanDao.updateMealPlan(mealPlan);
+            } catch (RuntimeException e){
+                throw new RuntimeException("Couldn't update meal plan");
+            }
+            return mealPlan.getId();
+        }
         int newMealPlanId;
         try{
+
             newMealPlanId = mealPlanDao.addMealPlan(mealPlan);
+
         } catch (RuntimeException e){
             throw new RuntimeException("Unable to add meal plan!", e);
         }

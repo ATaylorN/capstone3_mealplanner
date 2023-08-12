@@ -13,8 +13,7 @@
             draggable=".meal"
             @change="setDate($event, calendarSlot.date)"
           >          
-            <span slot="header"> {{ calendarSlot.displayDate }} </span>
-            <br>
+            <span slot="header"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
                 
                 {{ mealPlan.mealName }}
@@ -96,20 +95,19 @@ export default {
                         calendarSlot.mealPlans.push(mp)
                     }
                 })
-
                 this.dateSlots.push(calendarSlot)
             }
         },
         readCalendar(){
             let mealPlans = [];
             this.dateSlots.forEach(slot =>{
-                if (slot.mealPlans.length > 0){                    
-                    slot.mealPlans.forEach(mealPlan => { 
-                        mealPlans.push( {mealId: Number(mealPlan.mealId), dateToCook: mealPlan.dateToCook}); 
+                if (slot.mealPlans.length > 0){                                        
+                    slot.mealPlans.forEach(mealPlan => {                            
+                            mealPlans.push(mealPlan)
                     });
-                }
-            console.log(mealPlans);
+                }                
             });
+            console.log(mealPlans);
             mealPlans.forEach(mealPlan => {
                 MealService.addMealPlan(mealPlan)
                     .then(response => {
@@ -167,8 +165,7 @@ export default {
                 if (error.request){
                   console.log(error.request)
                 }
-            })
-         
+            })                     
     }
 }
 </script>

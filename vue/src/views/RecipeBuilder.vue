@@ -319,6 +319,7 @@ input {
 }
 .recipe-data-section input{
   margin-bottom: 2rem;
+  color: black;
 }
 
 .add-recipe{
@@ -333,6 +334,7 @@ input {
 
 #prep-instructions{
   height: 40rem;
+  color: black;
 }
 .new-recipe-ingredient {
   background: white;
@@ -355,6 +357,7 @@ input {
 
 .recipe-builder button{
   background-color: wheat;
+  color: black;
   font-size: 16px;
   font-weight: 400;
 }

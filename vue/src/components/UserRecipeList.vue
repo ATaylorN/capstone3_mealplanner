@@ -55,14 +55,14 @@ export default {
     text-align: center;
     font-size: 18px;
     border-radius: 8px;
-    background-color: #86B775;
-    color: white;
+    background-color: wheat;
+    color: black;
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
     
 }
 .updateBtn:hover{
-    background-color: darkgreen;
+    background-color: darkorange;
 }
 
 .detailsBtn{
@@ -70,13 +70,13 @@ export default {
     text-align: center;
     font-size: 18px;
     border-radius: 8px;
-    background-color: #86B775;
-    color: white;
+    background-color: wheat;
+    color: black;
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
 }
 .detailsBtn:hover{
-    background-color: darkgreen;
+    background-color: darkorange;
 }
 
 #recipe-image{

@@ -95,7 +95,6 @@ export default {
 }
 
 .ingredientsList{
-    /* border: 5px solid yellow; */
     list-style: none;
     padding: 2rem;
     background-color: white;
@@ -106,7 +105,6 @@ export default {
 }
 
 .ingredients-container{
-    /* border: 5px solid yellow; */
 grid-area: ingredients;
 display: flex;
 flex-direction: column;
@@ -119,7 +117,6 @@ overflow: scroll;
 }
 
 .instructions {
-    /* border: 5px solid yellow; */
     padding: 2rem 2rem 2rem 2rem;
     background-image: none;
     background-color: white;

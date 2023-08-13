@@ -2,75 +2,41 @@
   <div>
     <Header />
     <div class="recipe-builder">
-      <!-- 
-          list of ingredients on one side
-          recipe form on the other, with element to display added ingredients
-    -->
+      
       <div class="ingredients-section">
         <div class="search-input-block">
-          <span class="search-text"> {{ searchInputValue }} </span
-          ><span class="autocomplete-suggestion">{{
-            autoCompleteSuggestion
-          }}</span>
-          <input
-            id="search-input"
-            class="search-field"
-            type="text"
-            placeholder="Search for Ingredients"
-            v-model="searchInputValue"
-            @keyup="suggestSearchTerm()"
-          />
+          <span class="search-text"> {{ searchInputValue }} </span>
+          <span class="autocomplete-suggestion">{{autoCompleteSuggestion}}</span>
+          <input id="search-input" class="search-field" type="text" placeholder="Search for Ingredients" v-model="searchInputValue" @keyup="suggestSearchTerm()"/>
           <button class="search-button" @click="runSearch()">Search</button>
         </div>
 
         <div class="add-ingredient-container">
           <!-- <form v-show="filteredIngredientList.length === 0" class="add-ingredient"> -->
-          <input
-            class="ingredientSearch"
-            type="text"
-            v-model="newIngredient.name"
-            placeholder="Ingredient Name"
-          />
-          <button id="find-ingredient" @click.prevent="listIngredients()">
-            Find Ingredient
-          </button>
-          <button id="clear-ingredients" @click.prevent="clearIngredients()">
-            Clear Ingredient List
-          </button>
+          <input class="ingredientSearch" type="text" v-model="newIngredient.name" placeholder="Ingredient Name"/>
+          <button id="find-ingredient" @click.prevent="listIngredients()"> Find Ingredient </button>
+          <button id="clear-ingredients" @click.prevent="clearIngredients()"> Clear Ingredient List </button>
           <!-- </form> -->
         </div>
 
         <ul class="ingredient-search-results">
-          <li
-            v-for="foundIngredient in searchResults"
-            :key="foundIngredient.index"
-          >
-            <span @click="addNewIngredientToRecipe(foundIngredient)">
-              {{ foundIngredient.name }}
-            </span>
-            <img
-              @click="addNewIngredientToRecipe(foundIngredient)"
-              :src="foundIngredient.image"
-              :alt="foundIngredient.name"
-              class="img-rounded"
-            />
+          <li v-for="foundIngredient in searchResults" :key="foundIngredient.index">
+            <span @click="addNewIngredientToRecipe(foundIngredient)"> {{ foundIngredient.name }} </span>
+            <img @click="addNewIngredientToRecipe(foundIngredient)" :src="foundIngredient.image" :alt="foundIngredient.name" class="img-rounded"/>
           </li>
         </ul>
 
         <ul class="ingredients">
           <li v-for="ingredient in ingredients" :key="ingredient.id">
-            <span @click="addNewIngredientToRecipe(ingredient)">
-              {{ ingredient.name }}
-            </span>
-            <img
-              @click="addNewIngredientToRecipe(ingredient)"
-              :src="ingredient.image"
-              alt=""
-              class="img-rounded"
-            />
+            <span @click="addNewIngredientToRecipe(ingredient)"> {{ ingredient.name }} </span>
+            <img @click="addNewIngredientToRecipe(ingredient)" :src="ingredient.image" class="img-rounded"/>
           </li>
         </ul>
+
       </div>
+
+
+
     <div class="recipe-data-section">
     <form @submit.prevent="addRecipe()" class="add-recipe">
       <input type="text" v-model="newRecipe.name" placeholder="Recipe Name" />
@@ -79,13 +45,15 @@
       <textarea name="instructions" id="prep-instructions" v-model="newRecipe.instructions" placeholder="Prep Instructions"/>
       <button class="saveBtn">Save Recipe</button>
     </form>
-          <ul class="new-recipe-ingredient-list">
+
+      <ul class="new-recipe-ingredient-list">
         <li v-for="newIngredient in newRecipeIngredients" :key="newIngredient.id" class="new-recipe-ingredient">
-          <span> {{ newIngredient.name }}</span>
           <button @click="removeIngredientFromRecipe(newIngredient)"> Remove </button>
+          <span> {{ newIngredient.name }}</span>
         </li>
       </ul>
     </div>
+
   </div>
   </div>
 </template>
@@ -285,91 +253,50 @@ export default {
 </script>
 
 <style scoped>
-div.recipe-builder {
-  display: grid;
+
+input {
+  color: black;
+}
+
+.recipe-builder{
+ display: grid;
   grid-template-columns: 1fr 1fr;
   grid-template-areas: "ingredients recipe";
   gap: 20px;
-  margin: 10rem;
-}
-
-.saveBtn {
-  color: black;
-  margin-top: 1rem;
-  margin-left: 15rem;
-  margin-right: 15rem;
-}
-
-#clear-ingredients{
-  max-width: 10rem;
-  border-radius: 5px;
-  height: 7rem;
-  align-self: center;
-}
-#find-ingredient{
-  border-radius: 5px;
- 
-}
-
-
-.new-recipe-ingredient {
-  color: black;
-}
-.add-recipe {
-  color: black;
-  display: grid;
   margin: 2rem;
-  justify-items: center;
-  
-}
-
-.add-recipe > input, textarea{
-  margin: .5rem;
-  border-radius: 5px;
 }
 
 .ingredients-section{
-  margin-top: 50px;
-  margin-left: 10px;
+  margin-top: 1rem;
+  margin-left: 4rem;
   grid-area: ingredients;
   align-content: center;
-  border-style: solid;
-  border-color: black;
   background-color: #4a180c;
   color: white;
-  padding-top: 5rem;
+  padding-top: 4rem;
   display: flex; 
   flex-direction: column; 
+  border-radius: 20px;
 }
 
-.add-ingredient-container {
-  color: black; 
+.search-input-block {
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  height: 7rem;
-
-}
-.search-field {
-  color: black;
+  flex-direction: column;
+  margin-right: 4rem;
+  margin-left: 4rem;
+  margin-bottom: 2rem;
+  border-radius: 2rem;
   font-size: 16px;
-  padding-right: 10px;
-  margin-right: 5px;
-  border-radius: 5px;
-  
 }
 
-.ingredientSearch {
-  color: black;
+.add-ingredient-container{
+  display: flex;
+  flex-direction: column;
+  margin-right: 4rem;
+  margin-left: 4rem;
+  margin-bottom: 2rem;
+  border-radius: 2rem;
   font-size: 16px;
-  border-radius: 5px;
-  grid-area: search;
-  padding: 6px;
-  margin-right: 5px;
-}
-.search-button {
-  color: black;
-  border-radius: 5px;
 }
 .ingredients {
   display: flex;
@@ -378,33 +305,61 @@ div.recipe-builder {
   gap: 40px;
 }
 
-#prep-instructions{
-  height: 30rem;
-  width: 30rem;
-
-}
-
 .recipe-data-section{
-  margin-top: 50px;
-  margin-right: 10px;
+  margin-top: 1rem;
+  margin-right: 4rem;
+  grid-area: recipe;
   align-content: center;
-  border-style: solid;
-  border-color: black;
   background-color: #4a180c;
   color: white;
-  grid-area: recipe;
+  padding-top: 2rem;
+  display: flex; 
+  flex-direction: column; 
+  border-radius: 20px;
 }
-.new-recipe-ingredient-list {
-  list-style: none;
+.recipe-data-section input{
+  margin-bottom: 2rem;
 }
 
+.add-recipe{
+  display: flex;
+  flex-direction: column;
+  font-size: 16px;
+  margin-right: 2rem;
+  margin-left: 2rem;
+  margin-bottom: 2rem;
+  border-radius: 2rem;
+}
+
+#prep-instructions{
+  height: 40rem;
+}
 .new-recipe-ingredient {
-  background: wheat;
+  background: white;
+  color: black;
+  max-width: 30rem;
+  margin-bottom: 2rem;
+}
+.new-recipe-ingredient-list {
+  font-weight: 700;
+  list-style: none;
+}
+.new-recipe-ingredient-list button{
+ margin-right: 2rem;
 }
 
 .recipe-builder img{
-  max-width: 10rem;
-  max-height: 10rem;
+  max-width: 14rem;
+  max-height: 14rem;
+}
+
+.recipe-builder button{
+  background-color: wheat;
+  font-size: 16px;
+  font-weight: 400;
+}
+.recipe-builder button:hover{
+  background-color: darkorange;
 }
 
 </style>

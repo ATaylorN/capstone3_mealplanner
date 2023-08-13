@@ -238,14 +238,15 @@ figure {
     text-align: center;
     font-size: 18px;
     border-radius: 8px;
-    background-color: #86B775;
-    color: white;
+    background-color:wheat;
+    color: black;
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
     margin: 0.2rem 8rem 2rem 8rem;
 }
 .create-meal-button:hover{
-  background-color: darkgreen;
+  background-color: darkkhaki;
+  cursor: pointer;
 }
 
 .user-meals {

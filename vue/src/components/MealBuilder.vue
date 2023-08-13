@@ -155,7 +155,7 @@ export default {
   padding-top: 2rem;
 }
 .new-meal-editor {
-  max-height: 80vh;
+  max-height: 100vh;
   grid-area: newMeal;
   display: grid;
   grid-template-columns: 100%;
@@ -243,26 +243,21 @@ figure {
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
     margin: 0.2rem 8rem 2rem 8rem;
-  /* margin-left: 7rem;
-  margin-right: 14rem; */
 }
 .create-meal-button:hover{
   background-color: darkgreen;
 }
+
 .user-meals {
   grid-area: userMeals;
   display: flex;
   flex-wrap: wrap;
   padding: 2rem 2rem 2rem 2rem;
   justify-content: center;
+  max-width: 100rem;
 }
+
 .meal-card {
   max-height: 5rem;
 }
-#meal-sortable {
-  display: flex;
-  flex-wrap: wrap;
-  padding-left: 5rem;
-  max-width: 100rem;
-  }
 </style>

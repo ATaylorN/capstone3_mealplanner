@@ -18,7 +18,7 @@
          
           <div class="instructions">
               <h3>Instructions:</h3>
-              {{recipe.instructions}}
+              <p>{{recipe.instructions}}</p>
           </div>
 
       </div>
@@ -76,7 +76,7 @@ export default {
     border-radius: 8px;
     align-content: center;
     margin-top: 10rem;
-    margin-bottom: 2rem;
+    margin-bottom: 10px;
     margin-right: auto;
     margin-left: auto;
     background-color: #4a180c;
@@ -100,7 +100,7 @@ export default {
     padding: 2rem;
     background-color: white;
     background-image: none;
-    height: 50vh;
+    max-height: 40rem;
     border-radius: 6px;
     width: 100%;
 }
@@ -111,7 +111,11 @@ grid-area: ingredients;
 display: flex;
 flex-direction: column;
 width: 45rem;
-height: 30rem;
+max-height: 35rem;
+overflow: scroll;
+}
+.ingredients-container::-webkit-scrollbar{
+    display: none;
 }
 
 .instructions {
@@ -124,7 +128,7 @@ height: 30rem;
     border-radius: 6px;
     height: 70rem;
     max-width: 50rem;
-    max-height: 60rem;
+    max-height: 56rem;
     overflow: scroll;
 }
 

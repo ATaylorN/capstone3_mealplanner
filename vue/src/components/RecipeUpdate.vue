@@ -1,6 +1,6 @@
 <template>
 <div class="recipe-updater">
-  <Header id="hdr" />
+  <Header class="hdr"/>
     <section class="ingredient-data">
       <!-- list of ingredients to pick goes here -->
       <ul>
@@ -9,24 +9,29 @@
         </li>
       </ul>
     </section>
+
     <section class="recipe-data">
-    <form v-on:submit.prevent class="recipe-inputs">
-      <div class="field">
-        <label for="name">Recipe Name: </label>
-        <input name="name" type="text" v-model="name" />
-      </div>
-      <div class="field">
-        <label for="image">Recipe Image Link: </label>
-        <input name="image" type="text" v-model="image" />
-      </div>
+       <form v-on:submit.prevent class="recipe-inputs">
+         <div class="field">
+           <label for="name">Recipe Name: </label>
+           <input name="name" type="text" v-model="name" />
+         </div>
+
+        <div class="field">
+           <label for="image">Recipe Image Link: </label>
+           <input name="image" type="text" v-model="image" />
+       </div>
+
       <div class="field">
         <label for="instructions">Preparation Instructions: </label>
         <input id="prep-instructions" name="instructions" type="text" v-model="instructions" />
       </div>
+
       <div class="actions">
         <button type="submit" v-on:click="updateRecipe()">Update</button>
       </div>
     </form>
+
     <div class="recipe-ingredients">
     <span >Your Ingredients</span>
     <ul class="ingredients">
@@ -36,6 +41,7 @@
     </ul>
     </div>
       </section>
+
   </div>
 </template>
 
@@ -125,73 +131,50 @@ export default {
 <style>
 .recipe-updater{
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-template-rows: .2fr .1fr .7fr;
+  grid-template-rows: 0.5fr 3fr;
+  grid-template-columns: 1fr 3fr;
   grid-template-areas: "header header"
-                        ". . "
-                       "ingredients recipe"; 
-  gap: 10px; 
-
+                        "ingredients recipe"; 
+  gap: 4rem; 
+  font-size: 16px;
 }
-#hdr{
-  grid-area: header; 
+.hdr{
+  grid-area: header;
 }
-
-section {
-  display: flex;
-  flex-direction: column;
-  border-radius: 20px;
-  color: white; 
-}
-button {
-  color: black;
-}
-form {
-  padding: 20px
-}
-
-section.recipe-data{
-  grid-area: recipe;
-  display: grid;
-  grid-template-columns: 2fr 1fr;
-  grid-template-areas: "form list";
-  background-color:#4a180c;
-}
-section.recipe-data form.recipe-inputs{
-  grid-area: form; 
-  display: flex; 
-  flex-direction: column; 
-  justify-content: flex-start;
-  color: black;  
-  
-}
-
-.recipe-inputs label{
-  color: white;
-  align-self: center;
-}
-section.recipe-data div.recipe-ingredients{
-  grid-area: list;
-  display: flex; 
-  flex-direction: column; 
-  justify-content: flex-start;
-  
-
-}
-.recipe-ingredients ul {
-  list-style: none;
-  padding: 0px 0px 5px 0px;
-  margin: 0px;  
-}
-.recipe-ingredients ul li {
-  margin: 5px;
-}
-
-
-
 section.ingredient-data{
+  border-radius: 20px;
   grid-area: ingredients;
   background-color:#4a180c;
+  color: white;
+  padding: 4rem;
+  margin-left: 4rem;
 }
-
+.recipe-data{
+  margin-right: 4rem;
+  border-radius: 20px;
+  grid-area: recipe;
+  display: flex;
+  justify-content: space-between;
+  padding: 4rem 8rem 4rem 8rem;
+  background-color:#4a180c;
+  color: white;
+}
+.recipe-data input{
+  color: black;
+  margin-bottom: 2rem;
+}
+.recipe-data button{
+  color: black;
+  background-color: wheat;
+}
+.recipe-data button:hover{
+  background-color: darkorange;
+}
+.recipe-inputs div{
+  display: flex;
+  flex-direction: column;
+}
+.recipe-inputs input{
+  height: 4rem;
+}
 </style>

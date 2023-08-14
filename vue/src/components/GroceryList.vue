@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <div id="grocery-list">
+      <h2>{{getHeaderText}}</h2>
     <div class="ingredients" v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}}</div>
   </div>
 </template>
@@ -7,6 +8,7 @@
 <script>
 
 import GroceryListService from '../services/GroceryListService.js'
+
 export default {
     name: "grocery-list",
     components: {
@@ -14,12 +16,23 @@ export default {
     },
     props: ['startDate', 'endDate'],
     data() {
-        return {
-        mealPlanIngredients: [],
-        
-    }
+            return {
+                mealPlanIngredients: [],        
+        }
     },
-    
+    computed: {
+      getHeaderText(){
+          let output = "";
+          if(!this.startDate && !this.endDate){
+              output = "Select dates to view meal plans."; 
+          } else if (!this.startDate) {
+              output = "Plans from today til " + this.endDate; 
+          } else {
+              output = "Plans from " + this.startDate + " to " + this.endDate; 
+          }
+          return output; 
+      }  
+    },    
     methods: {
         getMealPlanIngredients(){
             GroceryListService.getMealPlanIngredients(this.startDate, this.endDate).then(response => {
@@ -35,5 +48,6 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+
 </style>

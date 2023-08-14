@@ -1,11 +1,10 @@
 <template>
   <div class="meal-planner">
-
     <section class="calendar-container">
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id">
           <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal">          
-            <span slot="header"> {{ calendarSlot.displayDate }} <br></span>
+            <span @click="setDates(calendarSlot.date, calendarSlot.displayDate)" slot="header"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
                 {{ mealPlan.mealName }}
             </span>
@@ -16,7 +15,6 @@
 
 
       <section class="meal-list">
-
           <div class="saveBtn" > Drag Meals to Calendar </div>
           
             <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false"> 
@@ -24,25 +22,29 @@
                   <span :mealId="meal.mealId" > {{meal.mealName}} </span>
                   <span></span>
               </div>
-            </draggable>
-      
+            </draggable>      
     </section>
 
 
     <draggable class="trash" group="mealplan" :list="trashmode">
       <div>trash</div>
     </draggable>
+
+      <GroceryList id='groceries' :startDate="startDate" :endDate="endDate" />
   </div>
+
 </template>
 
 <script>
 import MealService from "@/services/MealService.js";
 import draggable from "vuedraggable";
 import moment from "moment";
+import GroceryList from '@/components/GroceryList';
 export default {
   name: "MealPlanner",
   components: {
     draggable,
+    GroceryList
   },
   // when I drag a meal to a date, create a meal plan with the date of the slot that was given.
   // if I drag a meal out of the calendar, destroy the corresponding meal plan.
@@ -54,6 +56,8 @@ export default {
       mealsToDrag: [],
       mealPlans: [],
       trashmode: [],
+      startDate: "",
+      endDate: "",
     };
   },
 //   computed: {
@@ -89,6 +93,21 @@ export default {
                 })
                 this.dateSlots.push(calendarSlot)
             }
+        },
+        setDates(date){
+          // if both dates aren't populated, set the start date first. 
+          if(!this.startDate && !this.endDate){
+            this.startDate = date;
+          } else if(date > this.startDate && date < this.endDate){
+            // shrink the window
+            this.start = date; 
+          } else if (date < this.startDate && date < this.endDate){
+            //grow the window toward start date. 
+            this.startDate = date; 
+          } else if (date > this.startDate && date > this.endDate){
+            // grow the window toward end date.
+            this.endDate = date; 
+          }
         },
         readCalendar(){
             let mealPlans = [];
@@ -196,14 +215,18 @@ section.calendar-container {
 
 .meal-planner {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
   row-gap: 5rem;
+  column-gap: 5rem;
   grid-template-areas:
     "mid mid groceries"
     "lowerMid trash .";
 }
 
+#groceries{
+  grid-area: groceries; 
+}
 
 .mealplancalendar {
   list-style: none;
@@ -246,6 +269,10 @@ section.calendar-container {
 .meal-card {
   color: black;
   padding-left: 3rem;
+}
+
+#groceries{
+  background-color: wheat;
 }
 
 </style>

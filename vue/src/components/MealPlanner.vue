@@ -17,7 +17,7 @@
 
       <section class="meal-list">
 
-          <div class="saveBtn" @click="readCalendar()"> Save Meal Plan </div>
+          <div class="saveBtn" > Drag Meals to Calendar </div>
           
             <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false"> 
               <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
@@ -173,6 +173,9 @@ export default {
                   console.log(error.request)
                 }
             })                     
+    },
+    beforeDestroy(){
+      this.readCalendar();
     }
 }
 </script>
@@ -190,6 +193,18 @@ section.calendar-container {
     align-items: center; */
   padding: 2rem;
 }
+
+.meal-planner {
+  display: grid;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  row-gap: 5rem;
+  grid-template-areas:
+    "mid mid groceries"
+    "lowerMid trash .";
+}
+
+
 .mealplancalendar {
   list-style: none;
   display: grid;
@@ -207,15 +222,6 @@ section.calendar-container {
   background-color: tan;
 }
 
-.meal-planner {
-  display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  row-gap: 5rem;
-  grid-template-areas:
-    ". mid ."
-    ". lowerMid trash";
-}
 
 .mealplancalendar li span {
   margin: 2px;

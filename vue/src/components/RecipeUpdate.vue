@@ -168,7 +168,7 @@ section.ingredient-data{
   background-color: wheat;
 }
 .recipe-data button:hover{
-  background-color: darkorange;
+  background-color: darkkhaki;
 }
 .recipe-inputs div{
   display: flex;

@@ -68,6 +68,7 @@ export default {
   background-color: #4A180C;
   color: white;
   padding: 2rem;
+  box-shadow: 0px 6px 20px 0px black;
 }
 #login h1{
   padding-bottom: 2rem;
@@ -83,7 +84,7 @@ export default {
   background-color: wheat;
 }
 #login button:hover{
-  background-color: darkorange;
+  background-color: darkkhaki;
 }
 #login a{
   color: lightblue;

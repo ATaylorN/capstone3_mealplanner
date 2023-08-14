@@ -82,6 +82,7 @@ export default {
   margin-top: 15em;
   background-color: #4A180C;
   color: white;
+  box-shadow: 0px 6px 20px 0px black;
   padding: 2rem;
 }
 #register h1{
@@ -98,7 +99,7 @@ export default {
   background-color: wheat;
 }
 #register button:hover{
-  background-color: darkorange;
+  background-color: darkkhaki;
 }
 #register a{
   color: lightblue;

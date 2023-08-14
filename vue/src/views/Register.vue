@@ -1,22 +1,24 @@
 <template>
-  <div id="register" class="text-center">
+  <div id="register">
     <form @submit.prevent="register">
       <h1>Create Account</h1>
-      <div role="alert" v-if="registrationErrors">
-        {{ registrationErrorMsg }}
-      </div>
+      <div role="alert" v-if="registrationErrors">  {{ registrationErrorMsg }}</div>
+      
       <div class="form-input-group">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
       </div>
+      
       <div class="form-input-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
       </div>
+      
       <div class="form-input-group">
         <label for="confirmPassword">Confirm Password</label>
         <input type="password" id="confirmPassword" v-model="user.confirmPassword" required />
       </div>
+      
       <button type="submit">Create Account</button>
       <p><router-link :to="{ name: 'login' }">Already have an account? Log in.</router-link></p>
     </form>
@@ -74,10 +76,39 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
+#register {
+  display: flex;
+  justify-content: center;
+  margin-top: 15em;
+  background-color: #4A180C;
+  color: white;
+  padding: 2rem;
 }
-label {
-  margin-right: 0.5rem;
+#register h1{
+  padding-bottom: 2rem;
+}
+#register div{
+  margin: 1rem;
+}
+#register input{
+  color: black;
+}
+#register button{
+  color: black;
+  background-color: wheat;
+}
+#register button:hover{
+  background-color: darkorange;
+}
+#register a{
+  color: lightblue;
+}
+#register label{
+  margin-right: 1rem;
+}
+#register form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>

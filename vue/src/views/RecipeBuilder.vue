@@ -19,20 +19,21 @@
           <!-- </form> -->
         </div>
 
+        <div class="all-ingredients">
         <draggable class="ingredient-search-results" :list="searchResults" @start="drag=true" @end="drag=false" group="moveIngredient">
           <figure v-for="foundIngredient in searchResults" :key="foundIngredient.index">
             <span @click="addNewIngredientToRecipe(foundIngredient)"> {{ foundIngredient.name }} </span>
-            <img @click="addNewIngredientToRecipe(foundIngredient)" :src="foundIngredient.image" :alt="foundIngredient.name" class="img-rounded"/>
+            <img @click="addNewIngredientToRecipe(foundIngredient)" :src="foundIngredient.image" :alt="foundIngredient.name"/>
           </figure>
         </draggable>
 
         <draggable class="ingredients" :list="ingredients" @start="drag=true" @end="drag=false" group="moveIngredient">
           <figure v-for="ingredient in ingredients" :key="ingredient.id">
             <span @click="addNewIngredientToRecipe(ingredient)"> {{ ingredient.name }} </span>
-            <img @click="addNewIngredientToRecipe(ingredient)" :src="ingredient.image" class="img-rounded"/>
+            <img @click="addNewIngredientToRecipe(ingredient)" :src="ingredient.image"/>
           </figure>
         </draggable>
-
+      </div>
       </div>
 
 
@@ -49,8 +50,8 @@
     <div class="newRecipeContainer">
       <draggable id="newRecipe" :list="newRecipeIngredients" @start="drag=true" @end="drag=false" group="moveIngredient">
         <figure v-for="newIngredient in newRecipeIngredients" :key="newIngredient.id">
-          <img :src="newIngredient.image" :alt="newIngredient.name">
           <span>{{newIngredient.name}}</span>
+          <img :src="newIngredient.image" :alt="newIngredient.name">
         </figure>
       </draggable>
     </div>
@@ -270,6 +271,19 @@ input {
   margin: 2rem;
 }
 
+.recipe-builder figure{
+  display: flex;
+  flex-direction: column-reverse;
+  text-align: center;
+  margin: auto;
+  background-color: white;
+  color: black;
+  max-width: 100px;
+  border-radius: 2px;
+  font-weight: 700;
+  font-variant-caps:all-small-caps;
+}
+
 .ingredients-section{
   margin-top: 1rem;
   margin-left: 4rem;
@@ -308,6 +322,7 @@ input {
   flex-direction: column;
   list-style-type: none;
   gap: 40px;
+  padding-bottom: 1rem;
 }
 
 .recipe-data-section{
@@ -343,8 +358,10 @@ input {
   color: black;
 }
 .recipe-builder img{
-  max-width: 14rem;
-  max-height: 14rem;
+  max-width: 10rem;
+  max-height: 10rem;
+  border-radius: 1rem;
+  padding: 0.4rem;
 }
 
 .recipe-builder button{
@@ -357,7 +374,12 @@ input {
   background-color: darkkhaki;
 }
 .newRecipeContainer{
-  border: 5px solid yellow;
-  padding: 0rem 2rem 20rem 2rem;
+gap: 20px;
+padding-top: 2rem;
 }
+.all-ingredients {
+  max-height: 400px;
+  overflow: scroll;
+}
+
 </style>

@@ -2,23 +2,22 @@
   <div id="login">
     <form @submit.prevent="login">
       <h1 >Please Sign In</h1>
-      <div role="alert" v-if="invalidCredentials">
-        Invalid username and password!
-      </div>
-      <div role="alert" v-if="this.$route.query.registration">
-        Thank you for registering, please sign in.
-      </div>
+      
+      <div role="alert" v-if="invalidCredentials"> Invalid username and password!</div>
+      <div role="alert" v-if="this.$route.query.registration">Thank you for registering; please sign in.</div>
+     
       <div class="form-input-group">
         <label for="username">Username</label>
         <input type="text" id="username" v-model="user.username" required autofocus />
       </div>
+      
       <div class="form-input-group">
         <label for="password">Password</label>
         <input type="password" id="password" v-model="user.password" required />
       </div>
+     
       <button type="submit">Sign in</button>
-      <p>
-      <router-link :to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
+      <p><router-link :to="{ name: 'register' }">Need an account? Sign up.</router-link></p>
     </form>
   </div>
 </template>
@@ -62,10 +61,40 @@ export default {
 </script>
 
 <style scoped>
-.form-input-group {
-  margin-bottom: 1rem;
+#login {
+  display: flex;
+  justify-content: center;
+  margin-top: 15em;
+  background-color: #4A180C;
+  color: white;
+  padding: 2rem;
+  box-shadow: 0px 6px 20px 0px black;
 }
-label {
-  margin-right: 0.5rem;
+#login h1{
+  padding-bottom: 2rem;
+}
+#login div{
+  margin: 1rem;
+}
+#login input{
+  color: black;
+}
+#login button{
+  color: black;
+  background-color: wheat;
+}
+#login button:hover{
+  background-color: darkkhaki;
+}
+#login a{
+  color: lightblue;
+}
+#login label{
+  margin-right: 1rem;
+}
+#login form{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 </style>

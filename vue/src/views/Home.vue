@@ -101,6 +101,7 @@ background-size: cover;
   grid-area: featured;
   gap: 5rem;
   background-color: #4A180C;
+  box-shadow: 0px 6px 20px 0px black;
   color: white;
   margin-bottom: 10rem;
 }
@@ -140,6 +141,7 @@ p{
   gap: 5rem;
   background-color: #4A180C;
   color: white;
+  box-shadow: 0px 6px 20px 0px black;
 }
 
 .top-section img {

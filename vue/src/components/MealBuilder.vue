@@ -165,6 +165,7 @@ export default {
                         "userMeals";
   background-color: #4a180c;
   color: white;
+  box-shadow: 0px 6px 20px 0px black;
   margin: 5rem;
   border-radius: 20px;
 }
@@ -177,6 +178,7 @@ input{
   justify-content: center;
   background-color: #4a180c;
   color: white;
+  box-shadow: 0px 6px 20px 0px black;
   margin: 5rem 1rem 5rem 5rem;
   border-radius: 20px;
   overflow: hidden;

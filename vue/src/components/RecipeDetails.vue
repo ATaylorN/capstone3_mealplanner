@@ -80,6 +80,7 @@ export default {
     margin-right: auto;
     margin-left: auto;
     background-color: #4a180c;
+    box-shadow: 0px 6px 20px 0px black;
     color: white;
     text-align: center;
     max-width: 1100px;

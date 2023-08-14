@@ -76,11 +76,11 @@ public class IngredientController {
         }
     }
 
-    @RequestMapping(value = "/groceryList&from={fromDate}&to={toDate}", method = RequestMethod.GET)
-    public List<Ingredient> groceryList(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
+    @RequestMapping(value = "/groceryList?from={fromDate}&to={toDate}", method = RequestMethod.GET)
+    public List<Ingredient> groceryList(@PathVariable LocalDate fromDate, @PathVariable LocalDate toDate) {
         List<Ingredient> ingredients = new ArrayList<>();
         try {
-            ingredients = ingredientDao.selectAllIngredientsForMealPlansOnAGivenDate(startDate, endDate);
+            ingredients = ingredientDao.selectAllIngredientsForMealPlansOnAGivenDate(fromDate, toDate);
         } catch (RuntimeException e) {
             throw new RuntimeException("Couldn't get ingredients for specified date range");
         }

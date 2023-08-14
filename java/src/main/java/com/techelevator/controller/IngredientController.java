@@ -8,6 +8,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,4 +76,14 @@ public class IngredientController {
         }
     }
 
+    @RequestMapping(value = "/groceryList&from={fromDate}&to={toDate}", method = RequestMethod.GET)
+    public List<Ingredient> groceryList(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        try {
+            ingredients = ingredientDao.selectAllIngredientsForMealPlansOnAGivenDate(startDate, endDate);
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Couldn't get ingredients for specified date range");
+        }
+        return ingredients;
+    }
 }

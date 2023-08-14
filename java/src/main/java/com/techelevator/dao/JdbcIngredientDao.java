@@ -118,7 +118,7 @@ public class JdbcIngredientDao implements IngredientDao{
         return rowsRemoved;
     }
     @Override
-    public List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate date) {
+    public List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate startDate, LocalDate endDate) {
         List<Ingredient> ingredients = new ArrayList<>();
         String sql = "SELECT DISTINCT ingredient_name\n" +
                 "FROM ingredients\n" +
@@ -127,9 +127,9 @@ public class JdbcIngredientDao implements IngredientDao{
                 "JOIN meal_recipes ON meal_recipes.recipe_id = recipes.recipe_id\n" +
                 "JOIN meals ON meals.meal_id = meal_recipes.meal_id\n" +
                 "JOIN meal_plans ON meal_plans.meal_id = meals.meal_id\n" +
-                "WHERE meal_plans.plan_date = ?";
+                "WHERE meal_plans.plan_date >= ? AND meal_plans.plan_date <= ?";
         try {
-            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, Date.valueOf(date));
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, Date.valueOf(startDate), Date.valueOf(endDate));
             while(rows.next()){
                 ingredients.add(mapRowToIngredient(rows));
             }

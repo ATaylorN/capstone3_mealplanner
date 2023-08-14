@@ -181,11 +181,10 @@ input{
   box-shadow: 0px 6px 20px 0px black;
   margin: 5rem 1rem 5rem 5rem;
   border-radius: 20px;
-  overflow: scroll;
-  overflow-x: hidden;
+  overflow: hidden;
 }
-.user-recipes-container::-webkit-scrollbar {
-  display: none;
+.user-recipes-container:hover {
+  overflow-y: auto;
 }
 
 .user-recipes-container h3 {

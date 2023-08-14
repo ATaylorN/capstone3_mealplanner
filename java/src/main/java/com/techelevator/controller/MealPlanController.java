@@ -119,9 +119,18 @@ public class MealPlanController {
         }
         return mealRecipes;
     }
-    @RequestMapping(value="/meal-plan", method = RequestMethod.DELETE)
-    public void deleteMealPlan(int mealPlanId, Principal principal){
 
+    @RequestMapping(value="/delete-meal-plan/{id}", method = RequestMethod.DELETE)
+    public void deleteMealPlan(@PathVariable int id, Principal principal){
+        try{
+            if( mealPlanDao.getMealPlanById(id).getUserId() == userDao.findIdByUsername(principal.getName())){
+                mealPlanDao.deleteMealPlan(id);
+            } else {
+                throw new RuntimeException("User does not have permission to delete this plan.");
+            }
+        } catch (RuntimeException e){
+            throw new RuntimeException("Unable to delete meal plan.");
+        }
     }
 
     @RequestMapping(value="/meal-plan&from={fromDate}&to={toDate}", method = RequestMethod.GET)

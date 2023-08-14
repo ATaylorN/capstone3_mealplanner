@@ -22,6 +22,9 @@ export default {
     },
     getMealPlans(){
         return axios.get("/meals/meal-plan/")
+    },
+    deleteMealPlans(id){
+        return axios.delete(`/meals/delete-meal-plan/${id}`)
     }
 
 }

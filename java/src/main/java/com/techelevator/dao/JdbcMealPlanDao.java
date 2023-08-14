@@ -134,10 +134,10 @@ public class JdbcMealPlanDao implements MealPlanDao {
     } 
 
     @Override
-    public void deleteMealPlan(MealPlan mealPlan) {
+    public void deleteMealPlan(int mealPlanId) {
         String sql = "DELETE FROM meal_plans WHERE meal_plan_id = ?";
         try {
-            jdbcTemplate.update(sql, mealPlan.getId());
+            jdbcTemplate.update(sql, mealPlanId);
         } catch (CannotGetJdbcConnectionException e) {
             throw new RuntimeException("Unable to connect to the database.", e);
         } catch (DataIntegrityViolationException e) {

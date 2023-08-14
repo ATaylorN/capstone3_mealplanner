@@ -4,7 +4,7 @@
     <section class="calendar-container">
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id">
-          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" @change="setDate($event, calendarSlot.date)">          
+          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal">          
             <span slot="header"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
                 {{ mealPlan.mealName }}
@@ -94,8 +94,20 @@ export default {
             let mealPlans = [];
             this.dateSlots.forEach(slot =>{
                 if (slot.mealPlans.length > 0){                                        
-                    slot.mealPlans.forEach(mealPlan => {                            
-                            mealPlans.push(mealPlan)
+                    slot.mealPlans.forEach(mealPlan => {
+                      // clone the object instead of passing it as a reference? 
+                      let planToSend = {
+                        dateToCook: slot.date,
+                        mealId: mealPlan.mealId,
+                        userId: mealPlan.userId                                                
+                      }
+                      if(mealPlan.id !== undefined){
+                        planToSend.id = mealPlan.id;
+                      }
+                      if(mealPlan.mealType !== undefined){
+                        planToSend.mealType = mealPlan.mealType;
+                      }
+                      mealPlans.push(planToSend);
                     });
                 }                
             });
@@ -103,7 +115,21 @@ export default {
             mealPlans.forEach(mealPlan => {
                 MealService.addMealPlan(mealPlan)
                     .then(response => {
-                        console.log(response.status)
+                        console.log(response.status);
+                        this.trashmode.forEach(mealPlan => {
+                          console.log("Calling delete on: ");
+                          console.log(mealPlan);
+                          if(mealPlan.id){            
+                            console.log("Deleting mealplan " + mealPlan.id)                
+                            MealService.deleteMealPlans(mealPlan.id)
+                              .then( response => {
+                                console.log("Delete endpoint hit.")
+                                console.log(response.status)
+                                })
+                              .catch(err => {console.log(err)})
+                          }
+                        })
+                        this.trashmode = [];
                     })
                     .catch(error => {
                         if(error.response){
@@ -115,17 +141,6 @@ export default {
                     });
             })
         },
-        setDate(event, date){                                                         
-                if(event.added){
-                console.log('added')
-                event.added.element.dateToCook = date; 
-                console.log(event.added.element)
-                } else if (event.moved){
-                    console.log('moved')
-                    event.moved.dateToCook = date; 
-                } 
-                                
-            },
     },
     
     created(){

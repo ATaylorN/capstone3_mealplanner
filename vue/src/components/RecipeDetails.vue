@@ -71,6 +71,10 @@ export default {
         "image instructions"
         "ingredients instructions";
     height: 80vh;
+    overflow: hidden
+}
+.recipe-body:hover{
+    overflow-y: auto;
 }
 .recipeContainer{
     border-radius: 8px;
@@ -89,7 +93,7 @@ export default {
     color: black;    
 }
 #recipeImage {
-    max-height: 400px;
+    max-height: 300px;
     max-width: 460px;
     grid-area: image;
     margin-bottom: 0px;
@@ -130,10 +134,10 @@ overflow: hidden;
     overflow: hidden;
 }
 
-
 .instructions:hover{
     overflow-y: auto;
 }
+
 
 .instructions h3{
     padding-bottom: 2rem;

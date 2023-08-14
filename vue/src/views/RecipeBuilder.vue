@@ -272,6 +272,7 @@ input {
   grid-area: ingredients;
   align-content: center;
   background-color: #4a180c;
+  box-shadow: 0px 6px 20px 0px black;
   color: white;
   padding-top: 4rem;
   display: flex; 
@@ -312,6 +313,7 @@ input {
   align-content: center;
   background-color: #4a180c;
   color: white;
+  box-shadow: 0px 6px 20px 0px black;
   padding-top: 2rem;
   display: flex; 
   flex-direction: column; 
@@ -362,7 +364,7 @@ input {
   font-weight: 400;
 }
 .recipe-builder button:hover{
-  background-color: darkorange;
+  background-color: darkkhaki;
 }
 
 </style>

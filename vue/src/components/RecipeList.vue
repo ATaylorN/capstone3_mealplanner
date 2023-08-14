@@ -60,7 +60,7 @@ export default {
     text-decoration: none;
 }
 .detailsBtn:hover{
-    background-color: darkorange;
+    background-color: darkkhaki;
 }
 
 #recipe-image{

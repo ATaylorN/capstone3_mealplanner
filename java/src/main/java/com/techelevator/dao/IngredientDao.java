@@ -27,5 +27,5 @@ public interface IngredientDao {
 
     int deleteIngredientsByRecipeId (RecipeIngredientListDTO recipeIngredientListDTO);
 
-    List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate date);
+    List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate startDate, LocalDate endDate);
 }

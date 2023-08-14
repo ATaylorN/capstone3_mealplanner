@@ -12,6 +12,7 @@ import UserRecipeDetails from '../views/UserRecipeDetails.vue';
 import RecipeUpdate from '../views/RecipeUpdate.vue';
 import MealBuilder from '../views/MealBuilder.vue';
 import MealPlannerView from '../views/MealPlannerView.vue';
+import GroceryList from '../views/GroceryList.vue'
 //import { component } from 'vue/types/umd'
 
 
@@ -104,6 +105,11 @@ const router = new Router({
       path: '/meal-planner',
       name: 'meal-planner',
       component: MealPlannerView
+    },
+    {
+      path: '/grocery-list',
+      name: 'grocery-list',
+      component: GroceryList
     }
 
   ]

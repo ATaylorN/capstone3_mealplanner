@@ -19,19 +19,19 @@
           <!-- </form> -->
         </div>
 
-        <ul class="ingredient-search-results">
-          <li v-for="foundIngredient in searchResults" :key="foundIngredient.index">
+        <draggable class="ingredient-search-results" :list="searchResults" @start="drag=true" @end="drag=false" group="moveIngredient">
+          <figure v-for="foundIngredient in searchResults" :key="foundIngredient.index">
             <span @click="addNewIngredientToRecipe(foundIngredient)"> {{ foundIngredient.name }} </span>
             <img @click="addNewIngredientToRecipe(foundIngredient)" :src="foundIngredient.image" :alt="foundIngredient.name" class="img-rounded"/>
-          </li>
-        </ul>
+          </figure>
+        </draggable>
 
-        <ul class="ingredients">
-          <li v-for="ingredient in ingredients" :key="ingredient.id">
+        <draggable class="ingredients" :list="ingredients" @start="drag=true" @end="drag=false" group="moveIngredient">
+          <figure v-for="ingredient in ingredients" :key="ingredient.id">
             <span @click="addNewIngredientToRecipe(ingredient)"> {{ ingredient.name }} </span>
             <img @click="addNewIngredientToRecipe(ingredient)" :src="ingredient.image" class="img-rounded"/>
-          </li>
-        </ul>
+          </figure>
+        </draggable>
 
       </div>
 
@@ -46,14 +46,16 @@
       <button class="saveBtn">Save Recipe</button>
     </form>
 
-      <ul class="new-recipe-ingredient-list">
-        <li v-for="newIngredient in newRecipeIngredients" :key="newIngredient.id" class="new-recipe-ingredient">
-          <button @click="removeIngredientFromRecipe(newIngredient)"> Remove </button>
-          <span> {{ newIngredient.name }}</span>
-        </li>
-      </ul>
+    <div class="newRecipeContainer">
+      <draggable id="newRecipe" :list="newRecipeIngredients" @start="drag=true" @end="drag=false" group="moveIngredient">
+        <figure v-for="newIngredient in newRecipeIngredients" :key="newIngredient.id">
+          <img :src="newIngredient.image" :alt="newIngredient.name">
+          <span>{{newIngredient.name}}</span>
+        </figure>
+      </draggable>
     </div>
 
+    </div>
   </div>
   </div>
 </template>
@@ -63,10 +65,12 @@ import ingredientService from "@/services/IngredientService.js";
 import recipeService from "@/services/RecipeService.js";
 import spoonacularService from "@/services/SpoonacularService.js";
 import Header from "@/components/Header.vue";
+import draggable from 'vuedraggable';
 
 export default {
   components: {
     Header,
+    draggable
   },
   name: "recipe-builder",
   data() {
@@ -335,23 +339,9 @@ input {
 }
 
 #prep-instructions{
-  height: 40rem;
+  height: 20rem;
   color: black;
 }
-.new-recipe-ingredient {
-  background: white;
-  color: black;
-  max-width: 30rem;
-  margin-bottom: 2rem;
-}
-.new-recipe-ingredient-list {
-  font-weight: 700;
-  list-style: none;
-}
-.new-recipe-ingredient-list button{
- margin-right: 2rem;
-}
-
 .recipe-builder img{
   max-width: 14rem;
   max-height: 14rem;
@@ -366,5 +356,8 @@ input {
 .recipe-builder button:hover{
   background-color: darkkhaki;
 }
-
+.newRecipeContainer{
+  border: 5px solid yellow;
+  padding: 0rem 2rem 20rem 2rem;
+}
 </style>

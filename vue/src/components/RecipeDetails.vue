@@ -110,10 +110,10 @@ display: flex;
 flex-direction: column;
 width: 45rem;
 max-height: 35rem;
-overflow: scroll;
+overflow: hidden;
 }
-.ingredients-container::-webkit-scrollbar{
-    display: none;
+.ingredients-container:hover{
+    overflow-y: auto;
 }
 
 .instructions {
@@ -126,11 +126,12 @@ overflow: scroll;
     height: 70rem;
     max-width: 50rem;
     max-height: 56rem;
-    overflow: scroll;
+    overflow: hidden;
 }
 
-.instructions::-webkit-scrollbar{
-    display: none;
+
+.instructions:hover{
+    overflow-y: auto;
 }
 
 .instructions h3{

@@ -1,24 +1,25 @@
 <template>
   <div>
-    <Header />
+    <div class="ingredients" v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}}</div>
   </div>
 </template>
 
 <script>
-import Header from './Header.vue'
+
 import GroceryListService from '../services/GroceryListService.js'
 export default {
     name: "grocery-list",
     components: {
-        Header
+        
     },
+    props: ['startDate', 'endDate'],
     data() {
         return {
-        mealPlanIngredients: '',
-        startDate: '',
-        endDate: ''
+        mealPlanIngredients: [],
+        
     }
     },
+    
     methods: {
         getMealPlanIngredients(){
             GroceryListService.getMealPlanIngredients(this.startDate, this.endDate).then(response => {

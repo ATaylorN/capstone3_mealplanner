@@ -1,10 +1,14 @@
 <template>
   <div class="meal-planner">
 
-    <section class="calendar-container">
+    <div class="menuTitle">
+      <h1>My Meal Plan</h1>
+    </div>
+
+    <section class="calendar-container">      
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id">
-          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal">          
+          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag">          
             <span slot="header"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
                 {{ mealPlan.mealName }}
@@ -17,9 +21,9 @@
 
       <section class="meal-list">
 
-          <div class="saveBtn" @click="readCalendar()"> Save Meal Plan </div>
+          <button class="saveBtn" @click="readCalendar()"> Save Meal Plan </button>
           
-            <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false"> 
+            <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false" class="mealCardContainer"> 
               <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
                   <span :mealId="meal.mealId" > {{meal.mealName}} </span>
                   <span></span>
@@ -30,6 +34,7 @@
 
 
     <draggable class="trash" group="mealplan" :list="trashmode">
+      <i class="fa-solid fa-trash fa-2xl" style="color: #000000;"></i>
       <div>trash</div>
     </draggable>
   </div>
@@ -181,14 +186,33 @@ export default {
 /* 
 Set the calendar to a grid containing five rows, seven columns.
 */
+.menuTitle{
+  grid-area: title;
+  margin-top: 4rem;
+  text-align: center;
+  background-color: #4A180C;
+  color: white;
+  box-shadow: 0px 6px 20px 0px black;
+  border-radius: 10px;
+
+}
+.meal:hover{
+  cursor: pointer;
+}
+.calendarDrag{
+  max-height: 100%;
+  overflow:hidden;
+}
+.calendarDrag:hover{
+  overflow-y: auto;
+}
 section.calendar-container {
   grid-area: mid;
   background-color: wheat;
   color: black;
-  /* display: flex;
-    justify-content: center;
-    align-items: center; */
   padding: 2rem;
+  border-radius: 10px;
+   box-shadow: 0px 6px 20px 0px black;
 }
 .mealplancalendar {
   list-style: none;
@@ -203,43 +227,76 @@ section.calendar-container {
   height: 12rem;
   width: 11rem;
   border: 1px solid black;
-  border-radius: 3px;
+  border-radius: 1rem;
   background-color: tan;
+  box-shadow: 0px 2px 10px 0px black;
 }
 
 .meal-planner {
   display: grid;
   grid-template-columns: 1fr 3fr 1fr;
-  grid-template-rows: 1fr 1fr;
-  row-gap: 5rem;
+  grid-template-rows: 0.2fr 2fr 0.2fr 1fr;
   grid-template-areas:
+    ". title ."
     ". mid ."
-    ". lowerMid trash";
+    ".trash ."
+    ". lowerMid .";
 }
 
 .mealplancalendar li span {
-  margin: 2px;
+  padding: 1rem;
 }
 
 .trash {
+  margin-top: 1rem;
   grid-area: trash;
   color: black;
   height: 5rem;
-  width: 5rem;
+  width: 10rem;
   border: 1px solid black;
-  background-color: rgb(42, 165, 149);
+  background-color: rgb(202, 204, 204);
   border-radius: 3px;
+  text-align: center;
+  padding-top: 1rem;
+  box-shadow: 0px 2px 10px 0px black;
 }
-
 .meal-list {
   grid-area: lowerMid;
   background-color: wheat;
-  height: 40vh;
+  height: 30rem;
+  border-radius: 10px;
+  margin-top: 2rem;
+  box-shadow: 0px 6px 20px 0px black;
 }
-
 .meal-card {
   color: black;
-  padding-left: 3rem;
+  padding: 1rem;
+  border: 1px solid black;
+  border-radius: 1rem;
+  margin: 0.5rem;
+  background-color: white;
+  font-variant-caps: all-small-caps;
+  font-weight: 800;
+  width: 100px;
+  text-align: center;
+  box-shadow: 0px 6px 20px 0px black;
+}
+
+.meal-card:hover span{
+  cursor: pointer;
+  font-size: 2rem;
+}
+
+.saveBtn {
+  margin: 1rem;
+  font-size: 16px;
+  box-shadow: 0px 2px 10px 0px black;
+}
+.mealCardContainer{
+  display: flex;
+  flex-direction: row;
+  padding: 2rem;
+  flex-wrap: wrap;
 }
 
 </style>

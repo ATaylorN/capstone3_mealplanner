@@ -107,18 +107,18 @@ export default {
     max-height: 40rem;
     border-radius: 6px;
     width: 100%;
+    overflow: hidden;
 }
 
+.ingredientsList:hover{
+overflow-y: auto;
+}
 .ingredients-container{
 grid-area: ingredients;
 display: flex;
 flex-direction: column;
 width: 45rem;
 max-height: 35rem;
-overflow: hidden;
-}
-.ingredients-container:hover{
-    overflow-y: auto;
 }
 
 .instructions {

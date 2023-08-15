@@ -3,11 +3,12 @@
   <Header class="hdr"/>
     <section class="ingredient-data">
       <!-- list of ingredients to pick goes here -->
-      <ul>
-        <li v-for="ingredient in browseIngredientList" :key="ingredient.id" @click="addNewIngredientToRecipe(ingredient)">
+      <draggable class="ingredientsList" :list="browseIngredientList" @start="drag=true" @end="drag=false" group="newIngredients">
+        <figure v-for="ingredient in browseIngredientList" :key="ingredient.id" @click="addNewIngredientToRecipe(ingredient)">
           <span> {{ingredient.name}} </span>
-        </li>
-      </ul>
+          <img :src="ingredient.image" alt="">
+        </figure>
+      </draggable>
     </section>
 
     <section class="recipe-data">
@@ -40,6 +41,15 @@
       </li>
     </ul>
     </div>
+
+    <div class="addIngredient">
+      <draggable class="newIngredientsList" :list="newIngredientList" @start="drag=true" @end="drag=false" group="newIngredients">
+        <figure v-for="newIngredient in newIngredientList" :key="newIngredient.id">
+          <span> {{newIngredient.name}} </span>
+          <img :src="newIngredient.image" alt="">
+        </figure>
+      </draggable>
+    </div>
       </section>
 
   </div>
@@ -49,10 +59,12 @@
 import RecipeService from "../services/RecipeService";
 import IngredientService from '@/services/IngredientService';
 import Header from '@/components/Header.vue';
+import draggable from 'vuedraggable';
 export default {
   name: "updateRecipe",
   components: {
-    Header
+    Header,
+    draggable
   },
   data() {
     return {
@@ -129,10 +141,13 @@ export default {
 </script>
 
 <style>
+.recipe-updater img{
+  max-width: 100px;
+}
 .recipe-updater{
   display: grid;
   grid-template-rows: 0.5fr 3fr;
-  grid-template-columns: 1fr 3fr;
+  grid-template-columns: 1fr 2fr;
   grid-template-areas: "header header"
                         "ingredients recipe"; 
   gap: 4rem; 
@@ -148,20 +163,32 @@ section.ingredient-data{
   color: white;
   padding: 4rem;
   margin-left: 4rem;
+  max-height: 700px;
+  overflow: hidden;
+}
+section.ingredient-data:hover{
+  overflow-y: scroll;
 }
 .recipe-data{
   margin-right: 4rem;
   border-radius: 20px;
   grid-area: recipe;
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-rows: 1fr 1fr;
+  grid-template-areas: "info info oldIngredients"
+                        "new new oldIngredients";
   padding: 4rem 8rem 4rem 8rem;
   background-color:#4a180c;
   color: white;
+  gap: 2rem;
 }
 .recipe-data input{
   color: black;
   margin-bottom: 2rem;
+}
+.recipe-data form{
+  grid-area: info;
 }
 .recipe-data button{
   color: black;
@@ -176,5 +203,12 @@ section.ingredient-data{
 }
 .recipe-inputs input{
   height: 4rem;
+}
+.recipe-ingredients{
+   grid-area: oldIngredients;
+}
+.addIngredient{
+  grid-area: new;
+  border: 5px solid yellow;
 }
 </style>

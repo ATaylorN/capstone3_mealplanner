@@ -1,6 +1,7 @@
 package com.techelevator.controller;
 
 import com.techelevator.dao.IngredientDao;
+import com.techelevator.dao.UserDao;
 import com.techelevator.model.Ingredient;
 import com.techelevator.model.RecipeIngredientListDTO;
 import org.springframework.http.HttpStatus;
@@ -8,6 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 
+import java.security.Principal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,9 +19,11 @@ import java.util.List;
 @RequestMapping(value = "/ingredients")
 public class IngredientController {
     private IngredientDao ingredientDao;
+    private UserDao userDao;
 
-    public IngredientController(IngredientDao ingredientDao){
+    public IngredientController(IngredientDao ingredientDao, UserDao userDao){
         this.ingredientDao = ingredientDao;
+        this.userDao = userDao;
     }
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "/recipe-ingredient-list", method = RequestMethod.POST)
@@ -41,6 +45,17 @@ public class IngredientController {
             throw new RuntimeException("Failed to add ingredient list rows.", e);
         }
         return rowsAdded;
+    }
+    @PreAuthorize("isAuthenticated()")
+    @RequestMapping(value = "/groceryList{fromDate}{toDate}", method = RequestMethod.GET)
+    public List<Ingredient> groceryList(@RequestParam String fromDate, @RequestParam String toDate, Principal principal) {
+        List<Ingredient> ingredients = new ArrayList<>();
+        try {
+            ingredients = ingredientDao.selectAllIngredientsForMealPlansOnAGivenDate(LocalDate.parse(fromDate), LocalDate.parse(toDate), userDao.findIdByUsername(principal.getName()));
+        } catch (RuntimeException e) {
+            throw new RuntimeException("Couldn't get ingredients for specified date range");
+        }
+        return ingredients;
     }
     @ResponseStatus(HttpStatus.CREATED)
     @RequestMapping(value = "", method = RequestMethod.POST)
@@ -76,14 +91,5 @@ public class IngredientController {
         }
     }
 
-    @RequestMapping(value = "/groceryList?from={fromDate}&to={toDate}", method = RequestMethod.GET)
-    public List<Ingredient> groceryList(@PathVariable LocalDate fromDate, @PathVariable LocalDate toDate) {
-        List<Ingredient> ingredients = new ArrayList<>();
-        try {
-            ingredients = ingredientDao.selectAllIngredientsForMealPlansOnAGivenDate(fromDate, toDate);
-        } catch (RuntimeException e) {
-            throw new RuntimeException("Couldn't get ingredients for specified date range");
-        }
-        return ingredients;
-    }
+
 }

@@ -1,9 +1,10 @@
 import axios from "axios";
 
 export default {
+    getMealPlansForDateRange(startDate, endDate){
+        return axios.get(`/meals/meal-plan?${startDate}&to=${endDate}`)
+    },
     getMealPlanIngredients(startDate, endDate){
-        console.log(startDate);
-        console.log(endDate)
-        return axios.get('/grocery-list')
+        return axios.get(`ingredients/groceryList?fromDate=${startDate}&toDate=${endDate}`)
     }
 }

@@ -161,7 +161,7 @@ section.ingredient-data{
   overflow: hidden;
 }
 section.ingredient-data:hover{
-  overflow-y: scroll;
+  overflow: auto;
 }
 .recipe-data{
   margin-right: 4rem;
@@ -214,7 +214,7 @@ section.ingredient-data:hover{
   overflow: hidden;
 }
 .ingredients:hover{
-  overflow-y: scroll;
+  overflow: auto;
 }
 .recipe-updater figure{
   display: flex;

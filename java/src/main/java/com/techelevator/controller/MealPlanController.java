@@ -133,11 +133,11 @@ public class MealPlanController {
         }
     }
 
-    @RequestMapping(value="/meal-plan&from={fromDate}&to={toDate}", method = RequestMethod.GET)
-    public List<MealPlan>getUserMealPlansForDateRange(@PathVariable LocalDate startDate, @PathVariable LocalDate endDate, Principal principal){
+    @RequestMapping(value="/meal-plan?from={fromDate}&to={toDate}", method = RequestMethod.GET)
+    public List<MealPlan>getUserMealPlansForDateRange(@PathVariable LocalDate fromDate, @PathVariable LocalDate toDate, Principal principal){
         List<MealPlan> mealPlans = new ArrayList<>();
         try{
-            mealPlans = mealPlanDao.getUserMealPlansForDateRange(startDate, endDate);
+            mealPlans = mealPlanDao.getUserMealPlansForDateRange(fromDate, toDate);
         }catch (RuntimeException e){
             throw new RuntimeException("Couldn't get meal plans for specified date range!");
         }

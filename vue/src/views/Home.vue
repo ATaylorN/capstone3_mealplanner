@@ -5,7 +5,7 @@
     <div class="top-section">
       <div class="next-recipe">
         <h1>UP NEXT</h1>
-        <img v-bind="nextMeal" src="@/Images/recipePlaceHolder.png" alt="">
+        <img :v-bind="nextMealPlan" src="@/Images/recipePlaceHolder.png" alt="">
         <p>INSERT RECIPE TITLE HERE</p>
       </div>
 

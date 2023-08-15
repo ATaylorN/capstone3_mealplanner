@@ -323,6 +323,8 @@ input {
   list-style-type: none;
   gap: 40px;
   padding-bottom: 1rem;
+  flex-wrap: wrap;
+  max-width: 400px;
 }
 
 .recipe-data-section{
@@ -374,13 +376,30 @@ input {
   background-color: darkkhaki;
 }
 .newRecipeContainer{
-padding-top: 1rem;
+margin: 2rem;
+padding: 1rem;
+border: 2px solid white;
+max-height: 200px;
+overflow: hidden;
 }
+.newRecipeContainer:hover{
+  overflow: auto;
+}
+
 .all-ingredients {
-  max-height: 80rem;
+  margin: 2rem;
+  max-height: 400px;
   overflow: hidden;
 }
 .all-ingredients:hover{
-  overflow-y: auto;
+  overflow: auto;
 }
+
+#newRecipe{
+padding: 2rem;
+display: flex;
+flex-direction: row;
+flex-wrap: wrap;
+}
+
 </style>

@@ -27,7 +27,7 @@
           </figure>
         </draggable>
 
-        <div>
+        <div class="meals-container">
           <draggable id="meal-sortable" class="user-meals">
             <figure class="meal-card" id="user-meal-list" v-for="meal in meals" :key="meal.id">
               <span class="recipe-card-title">{{ meal.mealName }}</span>
@@ -203,9 +203,10 @@ figure {
 }
 .recipe-card img {
   border: 2 solid white;
-  max-width: 190px;
-  max-height: auto;
+  max-width: 15rem;
+  max-height: 15rem;
   border-radius: 4px;
+  padding-top: 1rem;
 }
 .recipe-card span {
   max-width: 90%;
@@ -249,7 +250,12 @@ figure {
   background-color: darkkhaki;
   cursor: pointer;
 }
-
+.meals-container{
+  overflow: hidden;
+}
+.meals-container:hover{
+  overflow-y: auto;
+}
 .user-meals {
   grid-area: userMeals;
   display: flex;

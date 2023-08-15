@@ -3,8 +3,10 @@
       <h2>{{getHeaderText}}</h2>
       <button @click="getMealPlanIngredients">Generate Grocery List</button> 
       <button v-if="listShowing" @click="printGroceryList()">Print Grocery List</button>
+           <button v-if="listShowing" @click="emailGroceryList()">E-mail Grocery List</button>
+      
       <button @click="$emit('clear'), clear()">Clear</button>      
-    <div class="ingredients" id="ingredient-list"> 
+    <div class="ingredients" id="ingredient-list" ref="listo"> 
         <ol> 
             <li v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}} </li>           
         </ol>  
@@ -16,6 +18,7 @@
 
 import GroceryListService from '../services/GroceryListService.js'; 
 import { Printd }  from 'printd'; 
+import emailjs from '@emailjs/browser'
 
 export default {
     name: "grocery-list",
@@ -46,11 +49,11 @@ export default {
             GroceryListService.getMealPlanIngredients(this.startDate, this.endDate).then(response => {
                 if (response.status === 200){
                     this.mealPlanIngredients = response.data
-                    if(this.mealPlanIngredients.length > 1){
-                        this.listShowing = true; 
+                        if(this.mealPlanIngredients.length > 1){
+                            this.listShowing = true; 
+                        }
                     }
-                }
-            })
+                })
             return this.mealPlanIngredients
             },
         clear(){
@@ -63,10 +66,27 @@ export default {
             d.print(document.getElementById('ingredient-list'))
             console.log('listo printo');
         },
-        },
+        emailGroceryList(){
+            let messageBody = this.$refs.listo.outerHTML; 
+            // this.$refs.listo
 
-
+            console.log(); 
+            let params = {
+                to_name: "Sled Jacobs Jr",                
+                user_email: "benj427@gmail.com",                
+                message: messageBody
+                }
+            console.log(params.message);
+            // console.log(emailjs)
+            emailjs.send('service_8vy3gma', 'template_x42f4g7', params, 'GEie82de2ImMbutSn')
+                .then(res => {
+                    console.log(res.text);
+                    console.log("great success")
+                })
         }
+    },
+
+}
 
 
 </script>

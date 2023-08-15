@@ -13,7 +13,7 @@ import RecipeUpdate from '../views/RecipeUpdate.vue';
 import MealBuilder from '../views/MealBuilder.vue';
 import MealPlannerView from '../views/MealPlannerView.vue';
 import GroceryList from '../views/GroceryList.vue';
-import EmailView from '../views/EmailView.vue';
+import MealPlanDetails from '../views/MealPlanDetails.vue'
 //import { component } from 'vue/types/umd'
 
 
@@ -113,9 +113,9 @@ const router = new Router({
       component: GroceryList
     },
     {
-      path: '/email',
-      name: 'email',
-      component: EmailView
+      path: '/meal-plan-details/:id',
+      name: 'meal-plan-details',
+      component: MealPlanDetails
     }
 
   ]

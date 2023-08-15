@@ -100,7 +100,8 @@ const router = new Router({
     {
       path: '/meal-builder',
       name: 'meal-builder',
-      component: MealBuilder
+      component: MealBuilder,
+      props:{}
     },
     {
       path: '/meal-planner',
@@ -113,9 +114,9 @@ const router = new Router({
       component: GroceryList
     },
     {
-      path: '/meal-plan-details/:id',
+      path: '/meal-plan-details/:date',
       name: 'meal-plan-details',
-      component: MealPlanDetails
+      component: MealPlanDetails,
     }
 
   ]

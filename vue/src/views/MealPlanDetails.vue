@@ -1,4 +1,5 @@
 <template>
+  <!-- send meal plan list to MealPlanDetails via router prop -->
   <MealPlanDetails />
 </template>
 

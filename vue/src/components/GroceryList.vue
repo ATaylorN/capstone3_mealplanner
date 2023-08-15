@@ -63,7 +63,7 @@ export default {
         },
         printGroceryList(){             
             const d = new Printd();
-            d.print(document.getElementById('ingredient-list'))
+            d.print(document.getElementById('ingredient-list')) // html element
             console.log('listo printo');
         },
         emailGroceryList(){

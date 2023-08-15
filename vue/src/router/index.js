@@ -13,7 +13,7 @@ import RecipeUpdate from '../views/RecipeUpdate.vue';
 import MealBuilder from '../views/MealBuilder.vue';
 import MealPlannerView from '../views/MealPlannerView.vue';
 import GroceryList from '../views/GroceryList.vue';
-
+import MealPlanDetails from '../views/MealPlanDetails.vue'
 //import { component } from 'vue/types/umd'
 
 
@@ -100,7 +100,8 @@ const router = new Router({
     {
       path: '/meal-builder',
       name: 'meal-builder',
-      component: MealBuilder
+      component: MealBuilder,
+      props:{}
     },
     {
       path: '/meal-planner',
@@ -112,6 +113,12 @@ const router = new Router({
       name: 'grocery-list',
       component: GroceryList
     },
+    {
+      path: '/meal-plan-details/:date',
+      name: 'meal-plan-details',
+      component: MealPlanDetails,
+    }
+
   ]
 })
 

@@ -1,6 +1,7 @@
 package com.techelevator.dao;
 
 import com.techelevator.model.Meal;
+import com.techelevator.model.Recipe;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.jdbc.BadSqlGrammarException;
 import org.springframework.jdbc.CannotGetJdbcConnectionException;
@@ -15,9 +16,10 @@ import java.util.List;
 public class JdbcMealDao implements MealDao {
 
     JdbcTemplate jdbcTemplate;
-
-    public JdbcMealDao(JdbcTemplate jdbcTemplate) {
+    JdbcRecipeDao recipeDao;
+    public JdbcMealDao(JdbcTemplate jdbcTemplate, JdbcRecipeDao recipeDao) {
         this.jdbcTemplate = jdbcTemplate;
+        this.recipeDao = recipeDao;
     }
 
     @Override
@@ -101,6 +103,27 @@ public class JdbcMealDao implements MealDao {
             return numOfRows3;
         }
         return 0;
+    }
+    public List<Recipe> getRecipesByMealId(int mealId, int userId){
+        List<Recipe> mealRecipes = new ArrayList<>();
+        String sql = "select recipes.recipe_id, recipe_ingredients, instructions, recipes.user_id, recipe_name, recipe_image from recipes " +
+                " join meal_recipes on meal_recipes.recipe_id = recipes.recipe_id " +
+                " join meals on meals.meal_id = meal_recipes.meal_id " +
+                " where meal_recipes.meal_id = ? AND meals.user_id = ?";
+        try{
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, mealId, userId);
+            while (rows.next()){
+                mealRecipes.add(recipeDao.mapRowToRecipe(rows));
+            }
+        } catch (CannotGetJdbcConnectionException e) {
+            throw new RuntimeException("Unable to connect to the database.", e);
+        } catch (DataIntegrityViolationException e) {
+            throw new RuntimeException("Action would violate data integrity.", e);
+        } catch (BadSqlGrammarException e) {
+            throw new RuntimeException("Invalid syntax in query statement.", e);
+        }
+
+        return mealRecipes;
     }
 
     @Override

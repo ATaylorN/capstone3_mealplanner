@@ -7,13 +7,17 @@
 
     <section class="calendar-container">      
       <ul class="mealplancalendar">
-        <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id">
+        <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id" @click="goToDetailView(calendarSlot.date)">
+          
           <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag">          
             <span slot="header" @click="setDates(calendarSlot.date)"> {{ calendarSlot.displayDate }} <br></span>
+            
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
-                {{ mealPlan.mealName }}
+             {{ mealPlan.mealName }} 
             </span>
+            
           </draggable>
+          <!-- <button>View Plan Details</button> -->
         </li>
       </ul>
     </section>
@@ -160,6 +164,10 @@ export default {
                     });
             })
         },
+        goToDetailView(slotDate){
+          // console.log(date)
+          this.$router.push({name: 'meal-plan-details', params: {date: slotDate}})
+        }
     },
     
     created(){

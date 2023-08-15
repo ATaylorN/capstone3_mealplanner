@@ -85,6 +85,16 @@ public class MealPlanController {
         }
         return newMealPlanId;
     }
+    @RequestMapping(value="/meal-plans{fromDate}{toDate}", method = RequestMethod.GET)
+    public List<MealPlan>getUserMealPlansForDateRange(@RequestParam String fromDate, @RequestParam String toDate, Principal principal){
+        List<MealPlan> mealPlans = new ArrayList<>();
+        try{
+            mealPlans = mealPlanDao.getUserMealPlansForDateRange(LocalDate.parse(fromDate), LocalDate.parse(toDate));
+        }catch (RuntimeException e){
+            throw new RuntimeException("Couldn't get meal plans for specified date range!");
+        }
+        return mealPlans;
+    }
 
     @RequestMapping(value="", method = RequestMethod.GET)
     public List<Meal> getUserMeals(Principal principal){
@@ -110,10 +120,11 @@ public class MealPlanController {
         return mealPlans;
     }
     @RequestMapping(value = "/{id}/recipes", method = RequestMethod.GET)
-    public List<Recipe> getRecipesByMealId(@RequestParam int id) {
+    public List<Recipe> getRecipesByMealId(@PathVariable int id, Principal principal) {
         List<Recipe> mealRecipes = new ArrayList<>();
+        int userId = userDao.findIdByUsername(principal.getName());
         try{
-           mealRecipes = getRecipesByMealId(id);
+            mealRecipes = mealDao.getRecipesByMealId(id, userId);
         } catch (RuntimeException e){
             throw new RuntimeException("Couldn't get the recipes for the given meal.");
         }
@@ -133,16 +144,7 @@ public class MealPlanController {
         }
     }
 
-    @RequestMapping(value="/meal-plan?from={fromDate}&to={toDate}", method = RequestMethod.GET)
-    public List<MealPlan>getUserMealPlansForDateRange(@PathVariable LocalDate fromDate, @PathVariable LocalDate toDate, Principal principal){
-        List<MealPlan> mealPlans = new ArrayList<>();
-        try{
-            mealPlans = mealPlanDao.getUserMealPlansForDateRange(fromDate, toDate);
-        }catch (RuntimeException e){
-            throw new RuntimeException("Couldn't get meal plans for specified date range!");
-        }
-        return mealPlans;
-    }
+
 
     @RequestMapping(value="/meal-plan/{id}", method = RequestMethod.PUT)
     public MealPlan updateMealPlan(@PathVariable int id, @RequestBody MealPlan mealPlanToUpdate){

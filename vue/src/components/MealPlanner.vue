@@ -46,9 +46,6 @@ export default {
     draggable,
     GroceryList
   },
-  // when I drag a meal to a date, create a meal plan with the date of the slot that was given.
-  // if I drag a meal out of the calendar, destroy the corresponding meal plan.
-  // if I drag a meal from one date slot to another, change the date instead of creating a new entry.
 
   data() {
     return {
@@ -60,15 +57,7 @@ export default {
       endDate: "",
     };
   },
-//   computed: {
-//       getMealPlansForCalendarSlot(){
-//           return this.dateSlots.forEach(dateSlot => {
-//               dateSlot.mealPlans = this.mealPlans.filter(mealPlan =>{
-//                   return mealPlan.dateToCook == dateSlot.date; 
-//               })
-//           });
-//       }
-//   },
+
     methods: {
         buildCalendar(){
             let d = moment();
@@ -199,26 +188,28 @@ export default {
 /* 
 Set the calendar to a grid containing five rows, seven columns.
 */
-section.calendar-container {
-  grid-area: mid;
-  background-color: wheat;
-  color: black;
-  /* display: flex;
-    justify-content: center;
-    align-items: center; */
-  padding: 2rem;
-}
-
 .meal-planner {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr;
+  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-rows: 2fr 1fr;
   row-gap: 5rem;
   column-gap: 5rem;
   grid-template-areas:
     "mid mid groceries"
     "lowerMid trash .";
 }
+
+section.calendar-container {
+  grid-area: mid;
+  background-color: wheat;
+  color: black;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+}
+
+
 
 #groceries{
   grid-area: groceries; 
@@ -230,7 +221,7 @@ section.calendar-container {
   grid-template-rows: 11rem 11rem 11rem 11rem;
   grid-template-columns: 11rem 11rem 11rem 11rem 11rem 11rem 11rem;
   gap: 6rem;
-  padding: 0;
+  
 }
 
 .calendar-square {

@@ -120,7 +120,7 @@ public class JdbcIngredientDao implements IngredientDao{
     @Override
     public List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate startDate, LocalDate endDate, int userId) {
         List<Ingredient> ingredients = new ArrayList<>();
-        String sql = "SELECT DISTINCT ingredient_id, ingredient_name, ingredient_image FROM ingredients " +
+        String sql = "SELECT DISTINCT ingredients.ingredient_id, ingredient_name, ingredient_image FROM ingredients " +
                      "JOIN recipe_ingredients ON recipe_ingredients.ingredient_id = ingredients.ingredient_id " +
                      "JOIN recipes ON recipes.recipe_id = recipe_ingredients.recipe_id JOIN meal_recipes ON meal_recipes.recipe_id = recipes.recipe_id JOIN meals ON meals.meal_id = meal_recipes.meal_id JOIN meal_plans ON meal_plans.meal_id = meals.meal_id WHERE meal_plans.plan_date >= ? AND meal_plans.plan_date <= ? AND meal_plans.user_id = ?";
         try {

@@ -5,7 +5,7 @@
     <div class="top-section">
       <div class="next-recipe">
         <h1>UP NEXT</h1>
-        <img :v-bind="nextMealPlan" src="@/Images/recipePlaceHolder.png" alt="">
+        <img src="@/Images/recipePlaceHolder.png" alt="">
         <p>INSERT RECIPE TITLE HERE</p>
       </div>
 
@@ -33,7 +33,7 @@
 
 <script>
 import Header from '@/components/Header';
-import MealService from '@/services/MealService.js';
+
 
 export default {
   name: "home",
@@ -49,11 +49,7 @@ export default {
     sendToMealPlan() {
       return this.$router.push({name: 'meal-planner'})
     }
-  },
-    nextMealPlan(){
-      MealService.getAllUserMeals();
-      this.nextMeal = MealService[0];
-    }
+  }
 };
 </script>
 

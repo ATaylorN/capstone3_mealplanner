@@ -34,7 +34,7 @@
     </form>
 
     <div class="recipe-ingredients">
-    <span >Your Ingredients</span>
+    <span class="yours">Your Ingredients</span>
     <draggable class="ingredients" :list="ingredientList" @start="drag=true" @end="drag=false" group="newIngredients">
       <figure v-for="ingredient in ingredientList" :key="ingredient.id" @click="removeIngredientFromRecipe(ingredient)">
         <span> {{ingredient.name}} </span>
@@ -42,15 +42,6 @@
       </figure>
     </draggable>
     </div>
-<!-- 
-    <div class="addIngredient">
-      <draggable class="newIngredientsList" :list="newIngredientList" @start="drag=true" @end="drag=false" group="newIngredients">
-        <figure v-for="ingredient in ingredientList" :key="ingredient.id">
-          <span> {{ingredient.name}} </span>
-          <img :src="ingredient.image" alt="">
-        </figure>
-      </draggable>
-    </div> -->
       </section>
 
   </div>
@@ -61,6 +52,7 @@ import RecipeService from "../services/RecipeService";
 import IngredientService from '@/services/IngredientService';
 import Header from '@/components/Header.vue';
 import draggable from 'vuedraggable';
+
 export default {
   name: "updateRecipe",
   components: {
@@ -153,6 +145,7 @@ export default {
                         "ingredients recipe"; 
   gap: 4rem; 
   font-size: 16px;
+  margin-bottom: 2rem;
 }
 .hdr{
   grid-area: header;
@@ -177,16 +170,17 @@ section.ingredient-data:hover{
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 1fr 1fr;
-  grid-template-areas: "info info oldIngredients"
-                        "new new oldIngredients";
-  padding: 4rem 8rem 4rem 8rem;
+  grid-template-areas: "info info info"
+                        "yours yours yours";
+  padding: 4rem 8rem 0rem 8rem;
   background-color:#4a180c;
   color: white;
-  gap: 2rem;
+  /* gap: 2rem; */
+  max-height: 700px;
 }
 .recipe-data input{
   color: black;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
 }
 .recipe-data form{
   grid-area: info;
@@ -206,10 +200,35 @@ section.ingredient-data:hover{
   height: 4rem;
 }
 .recipe-ingredients{
-   grid-area: oldIngredients;
+   grid-area: yours;
+   border: 2px solid white;
+   padding: 1rem;
+   border-radius: 10px;
+   text-align: center;
+   margin-bottom: 2rem;
 }
-.addIngredient{
-  grid-area: new;
-  border: 5px solid yellow;
+.ingredients{
+  display: flex;
+  flex-wrap: wrap;
+  max-height: 300px;
+  overflow: hidden;
+}
+.ingredients:hover{
+  overflow-y: scroll;
+}
+.recipe-updater figure{
+  display: flex;
+  flex-direction: column-reverse;
+  text-align: center;
+  margin-bottom: 2rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 2rem;
+  background-color: white;
+  color: black;
+  max-width: 100px;
+  border-radius: 2px;
+  font-weight: 900;
+  font-variant-caps:all-small-caps;
 }
 </style>

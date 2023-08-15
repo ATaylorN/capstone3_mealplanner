@@ -4,7 +4,7 @@
       <button @click="getMealPlanIngredients">Generate Grocery List</button> 
       <button v-if="listShowing" @click="printGroceryList()">Print Grocery List</button>
       <button @click="$emit('clear'), clear()">Clear</button>      
-    <div class="ingredients"> 
+    <div class="ingredients" id="ingredient-list"> 
         <ol> 
             <li v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}} </li>           
         </ol>  
@@ -14,7 +14,8 @@
 
 <script>
 
-import GroceryListService from '../services/GroceryListService.js'
+import GroceryListService from '../services/GroceryListService.js'; 
+import { Printd }  from 'printd'; 
 
 export default {
     name: "grocery-list",
@@ -57,7 +58,9 @@ export default {
             this.listShowing = false;
             
         },
-        printGroceryList(){
+        printGroceryList(){             
+            const d = new Printd();
+            d.print(document.getElementById('ingredient-list'))
             console.log('listo printo');
         },
         },

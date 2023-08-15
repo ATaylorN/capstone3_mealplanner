@@ -9,7 +9,7 @@
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id">
           <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag">          
-            <span slot="header"> {{ calendarSlot.displayDate }} <br></span>
+            <span slot="header" @click="setDates(calendarSlot.date)"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
                 {{ mealPlan.mealName }}
             </span>
@@ -29,8 +29,7 @@
                   <span :mealId="meal.mealId" > {{meal.mealName}} </span>
                   <span></span>
               </div>
-            </draggable>
-      
+            </draggable>      
     </section>
 
 
@@ -38,21 +37,26 @@
       <i class="fa-solid fa-trash fa-2xl" style="color: #000000;"></i>
       <div>trash</div>
     </draggable>
+      <!-- 
+        Need to figure out how to make a control on the child key off data in the parent
+       -->
+      <GroceryList id='groceries' @clear="clearDates()" :startDate="startDate" :endDate="endDate" />
+
   </div>
+
 </template>
 
 <script>
 import MealService from "@/services/MealService.js";
 import draggable from "vuedraggable";
 import moment from "moment";
+import GroceryList from '@/components/GroceryList';
 export default {
   name: "MealPlanner",
   components: {
     draggable,
+    GroceryList
   },
-  // when I drag a meal to a date, create a meal plan with the date of the slot that was given.
-  // if I drag a meal out of the calendar, destroy the corresponding meal plan.
-  // if I drag a meal from one date slot to another, change the date instead of creating a new entry.
 
   data() {
     return {
@@ -60,17 +64,11 @@ export default {
       mealsToDrag: [],
       mealPlans: [],
       trashmode: [],
+      startDate: "",
+      endDate: "",
     };
   },
-//   computed: {
-//       getMealPlansForCalendarSlot(){
-//           return this.dateSlots.forEach(dateSlot => {
-//               dateSlot.mealPlans = this.mealPlans.filter(mealPlan =>{
-//                   return mealPlan.dateToCook == dateSlot.date; 
-//               })
-//           });
-//       }
-//   },
+
     methods: {
         buildCalendar(){
             let d = moment();
@@ -95,6 +93,25 @@ export default {
                 })
                 this.dateSlots.push(calendarSlot)
             }
+        },
+        clearDates(){
+          this.startDate = "";
+          this.endDate = "";
+        },
+        setDates(date){
+          // if both dates aren't populated, set the start date first. 
+          if(!this.startDate && !this.endDate){
+            this.startDate = date;
+          } else if(date > this.startDate && date < this.endDate){
+            // shrink the window
+            this.start = date; 
+          } else if (date < this.startDate && date < this.endDate){
+            //grow the window toward start date. 
+            this.startDate = date; 
+          } else if (date > this.startDate && date > this.endDate){
+            // grow the window toward end date.
+            this.endDate = date; 
+          }
         },
         readCalendar(){
             let mealPlans = [];
@@ -123,13 +140,9 @@ export default {
                     .then(response => {
                         console.log(response.status);
                         this.trashmode.forEach(mealPlan => {
-                          console.log("Calling delete on: ");
-                          console.log(mealPlan);
-                          if(mealPlan.id){            
-                            console.log("Deleting mealplan " + mealPlan.id)                
+                          if(mealPlan.id){                           
                             MealService.deleteMealPlans(mealPlan.id)
                               .then( response => {
-                                console.log("Delete endpoint hit.")
                                 console.log(response.status)
                                 })
                               .catch(err => {console.log(err)})
@@ -179,6 +192,9 @@ export default {
                   console.log(error.request)
                 }
             })                     
+    },
+    beforeDestroy(){
+      this.readCalendar();
     }
 }
 </script>
@@ -215,13 +231,20 @@ section.calendar-container {
   border-radius: 10px;
    box-shadow: 0px 6px 20px 0px black;
 }
+
+
+
+#groceries{
+  grid-area: groceries; 
+}
+
 .mealplancalendar {
   list-style: none;
   display: grid;
   grid-template-rows: 11rem 11rem 11rem 11rem;
   grid-template-columns: 11rem 11rem 11rem 11rem 11rem 11rem 11rem;
   gap: 6rem;
-  padding: 0;
+  
 }
 
 .calendar-square {
@@ -235,11 +258,12 @@ section.calendar-container {
 
 .meal-planner {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 3fr 2fr;
   grid-template-rows: 0.2fr 2fr 0.2fr 1fr;
+  column-gap: 5rem;
   grid-template-areas:
     ". title ."
-    ". mid ."
+    ". mid groceries"
     ".trash ."
     ". lowerMid .";
 }
@@ -298,6 +322,10 @@ section.calendar-container {
   flex-direction: row;
   padding: 2rem;
   flex-wrap: wrap;
+}
+
+#groceries{
+  background-color: wheat;
 }
 
 </style>

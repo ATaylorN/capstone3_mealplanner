@@ -1,25 +1,45 @@
 <template>
-  <div>
-    <div class="ingredients" v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}}</div>
+  <div id="grocery-list">
+      <h2>{{getHeaderText}}</h2>
+      <button @click="getMealPlanIngredients">Generate Grocery List</button> 
+      <button v-if="listShowing" @click="getMealPlanIngredients">Print Grocery List</button>
+      <button @click="$emit('clear')">Clear</button>      
+    <div class="ingredients"> 
+        <ol> 
+            <li v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}} </li>           
+        </ol>  
+    </div>    
   </div>
 </template>
 
 <script>
 
 import GroceryListService from '../services/GroceryListService.js'
+
 export default {
     name: "grocery-list",
     components: {
         
     },
-    props: ['startDate', 'endDate'],
+    props: ['startDate', 'endDate', 'mealPlans'],
     data() {
-        return {
-        mealPlanIngredients: [],
-        
-    }
+            return {
+                mealPlanIngredients: [],       
+        }
     },
-    
+    computed: {
+      getHeaderText(){
+          let output = "";
+          if(!this.startDate && !this.endDate){
+              output = "Select dates to view meal plans."; 
+          } else if (!this.startDate) {
+              output = "Plans from today til " + this.endDate; 
+          } else {
+              output = "Plans from " + this.startDate + " to " + this.endDate; 
+          }
+          return output; 
+      }  
+    },    
     methods: {
         getMealPlanIngredients(){
             GroceryListService.getMealPlanIngredients(this.startDate, this.endDate).then(response => {
@@ -29,11 +49,15 @@ export default {
             })
             return this.mealPlanIngredients
             }
+        },
+        clear(){
+            this.mealPlanIngredients = [];
         }
         }
 
 
 </script>
 
-<style>
+<style scoped>
+
 </style>

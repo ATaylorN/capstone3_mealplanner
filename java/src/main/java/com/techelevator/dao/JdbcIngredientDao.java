@@ -118,18 +118,13 @@ public class JdbcIngredientDao implements IngredientDao{
         return rowsRemoved;
     }
     @Override
-    public List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate startDate, LocalDate endDate) {
+    public List<Ingredient> selectAllIngredientsForMealPlansOnAGivenDate(LocalDate startDate, LocalDate endDate, int userId) {
         List<Ingredient> ingredients = new ArrayList<>();
-        String sql = "SELECT DISTINCT ingredient_name\n" +
-                "FROM ingredients\n" +
-                "JOIN recipe_ingredients ON recipe_ingredients.ingredient_id = ingredients.ingredient_id\n" +
-                "JOIN recipes ON recipes.recipe_id = recipe_ingredients.recipe_id\n" +
-                "JOIN meal_recipes ON meal_recipes.recipe_id = recipes.recipe_id\n" +
-                "JOIN meals ON meals.meal_id = meal_recipes.meal_id\n" +
-                "JOIN meal_plans ON meal_plans.meal_id = meals.meal_id\n" +
-                "WHERE meal_plans.plan_date >= ? AND meal_plans.plan_date <= ?";
+        String sql = "SELECT DISTINCT ingredient_id, ingredient_name, ingredient_image FROM ingredients " +
+                     "JOIN recipe_ingredients ON recipe_ingredients.ingredient_id = ingredients.ingredient_id " +
+                     "JOIN recipes ON recipes.recipe_id = recipe_ingredients.recipe_id JOIN meal_recipes ON meal_recipes.recipe_id = recipes.recipe_id JOIN meals ON meals.meal_id = meal_recipes.meal_id JOIN meal_plans ON meal_plans.meal_id = meals.meal_id WHERE meal_plans.plan_date >= ? AND meal_plans.plan_date <= ? AND meal_plans.user_id = ?";
         try {
-            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, Date.valueOf(startDate), Date.valueOf(endDate));
+            SqlRowSet rows = jdbcTemplate.queryForRowSet(sql, startDate, endDate, userId);
             while(rows.next()){
                 ingredients.add(mapRowToIngredient(rows));
             }

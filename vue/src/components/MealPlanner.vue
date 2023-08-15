@@ -4,7 +4,7 @@
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id">
           <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal">          
-            <span @click="setDates(calendarSlot.date, calendarSlot.displayDate)" slot="header"> {{ calendarSlot.displayDate }} <br></span>
+            <span @click="setDates(calendarSlot.date)" slot="header"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
                 {{ mealPlan.mealName }}
             </span>
@@ -136,13 +136,9 @@ export default {
                     .then(response => {
                         console.log(response.status);
                         this.trashmode.forEach(mealPlan => {
-                          console.log("Calling delete on: ");
-                          console.log(mealPlan);
-                          if(mealPlan.id){            
-                            console.log("Deleting mealplan " + mealPlan.id)                
+                          if(mealPlan.id){                           
                             MealService.deleteMealPlans(mealPlan.id)
                               .then( response => {
-                                console.log("Delete endpoint hit.")
                                 console.log(response.status)
                                 })
                               .catch(err => {console.log(err)})

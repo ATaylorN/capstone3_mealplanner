@@ -36,8 +36,11 @@
       <i class="fa-solid fa-trash fa-2xl" style="color: #000000;"></i>
       <div>trash</div>
     </draggable>
+      <!-- 
+        Need to figure out how to make a control on the child key off data in the parent
+       -->
+      <GroceryList id='groceries' @clear="clearDates()" :startDate="startDate" :endDate="endDate" />
 
-      <GroceryList id='groceries' :startDate="startDate" :endDate="endDate" />
   </div>
 
 </template>
@@ -89,6 +92,10 @@ export default {
                 })
                 this.dateSlots.push(calendarSlot)
             }
+        },
+        clearDates(){
+          this.startDate = "";
+          this.endDate = "";
         },
         setDates(date){
           // if both dates aren't populated, set the start date first. 

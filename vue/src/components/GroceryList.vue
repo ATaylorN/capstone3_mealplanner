@@ -1,12 +1,14 @@
 <template>
   <div id="grocery-list">
       <h2>{{getHeaderText}}</h2>
-      <button @click="getMealPlanIngredients"> Generate Grocery List</button>      
+      <button @click="getMealPlanIngredients">Generate Grocery List</button> 
+      <button v-if="listShowing" @click="getMealPlanIngredients">Print Grocery List</button>
+      <button @click="$emit('clear')">Clear</button>      
     <div class="ingredients"> 
         <ol> 
             <li v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}} </li>           
-           </ol>  
-        </div>    
+        </ol>  
+    </div>    
   </div>
 </template>
 
@@ -22,7 +24,7 @@ export default {
     props: ['startDate', 'endDate', 'mealPlans'],
     data() {
             return {
-                mealPlanIngredients: [],        
+                mealPlanIngredients: [],       
         }
     },
     computed: {
@@ -47,6 +49,9 @@ export default {
             })
             return this.mealPlanIngredients
             }
+        },
+        clear(){
+            this.mealPlanIngredients = [];
         }
         }
 

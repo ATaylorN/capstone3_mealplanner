@@ -74,7 +74,7 @@ export default {
     overflow: hidden
 }
 .recipe-body:hover{
-    overflow-y: auto;
+    overflow: auto;
 }
 .recipeContainer{
     border-radius: 8px;
@@ -111,7 +111,7 @@ export default {
 }
 
 .ingredientsList:hover{
-overflow-y: auto;
+overflow: auto;
 }
 .ingredients-container{
 grid-area: ingredients;
@@ -135,7 +135,7 @@ max-height: 35rem;
 }
 
 .instructions:hover{
-    overflow-y: auto;
+    overflow: auto;
 }
 
 

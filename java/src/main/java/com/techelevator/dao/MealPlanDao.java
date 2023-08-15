@@ -18,4 +18,5 @@ public interface MealPlanDao {
     MealPlan updateMealPlan(MealPlan mealPlan);
     List <MealPlan> getMealPlansByDate(LocalDate date);
 
+
 }

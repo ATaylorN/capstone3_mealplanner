@@ -3,7 +3,7 @@
       <h2>{{getHeaderText}}</h2>
       <button @click="getMealPlanIngredients">Generate Grocery List</button> 
       <button v-if="listShowing" @click="printGroceryList()">Print Grocery List</button>
-      <button @click="$emit('clear'), mealPlanIngredients=[], listShowing = false">Clear</button>      
+      <button @click="$emit('clear'), clear()">Clear</button>      
     <div class="ingredients"> 
         <ol> 
             <li v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}} </li>           
@@ -51,15 +51,18 @@ export default {
                 }
             })
             return this.mealPlanIngredients
-            }
+            },
+        clear(){
+            this.mealPlanIngredients = [];
+            this.listShowing = false;
+            
         },
         printGroceryList(){
             console.log('listo printo');
         },
-        clear(){
-            this.mealPlanIngredients = [];
-            
-        }
+        },
+
+
         }
 
 

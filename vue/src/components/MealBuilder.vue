@@ -184,7 +184,7 @@ input{
   overflow: hidden;
 }
 .user-recipes-container:hover {
-  overflow-y: auto;
+  overflow: auto;
 }
 
 .user-recipes-container h3 {
@@ -254,7 +254,7 @@ figure {
   overflow: hidden;
 }
 .meals-container:hover{
-  overflow-y: auto;
+  overflow: auto;
 }
 .user-meals {
   grid-area: userMeals;

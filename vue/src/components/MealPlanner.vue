@@ -22,6 +22,7 @@
       <section class="meal-list">
 
           <button class="saveBtn" @click="readCalendar()"> Save Meal Plan </button>
+          <router-link :to="{name:'email'}" tag="button"> Email </router-link>
           
             <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false" class="mealCardContainer"> 
               <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
@@ -204,7 +205,7 @@ Set the calendar to a grid containing five rows, seven columns.
   overflow:hidden;
 }
 .calendarDrag:hover{
-  overflow-y: auto;
+  overflow: auto;
 }
 section.calendar-container {
   grid-area: mid;

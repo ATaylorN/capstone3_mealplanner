@@ -250,11 +250,12 @@ section.calendar-container {
 
 .meal-planner {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 3fr 2fr;
   grid-template-rows: 0.2fr 2fr 0.2fr 1fr;
+  column-gap: 5rem;
   grid-template-areas:
     ". title ."
-    ". mid ."
+    ". mid groceries"
     ".trash ."
     ". lowerMid .";
 }

@@ -7,7 +7,7 @@
 
     <section class="calendar-container">      
       <ul class="mealplancalendar">
-        <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id" @click="goToDetailView(calendarSlot.date)">
+        <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id" @dblclick="goToDetailView(calendarSlot.date)">
           
           <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag">          
             <span slot="header" @click="setDates(calendarSlot.date)"> {{ calendarSlot.displayDate }} <br></span>

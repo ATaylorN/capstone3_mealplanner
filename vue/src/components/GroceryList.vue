@@ -3,8 +3,8 @@
       <h2>{{getHeaderText}}</h2>
       <button @click="getMealPlanIngredients">Generate Grocery List</button> 
       <button v-if="listShowing" @click="printGroceryList()">Print Grocery List</button>
-           <button v-if="listShowing" @click="emailGroceryList()">E-mail Grocery List</button>
-      
+        <button v-if="listShowing" @click="emailGroceryList(mailTo)">E-mail Grocery List</button>
+        <input v-if="listShowing" type="text" v-model="mailTo" placeholder="email address">
       <button @click="$emit('clear'), clear()">Clear</button>      
     <div class="ingredients" id="ingredient-list" ref="listo"> 
         <ol> 
@@ -73,7 +73,7 @@ export default {
             console.log(); 
             let params = {
                 to_name: "Sled Jacobs Jr",                
-                user_email: "benj427@gmail.com",                
+                user_email: this.mailTo,                
                 message: messageBody
                 }
             console.log(params.message);

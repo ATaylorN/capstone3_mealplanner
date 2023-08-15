@@ -5,7 +5,7 @@
       
       <div class="ingredients-section">
         <div class="search-input-block">
-          <span class="search-text"> {{ searchInputValue }} </span>
+          <!-- <span class="search-text"> {{ searchInputValue }} </span> -->
           <span class="autocomplete-suggestion">{{autoCompleteSuggestion}}</span>
           <input id="search-input" class="search-field" type="text" placeholder="Search for Ingredients" v-model="searchInputValue" @keyup="suggestSearchTerm()"/>
           <button class="search-button" @click="runSearch()">Search</button>
@@ -280,7 +280,7 @@ input {
   color: black;
   max-width: 100px;
   border-radius: 2px;
-  font-weight: 700;
+  font-weight: 900;
   font-variant-caps:all-small-caps;
 }
 
@@ -374,12 +374,13 @@ input {
   background-color: darkkhaki;
 }
 .newRecipeContainer{
-gap: 20px;
-padding-top: 2rem;
+padding-top: 1rem;
 }
 .all-ingredients {
-  max-height: 400px;
-  overflow: scroll;
+  max-height: 80rem;
+  overflow: hidden;
 }
-
+.all-ingredients:hover{
+  overflow-y: auto;
+}
 </style>

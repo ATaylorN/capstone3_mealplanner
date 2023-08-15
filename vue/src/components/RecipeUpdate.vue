@@ -35,21 +35,22 @@
 
     <div class="recipe-ingredients">
     <span >Your Ingredients</span>
-    <ul class="ingredients">
-      <li v-for="ingredient in ingredientList" :key="ingredient.id" @click="removeIngredientFromRecipe(ingredient)">
-        <span> {{ingredient.name}} </span>      
-      </li>
-    </ul>
+    <draggable class="ingredients" :list="ingredientList" @start="drag=true" @end="drag=false" group="newIngredients">
+      <figure v-for="ingredient in ingredientList" :key="ingredient.id" @click="removeIngredientFromRecipe(ingredient)">
+        <span> {{ingredient.name}} </span>
+        <img :src="ingredient.image" alt="">      
+      </figure>
+    </draggable>
     </div>
-
+<!-- 
     <div class="addIngredient">
       <draggable class="newIngredientsList" :list="newIngredientList" @start="drag=true" @end="drag=false" group="newIngredients">
-        <figure v-for="newIngredient in newIngredientList" :key="newIngredient.id">
-          <span> {{newIngredient.name}} </span>
-          <img :src="newIngredient.image" alt="">
+        <figure v-for="ingredient in ingredientList" :key="ingredient.id">
+          <span> {{ingredient.name}} </span>
+          <img :src="ingredient.image" alt="">
         </figure>
       </draggable>
-    </div>
+    </div> -->
       </section>
 
   </div>

@@ -133,7 +133,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .recipe-updater img{
   max-width: 100px;
 }
@@ -175,7 +175,7 @@ section.ingredient-data:hover{
   padding: 4rem 8rem 0rem 8rem;
   background-color:#4a180c;
   color: white;
-  /* gap: 2rem; */
+  gap: 2rem;
   max-height: 700px;
 }
 .recipe-data input{

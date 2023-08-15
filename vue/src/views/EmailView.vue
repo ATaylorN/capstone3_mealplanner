@@ -1,6 +1,7 @@
 <template>
 <div>
     <Header />
+ 
   <div class="email-form">
    <form id="contact-form">
         <input type="hidden" name="contact_number">
@@ -18,6 +19,7 @@
 
 <script>
 import Header from '@/components/Header.vue';
+
 export default {
     name: "email-view",
     components: {
@@ -26,11 +28,6 @@ export default {
     data(){
         return{
             messageBody: ""
-        }
-    },
-    methods: {
-        generateMessage() {
-            
         }
     }
 }

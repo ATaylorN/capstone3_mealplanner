@@ -2,19 +2,17 @@
   <div class="home">
     <Header class="header"/>
 
-    <div class="top-section">
-      <div class="next-recipe">
-        <h1>UP NEXT</h1>
-        <img src="@/Images/recipePlaceHolder.png" alt="">
-        <p>INSERT RECIPE TITLE HERE</p>
-      </div>
+  <div class="container" id="top-section" >
+  <div class="jumbotron text-center" >
+   <h1>Welcome to E-1337 Meal Planner!</h1>
+  </div>
+</div>
 
-      <div class="my-plan">
-        <h1>MY PLAN</h1>
-        <img @click="sendToMealPlan()" src="@/Images/calendarPlaceholder.png" alt="My Meal Plan">
-      </div>
-
-    </div>
+  <div class="my-plan">
+    <h1>MY PLAN</h1>
+    <img @click="sendToMealPlan()" src="@/Images/calendarPlaceholder.png" alt="My Meal Plan">
+  </div>
+  
 
     <div class="featured">
       <h1>FEATURED RECIPES</h1>
@@ -29,6 +27,7 @@
       <p>Fudge</p></a>
     </div>
     </div>
+
 
   </div>
 </template>
@@ -74,34 +73,46 @@ background-size: cover;
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-areas: "header header header"
                         "top top top"
+                        "plan plan plan"
                         "featured featured featured";
 }
-
+.my-plan{
+  grid-area: plan;
+  display: flex;
+  flex-direction: row;
+  margin: auto;
+  background-color: #4A180C;
+  box-shadow: 0px 6px 20px 0px black;
+  color: white;
+  border-radius: 10px;
+  padding: 2rem;
+  text-align: center;
+}
+.my-plan h1{
+  padding: 2rem;
+}
+.my-plan img{
+  max-height: 20rem;
+  max-width: max-content;
+  border-radius: 20px;
+}
+.my-plan img:hover{
+  cursor: pointer;
+  border: 5px solid yellowgreen;
+  transform: scale(1.10); 
+  transition-duration: 0.5s;
+} 
+#top-section{
+  grid-area: top;
+}
+#top-section div{
+   background-color: #4A180C;
+  box-shadow: 0px 6px 20px 0px black;
+  color: white;
+}
 .header {
   grid-area: header;
 }
-.top-section {
-  grid-area: top;
-}
-.top-section h1{
-  font-family: 'Montserrat', sans-serif;
-}
-
-.top-section{
-  display: grid;
-  justify-content: space-evenly;
-  padding-right: 10rem;
-}
-
-.next-recipe{
-  padding: 1rem;
-  margin-left: 2rem;
-}
-.my-plan{
-  padding: 1rem;
-  margin-right: 2rem;
-}
-
 .featured {
   display: flex;
   flex-direction: column;
@@ -128,41 +139,19 @@ background-size: cover;
   flex-wrap: wrap;
   justify-content: center;
 }
-
 .featured img {
   border-radius: 8px;
   max-width: 100%;
-  max-height: 20rem;
+  max-height: 30rem;
 }
 .featured img:hover{
   cursor: pointer;
   border: 5px solid yellowgreen;
-}
-
+  transform: scale(1.15); 
+  transition-duration: 0.5s;
+} 
 p{
   padding-top: 1rem;
 }
 
-.next-recipe p{
-  text-align: center;
-  font-family: 'Montserrat', sans-serif;
-}
-.top-section{
-  display: flex;
-  gap: 5rem;
-  background-color: #4A180C;
-  color: white;
-  box-shadow: 0px 6px 20px 0px black;
-}
-
-.top-section img {
-  border-radius: 8px;
-  max-width: 30rem;
-  max-height: auto;
-}
-
-.top-section img:hover{
-  cursor: pointer;
-  border: 5px solid yellowgreen;
-}
 </style>

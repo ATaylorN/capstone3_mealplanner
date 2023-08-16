@@ -1,14 +1,24 @@
 <template>
-  <div>
-      <GroceryList />
+  <div @click="getDog">
+      <img src="" alt="">
   </div>
 </template>
 
 <script>
-import GroceryList from '../components/GroceryList.vue'
+
+//import firebase from 'firebase';
+import { getStorage, ref } from 'firebase/storage';
 export default {
     components: {
-        GroceryList
+        
+    },
+    methods: {
+        getDog() {
+            const storage = getStorage();
+            const storageRef = ref(storage, 'big dog.png');
+            console.log(storageRef)
+            //console.log(this.$fireBaseStorage)
+        }
     }
 }
 </script>

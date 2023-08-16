@@ -17,7 +17,7 @@
             </span>
             
           </draggable>
-          <!-- <button>View Plan Details</button> -->
+          
         </li>
       </ul>
     </section>
@@ -44,7 +44,7 @@
       <!-- 
         Need to figure out how to make a control on the child key off data in the parent
        -->
-      <GroceryList id='groceries' @clear="clearDates()" :startDate="startDate" :endDate="endDate" />
+      <GroceryList id='groceries' @save="readCalendar()" @clear="clearDates()" :startDate="startDate" :endDate="endDate" />
 
   </div>
 

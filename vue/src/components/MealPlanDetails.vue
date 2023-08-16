@@ -23,7 +23,6 @@ export default {
     data() {
         return {
             ingredients: [],
-            recipes: [],
             date: this.$route.params.date,
             mealPlans: [],
             meals: []
@@ -49,7 +48,7 @@ export default {
                     this.mealPlans.forEach(mp => {
                         MealService.getMealRecipes(mp.mealId)   
                             .then( res => {
-                                this.recipes.push(res.data);
+                                mp.recipes = res.data
                     })                             
             });
                 })

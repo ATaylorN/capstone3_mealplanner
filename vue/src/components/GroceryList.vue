@@ -1,7 +1,7 @@
 <template>
   <div id="grocery-list">
       <h2>{{getHeaderText}}</h2>
-      <button @click="getMealPlanIngredients">Generate Grocery List</button> 
+      <button @click="$emit('save'), getMealPlanIngredients()">Generate Grocery List</button> 
       <button v-if="listShowing" @click="printGroceryList()">Print Grocery List</button>
         <button v-if="listShowing" @click="emailGroceryList(mailTo)">E-mail Grocery List</button>
         <input v-if="listShowing" type="text" v-model="mailTo" placeholder="email address">

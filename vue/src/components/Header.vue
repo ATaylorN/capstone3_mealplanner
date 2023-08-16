@@ -22,7 +22,6 @@
         <li><a href="http://localhost:8080/meal-planner">Build a Meal Plan</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="http://localhost:8080/register"><span class="glyphicon glyphicon-user"></span> Sign Up</a></li>
         <li> <router-link v-bind:to="{ name: 'logout' }" v-if="$store.state.token != ''">Logout</router-link> </li>
       </ul>
     </div>

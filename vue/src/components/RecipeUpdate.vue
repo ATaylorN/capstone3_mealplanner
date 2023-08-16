@@ -184,7 +184,7 @@ export default {
         console.log(response.data);
         this.name = response.data.name;
         this.instructions = response.data.instructions;
-        this.image = response.data.image;
+        this.imageStr = response.data.image;
         this.ingredientsStr = response.data.ingredients;
         // get ingredient list. 
         RecipeService.getRecipeIngredients(this.$route.params.id)

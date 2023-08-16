@@ -1,7 +1,7 @@
 <template>
   <div>
       <Header />
-      <RecipeDetails :recipeId="$route.params.id" />
+      <RecipeDetails :bigMode="true" :recipeId="$route.params.id" />
       
   </div>
 </template>

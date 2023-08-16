@@ -5,12 +5,6 @@ import store from './store/index'
 import axios from 'axios'
 import { initializeApp } from 'firebase/app';
 
-
-
-Vue.config.productionTip = false
-
-axios.defaults.baseURL = process.env.VUE_APP_REMOTE_API;
-
 const firebaseConfig = {
   apiKey: "AIzaSyB-fKR0FaaVGQhCubKkpMQZxM7mbntHB4w",
   authDomain: "capstone-meal.firebaseapp.com",
@@ -21,7 +15,14 @@ const firebaseConfig = {
   storageBucket: 'gs://capstone-meal.appspot.com'
 };
 
-initializeApp(firebaseConfig); 
+initializeApp(firebaseConfig);
+
+
+Vue.config.productionTip = false
+
+axios.defaults.baseURL = process.env.VUE_APP_REMOTE_API;
+
+
 
 new Vue({
   router,

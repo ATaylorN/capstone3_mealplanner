@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from './router/index'
 import store from './store/index'
 import axios from 'axios'
-import firebase from 'firebase/app';
+import { initializeApp } from 'firebase/app';
+
+
 
 Vue.config.productionTip = false
 
@@ -19,7 +21,7 @@ const firebaseConfig = {
   storageBucket: 'gs://capstone-meal.appspot.com'
 };
 
-firebase.initializeApp(firebaseConfig)
+initializeApp(firebaseConfig); 
 
 new Vue({
   router,

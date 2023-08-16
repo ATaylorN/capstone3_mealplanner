@@ -4,13 +4,15 @@
       <button @click="$emit('save'), getMealPlanIngredients()">Generate Grocery List</button> 
       <button v-if="listShowing" @click="printGroceryList()">Print Grocery List</button>
         <button v-if="listShowing" @click="emailGroceryList(mailTo)">E-mail Grocery List</button>
+        <button v-if="listShowing" @click="generateIcsFile()">Generate Calendar File</button>
         <input v-if="listShowing" type="text" v-model="mailTo" placeholder="email address">
       <button @click="$emit('clear'), clear()">Clear</button>      
     <div class="ingredients" id="ingredient-list" ref="listo"> 
         <ol> 
             <li v-for="ingredient in mealPlanIngredients" v-bind:key="ingredient.id">{{ingredient.name}} </li>           
         </ol>  
-    </div>    
+    </div>
+        
   </div>
 </template>
 
@@ -19,6 +21,8 @@
 import GroceryListService from '../services/GroceryListService.js'; 
 import { Printd }  from 'printd'; 
 import emailjs from '@emailjs/browser'
+import * as ics from 'ics';
+import moment from "moment";
 
 export default {
     name: "grocery-list",
@@ -28,7 +32,9 @@ export default {
     props: ['startDate', 'endDate', 'mealPlans'],
     data() {
             return {
-                mealPlanIngredients: [],       
+                mealPlanIngredients: [],
+                listShowing: false,
+                mailTo: "",
         }
     },
     computed: {
@@ -45,6 +51,23 @@ export default {
       }  
     },    
     methods: {
+        generateIcsFile(){
+            let m = moment();
+           let events = [];
+           this.mealPlans.forEach(mealPlan => {
+               const event = {
+                   start: mealPlan.dateToCook.split(','),
+                   end: mealPlan.dateToCook.add(1, 'days').split(','),
+                   title: 'Prepare ' + mealPlan.mealName,
+                   description: 'Time to get groceries!',
+                   url: 'http://localhost:8080/meal-planner',
+
+               }
+              events.push(event); 
+           })
+            let val = ics.createEvents(events);
+           console.log(val)
+        },
         getMealPlanIngredients(){
             GroceryListService.getMealPlanIngredients(this.startDate, this.endDate).then(response => {
                 if (response.status === 200){

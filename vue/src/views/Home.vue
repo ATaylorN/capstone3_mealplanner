@@ -18,13 +18,15 @@
 
     <div class="featured">
       <h1>FEATURED RECIPES</h1>
-      <div class=card-container>
-      <div class="card"><img src="@/Images/recipePlaceHolder.png" alt=""><p>INSERT TITLE HERE</p></div>
-      <div class="card"><img src="@/Images/recipePlaceHolder.png" alt=""><p>INSERT TITLE HERE</p></div>
-      <div class="card"><img src="@/Images/recipePlaceHolder.png" alt=""><p>INSERT TITLE HERE</p></div>
-      <div class="card"><img src="@/Images/recipePlaceHolder.png" alt=""><p>INSERT TITLE HERE</p></div>
-      <div class="card"><img src="@/Images/recipePlaceHolder.png" alt=""><p>INSERT TITLE HERE</p></div>
-      <div class="card"><img src="@/Images/recipePlaceHolder.png" alt=""><p>INSERT TITLE HERE</p></div>
+      <div class="card-container">
+      <a href="http://localhost:8080/recipes/5"><img src="https://images.pexels.com/photos/1657343/pexels-photo-1657343.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1">
+      <p>Basic Muffins</p></a>
+      <a href="http://localhost:8080/recipes/2"><img src="https://images.pexels.com/photos/4110541/pexels-photo-4110541.jpeg">
+      <p>Peanut Butter Cookies</p></a>
+      <a href="http://localhost:8080/recipes/4"><img src="https://www.naschkatze.me/wp-content/uploads/2019/12/Schokolis-mit-Haselnuss-1-768x578.jpg">
+      <p>Hazelnut Bites</p></a>
+      <a href="http://localhost:8080/recipes/6"><img src="https://images.pexels.com/photos/15850680/pexels-photo-15850680/free-photo-of-close-up-of-delicious-chocolate-cake-with-fudge.jpeg">
+      <p>Fudge</p></a>
     </div>
     </div>
 
@@ -115,8 +117,10 @@ background-size: cover;
 .featured h1{
   font-family: 'Montserrat', sans-serif;
 }
-.featured p{
+.featured a{
   font-family: 'Montserrat', sans-serif;
+  text-decoration: none;
+  color: white;
 }
 .card-container{
   display: flex;
@@ -127,8 +131,8 @@ background-size: cover;
 
 .featured img {
   border-radius: 8px;
-  max-width: 20rem;
-  max-height: auto;
+  max-width: 100%;
+  max-height: 20rem;
 }
 .featured img:hover{
   cursor: pointer;

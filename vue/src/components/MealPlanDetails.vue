@@ -1,6 +1,17 @@
 <template>
   <div>
       <h1>MEAL PLANS FOR {{ date }} </h1>
+        <ul class="meal-list">
+            <li class="meals" v-for="meal in mealPlans" :key="meal.id">
+                <span>{{meal}}</span>
+            </li>
+        </ul>
+
+        <ul class="recipesInMeal">
+            <li class="recipe" v-for="recipe in mealPlans" :key="recipe.id">
+                <span>{{recipe}}</span>
+            </li>
+        </ul>
   </div>
 </template>
 
@@ -13,7 +24,8 @@ export default {
         return {
             ingredients: [],
             date: this.$route.params.date,
-            mealPlans: []
+            mealPlans: [],
+            meals: []
         }
     },
     components: {
@@ -54,10 +66,7 @@ export default {
         },
         created(){
             this.getRelevantMealPlans();
-
             console.log(this.recipes);
-        
-
         }
     }
     

@@ -1,6 +1,7 @@
 <template>
 
   <div class="recipeContainer">
+      <h1> {{bigMode}} </h1>
       <h2 class="recipeName"> {{recipe.name}} </h2>
       
       <div class="recipe-body">
@@ -31,7 +32,7 @@ import RecipeService from '@/services/RecipeService.js';
 
 export default {
     name: "RecipeDetails",
-    props: ['recipeId'],
+    props: ['recipeId', 'bigMode'],
     data(){
        return {
            recipe: {}           

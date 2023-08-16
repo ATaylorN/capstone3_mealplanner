@@ -8,22 +8,9 @@
 <script>
 
 //import firebase from 'firebase';
-import { initializeApp } from 'firebase/app';
 import {getStorage, ref, getDownloadURL, uploadBytes} from 'firebase/storage';
 
-const firebaseConfig = {
-  apiKey: "AIzaSyB-fKR0FaaVGQhCubKkpMQZxM7mbntHB4w",
-  authDomain: "capstone-meal.firebaseapp.com",
-  projectId: "capstone-meal",
-  messagingSenderId: "873102642159",
-  appId: "1:873102642159:web:2423cdd3c8bfef7414841a",
-  measurementId: "G-RPT693PW5Y",
-  storageBucket: 'gs://capstone-meal.appspot.com'
-};
 
-const fbApp = initializeApp(firebaseConfig); 
-const storage = getStorage(fbApp);
-const dogRef = ref(storage, 'big dog.png');
 
 
 
@@ -41,6 +28,8 @@ export default {
     },
     methods: {
         getDog() {
+            const storage = getStorage();
+            const dogRef = ref(storage, 'big dog.png');
             getDownloadURL(dogRef)
                 .then(url => {
                     // const xhr = new XMLHttpRequest();
@@ -57,6 +46,8 @@ export default {
             
         }, 
         loadFile(){
+            const storage = getStorage();
+            //const dogRef = ref(storage, 'big dog.png');
             this.image = this.$refs.fileslot.files[0];
             const imagesFolder = ref(storage, '/recipeImgs/' + this.image.name)
             // upload takes a reference, and then a file or blob object 

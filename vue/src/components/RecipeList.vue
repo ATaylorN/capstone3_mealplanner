@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="recipeList" v-for="recipe in recipes" :key="recipe.id">
-      <RecipeDetails v-bind:recipeId="recipe.id" />
+      <RecipeDetails v-bind:recipeId="recipe.id" :bigMode="false" />
       <div class="links">
         <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }" tag="button" class="detailsBtn">View Recipe</router-link>
       </div>

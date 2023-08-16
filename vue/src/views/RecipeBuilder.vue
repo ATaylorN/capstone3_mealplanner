@@ -39,9 +39,22 @@
 
 
     <div class="recipe-data-section">
+      <!-- 
+        When we submit a file from our computer, 2 things need to happen:  
+        1. We need to upload the image to Firebase
+          - Create a reference for the image file using the file's name
+          - Send the data to Firebase with uploadBytes()
+        2. Once the file is uploaded, we need to set the file's new download URL as the image property
+          - Given the reference to the file we just made, getDownloadURL() on it
+          - Stick the URL in newRecipe.image before sumitting the recipe. 
+        
+        Should hopefully be able to do this without making the form look like doo doo.           
+      -->
+
     <form @submit.prevent="addRecipe()" class="add-recipe">
       <input type="text" v-model="newRecipe.name" placeholder="Recipe Name" />
       <input type="text" v-model="newRecipe.image" placeholder="Image Link" />
+      <input type="file" @change="preUpload()" ref="imageFile" placeholder="Upload an image" />
       <input type="text" v-model="newRecipe.ingredients" placeholder="Ingredients"/>
       <textarea name="instructions" id="prep-instructions" v-model="newRecipe.instructions" placeholder="Prep Instructions"/>
       <button class="saveBtn">Save Recipe</button>
@@ -67,6 +80,8 @@ import recipeService from "@/services/RecipeService.js";
 import spoonacularService from "@/services/SpoonacularService.js";
 import Header from "@/components/Header.vue";
 import draggable from 'vuedraggable';
+import {getStorage, ref, getDownloadURL, uploadBytes} from 'firebase/storage';
+
 
 export default {
   components: {
@@ -89,6 +104,8 @@ export default {
       searched: false,
       searchResults: [],
       newIngredients: [],
+      image: null,
+      uploadRef: null,
     };
   },
   computed: {
@@ -99,6 +116,13 @@ export default {
     },
   },
   methods: {
+    preUpload(){
+      this.image = this.$refs.imageFile.files[0];
+      const storage = getStorage();
+      const imgRef = ref(storage, '/recipeImgs/' + this.image.name)
+      this.uploadRef = imgRef; 
+    },
+
     runSearch() {
       this.searchTerm = this.searchInputValue + this.autoCompleteSuggestion;
       this.autoCompleteSuggestion = "";
@@ -137,7 +161,15 @@ export default {
     addRecipe() {
       console.log(this.newRecipe);
       let newRecipeId = null;
-      recipeService
+      if(!this.newRecipe.image){
+            uploadBytes(this.uploadRef, this.image)
+              .then(response => {
+                console.log('great success');
+                console.log(response);
+                getDownloadURL(this.uploadRef)
+                .then(url => {
+                this.newRecipe.image = url; 
+                recipeService
         .addRecipe(this.newRecipe)
         .then((response) => {
           if (response.status === 201) {
@@ -170,6 +202,15 @@ export default {
             console.log(error.message);
           }
         });
+          })
+          .catch(error => {
+            console.log('horrific failure');
+            console.log(error);
+          })
+              })
+                    
+
+      }
     },
     searchIngredients() {
       spoonacularService

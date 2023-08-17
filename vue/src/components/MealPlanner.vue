@@ -8,7 +8,7 @@
     <section class="calendar-container">      
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id" @dblclick="goToDetailView(calendarSlot.date)">
-          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag">          
+          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag" @change="readCalendar()">          
             <span slot="header" @click="setDates(calendarSlot.date)"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
              {{ mealPlan.mealName }} 
@@ -140,6 +140,25 @@ export default {
             this.endDate = date; 
           }
         },
+        readSlot(calendarSlot){
+          let mealPlans = [];
+          if(calendarSlot.mealPlans.length > 0){
+            calendarSlot.mealPlans.forEach(mealPlan => {
+              let planToSend = {
+                dateToCook: calendarSlot.date,
+                mealId: mealPlan.mealId,
+                userId: mealPlan.userId                                                
+              }
+              if(mealPlan.id !== undefined){
+                planToSend.id = mealPlan.id;
+              }
+              if(mealPlan.mealType !== undefined){
+                planToSend.mealType = mealPlan.mealType;
+              }
+              mealPlans.push(planToSend);
+            });
+          }
+        },
         readCalendar(){
             let mealPlans = [];
             this.dateSlots.forEach(slot =>{
@@ -263,6 +282,7 @@ section.calendar-container {
 
 #groceries{
   grid-area: groceries; 
+  border-radius: 10px;
 }
 
 .mealplancalendar {

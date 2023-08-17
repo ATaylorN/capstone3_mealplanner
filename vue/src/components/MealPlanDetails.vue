@@ -90,6 +90,7 @@ export default {
 
 <style scoped>
 .mpdetails{
+    justify-content: center;
     display: grid;
     grid-template-rows: 0.2fr 0.5fr 2fr;
     grid-template-areas: "title"
@@ -97,13 +98,24 @@ export default {
                         "recipe";  
 }
 .date-title {
+    box-shadow: 0px 6px 20px 0px black;
     grid-area: title;
     text-align: center;
-    margin: 2rem;
+    background-color: #4A180C;
+    color: white;
+    margin-top: 4rem;
+    padding: 6rem;
 }
+
 .meals{
     grid-area: mealname;
     text-align: center;
+    box-shadow: 0px 6px 20px 0px black;
+}
+.meals h1{
+    background-color: #4A180C;
+    color: white;
+    padding: 2rem;
 }
 .recipes{
     grid-area: recipe;
@@ -113,6 +125,7 @@ export default {
     color: white;
     align-items: center;
     padding: 2rem;
+    box-shadow: 0px 6px 20px 0px black;
 }
 .recipes img{
     width: 400px;

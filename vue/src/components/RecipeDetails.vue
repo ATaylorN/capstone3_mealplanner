@@ -175,6 +175,7 @@ export default {
   grid-area: instructions;
   border-radius: 6px;
   max-width: 50rem;
+  max-height: 80rem;
   margin-bottom: 2rem;
   overflow: hidden;
 }

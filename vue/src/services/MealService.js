@@ -1,9 +1,7 @@
 import axios from "axios";
 
 export default {
-    getMealById(id){
-        return axios.get(`/meals/${id}`)
-    },
+    
     addMeal(meal){
         return axios.post('/meals', meal);
     },
@@ -29,6 +27,8 @@ export default {
     deleteMealPlans(id){
         return axios.delete(`/meals/delete-meal-plan/${id}`)
     },
-    
+    getMealById(id){
+        return axios.get(`/meals/meal/${id}`)
+    }
 
 }

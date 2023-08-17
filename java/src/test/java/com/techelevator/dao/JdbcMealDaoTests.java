@@ -14,11 +14,12 @@ public class JdbcMealDaoTests extends BaseDaoTests{
     protected static final Meal MEAL4 = new Meal(4, 2, "Big breakfast", "breakfast");
 
     private JdbcMealDao sut;
+    JdbcRecipeDao recipeDao;
 
     @Before
     public void setup(){
         JdbcTemplate jdbcTemplate = new JdbcTemplate(dataSource);
-        sut = new JdbcMealDao(jdbcTemplate);
+        sut = new JdbcMealDao(jdbcTemplate, recipeDao);
     }
 
     @Test

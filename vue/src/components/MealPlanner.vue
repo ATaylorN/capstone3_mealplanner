@@ -3,6 +3,7 @@
 
     <div class="menuTitle">
       <h1>My Meal Plan</h1>
+      <h3>Double click on date to view meal plan details</h3>
     </div>
 
     <section class="calendar-container">      

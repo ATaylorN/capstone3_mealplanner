@@ -57,18 +57,15 @@ export default {
                             MealService.getMealById(mp.mealId)
                                 .then(res => {
                                     mp.mealName = res.data.mealName;                                    
-  
                                 }).finally(() => {
                                     this.loadCount += 1; 
                                     if(this.loadCount == this.recordsToLoad){
                                         this.loaded = true; 
                                     }
-                                })                                                                                                            
-                            })
-
+                            })                                                                                                            
+                        })
                     })                                                                 
-                })
-                
+                })                
                 .catch(err => {
                     if(err.response){
                         console.log(err.response.data)
@@ -78,10 +75,8 @@ export default {
                         console.log(err.request)
                     }
                     console.log(err.message)
-                })
-             
-            }
-            
+                })             
+            }            
         },
         created(){
             this.getRelevantMealPlans()

@@ -6,14 +6,13 @@
       <div class="ingredients-section">
         <div class="search-input-block">
           <!-- <span class="search-text"> {{ searchInputValue }} </span> -->
-          <span class="autocomplete-suggestion">{{autoCompleteSuggestion}}</span>
-          <input id="search-input" class="search-field" type="text" placeholder="Search for Ingredients" v-model="searchInputValue" @keyup="suggestSearchTerm()"/>
-          <button class="search-button" @click="runSearch()">Search</button>
+          <input id="search-input" class="search-field" type="text" placeholder="Filter Ingredient List" v-model="searchTerm" @keyup="suggestSearchTerm()"/>
+          
         </div>
 
         <div class="add-ingredient-container">
           <!-- <form v-show="filteredIngredientList.length === 0" class="add-ingredient"> -->
-          <input class="ingredientSearch" type="text" v-model="newIngredient.name" placeholder="Ingredient Name"/>
+          <input class="ingredientSearch" type="text" v-model="newIngredient.name" placeholder="Search"/>
           <button id="find-ingredient" @click.prevent="listIngredients()"> Find Ingredient </button>
           <button id="clear-ingredients" @click.prevent="clearIngredients()"> Clear Ingredient List </button>
           <!-- </form> -->
@@ -28,7 +27,7 @@
         </draggable>
 
         <draggable class="ingredients" :list="ingredients" @start="drag=true" @end="drag=false" group="moveIngredient">
-          <figure v-for="ingredient in ingredients" :key="ingredient.id">
+          <figure v-for="ingredient in filteredIngredientList" :key="ingredient.id">
             <span @click="addNewIngredientToRecipe(ingredient)"> {{ ingredient.name }} </span>
             <img @click="addNewIngredientToRecipe(ingredient)" :src="ingredient.image"/>
           </figure>

@@ -3,7 +3,7 @@
           <div v-for="recipe in recipes" :key="recipe.id" class="recipesList" > 
                   <RecipeDetails :bigMode="false" :recipeId ="recipe.id" />        
                   <div class="links">       
-                  <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button" class="detailsBtn">View Details</router-link>
+                  <router-link :to="{ name: 'recipe-details', params: {id: recipe.id} }" tag="button" class="detailsBtn">View Recipe</router-link>
                   <router-link :to="{ name: 'recipe-update', params: {id: recipe.id} }" tag="button" class="updateBtn">Update</router-link>
                 </div> 
           </div>
@@ -59,10 +59,11 @@ export default {
     color: black;
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
-    
+
 }
 .updateBtn:hover{
     background-color: darkkhaki;
+    cursor: pointer;
 }
 
 .detailsBtn{
@@ -74,13 +75,11 @@ export default {
     color: black;
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
+    box-shadow: 0px 6px 20px 0px black;
+    border: 1px solid darkslategrey;
 }
 .detailsBtn:hover{
     background-color: darkkhaki;
-}
-
-#recipe-image{
-    max-height: 350px;
-    max-width: 350px;
+    cursor: pointer;
 }
 </style>

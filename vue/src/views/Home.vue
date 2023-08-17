@@ -89,7 +89,8 @@ background-size: cover;
   text-align: center;
 }
 .my-plan h1{
-  padding: 2rem;
+  padding: 2rem 3rem 2rem 1rem;
+  margin-top: 4rem;
 }
 .my-plan img{
   max-height: 20rem;
@@ -98,15 +99,16 @@ background-size: cover;
 }
 .my-plan img:hover{
   cursor: pointer;
-  border: 5px solid yellowgreen;
+  border: 2px solid black;
   transform: scale(1.10); 
   transition-duration: 0.5s;
+  box-shadow: 10px 20px 80px 10px black;
 } 
 #top-section{
   grid-area: top;
 }
 #top-section div{
-   background-color: #4A180C;
+  background-color: #4A180C;
   box-shadow: 0px 6px 20px 0px black;
   color: white;
 }
@@ -138,6 +140,7 @@ background-size: cover;
   gap: 2rem;
   flex-wrap: wrap;
   justify-content: center;
+  margin-bottom: 2rem;
 }
 .featured img {
   border-radius: 8px;
@@ -146,12 +149,16 @@ background-size: cover;
 }
 .featured img:hover{
   cursor: pointer;
-  border: 5px solid yellowgreen;
+  border: 2px solid black;
   transform: scale(1.15); 
   transition-duration: 0.5s;
+  box-shadow: 10px 20px 80px 10px black;
 } 
 p{
   padding-top: 1rem;
+}
+.featured p{
+  font-size: 16px;
 }
 
 </style>

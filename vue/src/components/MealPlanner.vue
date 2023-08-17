@@ -300,7 +300,7 @@ section.calendar-container {
   width: 11rem;
   border: 1px solid black;
   border-radius: 1rem;
-  background-color: rgb(230, 245, 216);
+  background-color: rgb(250, 243, 229);
   box-shadow: 0px 2px 10px 0px black;
 }
 .calendar-square .date{
@@ -342,7 +342,7 @@ section.calendar-container {
 .meal-list {
   grid-area: meal;
   text-align: center;
-  background-image: linear-gradient(to bottom, #52B788, rgb(230, 245, 216)); 
+  background-image: linear-gradient(to bottom, #4A180C, #b37869); 
   /* background-color: #52B788; */
   max-height: 60rem;
   border-radius: 10px;
@@ -355,7 +355,7 @@ section.calendar-container {
   border: 1px solid black;
   border-radius: 1rem;
   margin: 0.5rem;
-  background-color: rgb(230, 245, 216);
+  background-color: rgb(245, 236, 216);
   font-variant-caps: all-small-caps;
   font-weight: 800;
   width: 100px;
@@ -383,7 +383,7 @@ section.calendar-container {
 }
 
 #groceries{
-  background-image: linear-gradient(to bottom, #52B788, rgb(230, 245, 216)); 
+  background-image: linear-gradient(to bottom, #4A180C, #b37869); 
   padding: 2rem;
   border-radius: 8px;
   margin-top: 4rem;

@@ -109,7 +109,6 @@ background-size: cover;
 }
 #top-section div{
   background-color: #4A180C;
-  /* background-image: linear-gradient(to bottom, #4A180C, #923f2b); */
   box-shadow: 0px 6px 20px 0px black;
   color: white;
 }

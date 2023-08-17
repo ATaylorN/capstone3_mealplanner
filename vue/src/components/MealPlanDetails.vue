@@ -3,9 +3,10 @@
       <h1>MEAL PLANS FOR {{ date }} </h1>
         <div v-if="loaded" class="meal-list">
             <div class="meals"  v-for="meal in mealPlans" :key="meal.id">
-                <p>{{meal.mealName}}</p>
+                <h1>{{meal.mealName}}</h1>
                 <div v-for="recipe in meal.recipes" :key="recipe.id">
-                    {{recipe.name}}
+                  <h2>{{recipe.name}}</h2> 
+                  <img :src="recipe.image"/>
                 </div>
             </div>
         </div>

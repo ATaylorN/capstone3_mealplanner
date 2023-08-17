@@ -342,7 +342,8 @@ section.calendar-container {
 .meal-list {
   grid-area: meal;
   text-align: center;
-  background-color: #52B788;
+  background-image: linear-gradient(to bottom, #52B788, rgb(230, 245, 216)); 
+  /* background-color: #52B788; */
   max-height: 60rem;
   border-radius: 10px;
   padding: 1rem 2rem;
@@ -382,7 +383,7 @@ section.calendar-container {
 }
 
 #groceries{
-  background-color: #52B788;
+  background-image: linear-gradient(to bottom, #52B788, rgb(230, 245, 216)); 
   padding: 2rem;
   border-radius: 8px;
   margin-top: 4rem;

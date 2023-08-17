@@ -9,7 +9,7 @@
     <section class="calendar-container">      
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id" @dblclick="goToDetailView(calendarSlot.date)">
-          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag" @change="readCalendar()">          
+          <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag">          
             <span slot="header" @click="setDates(calendarSlot.date)"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
              {{ mealPlan.mealName }} 
@@ -38,7 +38,7 @@
       <!-- 
         Need to figure out how to make a control on the child key off data in the parent
        -->
-      <GroceryList id='groceries' @save="readCalendar()" @clear="clearDates()" :mealPlans="plansInDateRange" :startDate="startDate" :endDate="endDate" />
+      <GroceryList id='groceries' @clear="clearDates()" :mealPlans="plansInDateRange" :startDate="startDate" :endDate="endDate" />
 
   </div>
 
@@ -244,9 +244,6 @@ export default {
                 }
             })                     
     },
-    beforeDestroy(){
-      this.readCalendar();
-    }
 }
 </script>
 

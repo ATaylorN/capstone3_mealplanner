@@ -2,7 +2,7 @@
   <div>
       <h1>MEAL PLANS FOR {{ date }} </h1>
         <div v-if="loaded" class="meal-list">
-            <div class="meals" v-for="meal in mealPlans" :key="meal.id">
+            <div class="meals"  v-for="meal in mealPlans" :key="meal.id">
                 <p>{{meal.mealName}}</p>
                 <div v-for="recipe in meal.recipes" :key="recipe.id">
                     {{recipe.name}}
@@ -14,6 +14,7 @@
 </template>
 
 <script>
+
 import GroceryListService from '../services/GroceryListService.js'
 import MealService from '../services/MealService.js'
 export default {
@@ -24,7 +25,10 @@ export default {
             date: this.$route.params.date,
             mealPlans: [],
             meals: [],
-            loaded: false
+            loaded: false,
+            loadCount: 0,
+            recordsToLoad: 0, 
+
         }
     },
     components: {
@@ -44,20 +48,26 @@ export default {
                 .then(response => {                    
                     this.mealPlans = response.data;
                     console.log(this.mealPlans);
+                    this.recordsToLoad  = this.mealPlans.length; 
                     this.mealPlans.forEach(mp => {
                         MealService.getMealRecipes(mp.mealId)   
                             .then( res => {
                                 mp.recipes = res.data;
-                                console.log(mp.mealId)
-                                MealService.getMealById(mp.mealId)                                
-                                    .then(res => {
-                                        console.log(res.data);
-                                        mp.mealName = res.data.mealName;
-                                        this.loaded = true
-                                    })
-                            })                             
-            });
+                            MealService.getMealById(mp.mealId)
+                                .then(res => {
+                                    mp.mealName = res.data.mealName;                                    
+  
+                                }).finally(() => {
+                                    this.loadCount += 1; 
+                                    if(this.loadCount == this.recordsToLoad){
+                                        this.loaded = true; 
+                                    }
+                                })                                                                                                            
+                            })
+
+                    })                                                                 
                 })
+                
                 .catch(err => {
                     if(err.response){
                         console.log(err.response.data)
@@ -68,10 +78,13 @@ export default {
                     }
                     console.log(err.message)
                 })
+             
             }
+            
         },
         created(){
-            this.getRelevantMealPlans();            
+            this.getRelevantMealPlans()
+
         }
     }
     

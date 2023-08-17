@@ -41,11 +41,11 @@ export default {
       getHeaderText(){
           let output = "";
           if(!this.startDate && !this.endDate){
-              output = "Select dates to view meal plans."; 
+              output = "Click start and end date to get ingredients for grocery list."; 
           } else if (!this.startDate) {
-              output = "Plans from today til " + this.endDate; 
+              output = "Groceries from today til " + this.endDate; 
           } else {
-              output = "Plans from " + this.startDate + " to " + this.endDate; 
+              output = "Groceries from " + this.startDate + " to " + this.endDate; 
           }
           return output; 
       }  

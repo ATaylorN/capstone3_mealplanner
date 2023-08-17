@@ -8,7 +8,7 @@
     -->
     <div class="meal-builder-container">
 
-      <draggable class="user-recipes-container" :list="recipes" @start="drag = true" @end="drag = false" group="recipeHolder">
+      <draggable class="user-recipes-container" :list="recipes" @start="drag = true" @end="drag = false" :group="{name: 'recipeHolder', pull: 'clone'}">
         <figure class="recipe-card" v-for="recipe in recipes" :key="recipe.id">
           <img class="recipe-card-image" :src="recipe.image" :alt="recipe.name"/>
           <span class="recipe-card-title">{{ recipe.name }}</span>
@@ -293,13 +293,14 @@ input{
   grid-template-columns: 1fr;
   grid-template-areas: "usermeals"
                         "newmeals";
-  gap: 1rem;
+  gap: 1rem; 
   /* margin: 4rem 20rem; */
 }
 .user-recipes-container {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
+  
 }
 #meal-name {
   width: 30rem;

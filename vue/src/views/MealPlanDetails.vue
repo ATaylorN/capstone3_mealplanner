@@ -1,17 +1,21 @@
 <template>
   <!-- send meal plan list to MealPlanDetails via router prop -->
-  <MealPlanDetails />
+  <div>
+    <Header />
+    <MealPlanDetails />
+  </div>
 </template>
 
 <script>
-import MealPlanDetails from '../components/MealPlanDetails.vue'
+import Header from "../components/Header.vue";
+import MealPlanDetails from "../components/MealPlanDetails.vue";
 export default {
-    components: {
-        MealPlanDetails
-    }
-}
+  components: {
+    MealPlanDetails,
+    Header,
+  },
+};
 </script>
 
 <style>
-
 </style>

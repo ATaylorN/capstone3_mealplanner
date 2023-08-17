@@ -1,14 +1,14 @@
 <template>
   <div>
       <h1>MEAL PLANS FOR {{ date }} </h1>
-        <ul class="meal-list">
-            <li class="meals" v-for="meal in mealPlans" :key="meal.id">
-                <span>{{meal.mealName}}</span>
+        <div class="meal-list">
+            <div class="meals" v-for="meal in mealPlans" :key="meal.id">
+                <p>{{meal.mealName}}</p>
                 <div v-for="recipe in meal.recipes" :key="recipe.id">
                     {{recipe.name}}
                 </div>
-            </li>
-        </ul>
+            </div>
+        </div>
 
   </div>
 </template>
@@ -46,8 +46,14 @@ export default {
                     this.mealPlans.forEach(mp => {
                         MealService.getMealRecipes(mp.mealId)   
                             .then( res => {
-                                mp.recipes = res.data
-                    })                             
+                                mp.recipes = res.data;
+                                console.log(mp.mealId)
+                                MealService.getMealById(mp.mealId)                                
+                                    .then(res => {
+                                        console.log(res.data);
+                                        mp.mealName = res.data.mealName;
+                                    })
+                            })                             
             });
                 })
                 .catch(err => {
@@ -63,8 +69,7 @@ export default {
             }
         },
         created(){
-            this.getRelevantMealPlans();
-            console.log(this.recipes);
+            this.getRelevantMealPlans();            
         }
     }
     
@@ -73,7 +78,7 @@ export default {
 </script>
 
 <style>
-.recipeName {
+div {
     color: black
 }
 </style>

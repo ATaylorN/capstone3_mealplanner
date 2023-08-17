@@ -1,6 +1,10 @@
 <template>
   <div>
-      <h1>MEAL PLANS FOR {{ date }} </h1>
+      <h1>MEAL PLAN FOR {{ date }} </h1>
+      <div v-for="mealPlan in mealPlans" :key="mealPlan.id" class="mealRecipes">
+          
+         <span class="recipeName"> {{recipe.name}} </span> <br>
+      </div>
   </div>
 </template>
 
@@ -12,7 +16,6 @@ export default {
     data() {
         return {
             ingredients: [],
-            recipes: [],
             date: this.$route.params.date,
             mealPlans: []
         }
@@ -37,7 +40,7 @@ export default {
                     this.mealPlans.forEach(mp => {
                         MealService.getMealRecipes(mp.mealId)   
                             .then( res => {
-                                this.recipes.push(res.data);
+                                mp.meals = res.data
                     })                             
             });
                 })
@@ -54,7 +57,7 @@ export default {
             }
         },
         created(){
-            this.getRelevantMealPlans();
+            this.getRelevantMealPlans()
 
             console.log(this.recipes);
         
@@ -67,5 +70,7 @@ export default {
 </script>
 
 <style>
-
+.recipeName {
+    color: black
+}
 </style>

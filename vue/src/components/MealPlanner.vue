@@ -37,7 +37,7 @@
       <!-- 
         Need to figure out how to make a control on the child key off data in the parent
        -->
-      <GroceryList id='groceries' @save="readCalendar()" @clear="clearDates()" :startDate="startDate" :endDate="endDate" />
+      <GroceryList id='groceries' @save="readCalendar()" @clear="clearDates()" :mealPlans="plansInDateRange" :startDate="startDate" :endDate="endDate" />
 
   </div>
 
@@ -63,10 +63,23 @@ export default {
       trashmode: [],
       startDate: "",
       endDate: "",
+      
     };
   },
-
-    methods: {
+  computed: {
+    plansInDateRange(){
+      let output = [];
+      if(!this.startDate && !this.endDate){
+        output = []
+      } else if (this.startDate && !this.endDate){
+        output = this.getMealPlansForDateRange(this.startDate);
+      } else {
+        output = this.getMealPlansForDateRange(this.startDate, this.endDate);
+      }
+      return output;
+    }
+  },
+  methods: {
         buildCalendar(){
             let d = moment();
             for (let i = 0; i < 28; i++ ) {
@@ -94,6 +107,23 @@ export default {
         clearDates(){
           this.startDate = "";
           this.endDate = "";
+        },
+        getMealPlansForDateRange(start, end){
+          let output = []; 
+          if(end == undefined){
+            this.dateSlots.forEach(slot => {
+              if(slot.date >= start && slot.mealPlans.length > 0){                                
+                output = output.concat(slot.mealPlans);
+              }
+            });
+          } else if (start && end){
+            this.dateSlots.forEach(slot => {
+              if((slot.date >= start && slot.date <= end ) && slot.mealPlans.length > 0){                
+                output = output.concat(slot.mealPlans);
+              }
+            });
+          }
+          return output; 
         },
         setDates(date){
           // if both dates aren't populated, set the start date first. 

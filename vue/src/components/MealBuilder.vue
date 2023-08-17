@@ -185,7 +185,7 @@ input{
 }
 .user-recipes-container {
   grid-area: usermeals;
-  max-height: 80%;
+  max-height: 60rem;
   flex-direction: column;
   justify-content: center;
   background-color: #4a180c;

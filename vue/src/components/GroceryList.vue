@@ -6,6 +6,7 @@
         <button v-if="listShowing" @click="emailGroceryList(mailTo)">E-mail Grocery List</button>
         <button v-if="listShowing" @click="generateIcsFile()">Generate Calendar File</button>
         <input v-if="listShowing" type="text" v-model="mailTo" placeholder="email address">
+        <a v-show="false" ref="fileElement"> </a> 
       <button @click="$emit('clear'), clear()">Clear</button>      
     <div class="ingredients" id="ingredient-list" ref="listo"> 
         <ol> 
@@ -17,12 +18,12 @@
 </template>
 
 <script>
-
+/* eslint-disable */ 
 import GroceryListService from '../services/GroceryListService.js'; 
 import { Printd }  from 'printd'; 
 import emailjs from '@emailjs/browser'
 import * as ics from 'ics';
-import moment from "moment";
+// import moment from "moment";
 
 export default {
     name: "grocery-list",
@@ -51,22 +52,32 @@ export default {
       }  
     },    
     methods: {
-        generateIcsFile(){
-            let m = moment();
+        generateIcsFile(){        
            let events = [];
            this.mealPlans.forEach(mealPlan => {
+               let startDate = mealPlan.dateToCook.split('-').map(str => {return parseInt(str)});
+               let endDate = mealPlan.dateToCook.split('-').map(str => {return parseInt(str)})
+               endDate[2] += 1 
                const event = {
-                   start: mealPlan.dateToCook.split(','),
-                   end: mealPlan.dateToCook.add(1, 'days').split(','),
+                   start: startDate,
+                   end: endDate,
                    title: 'Prepare ' + mealPlan.mealName,
                    description: 'Time to get groceries!',
                    url: 'http://localhost:8080/meal-planner',
 
                }
-              events.push(event); 
-           })
-            let val = ics.createEvents(events);
-           console.log(val)
+              events.push(event);                                    
+           });
+
+        let icsData = ics.createEvents(events);
+        console.log(icsData.value)
+        let icsFileStrings = icsData.value.split('\r\n')
+        console.log(icsFileStrings)
+        
+        this.calendarFile = icsFileStrings
+        this.$refs.fileElement.setAttribute('href', 'data:text/plain;charset=utf-8,' + encodeURIComponent(icsData.value))  
+        this.$refs.fileElement.setAttribute('download', 'mealplan.ics') 
+        this.$refs.fileElement.click();             
         },
         getMealPlanIngredients(){
             GroceryListService.getMealPlanIngredients(this.startDate, this.endDate).then(response => {
@@ -95,7 +106,7 @@ export default {
 
             console.log(); 
             let params = {
-                to_name: "Sled Jacobs Jr",                
+                // to_name: "Sled Jacobs Jr",                
                 user_email: this.mailTo,                
                 message: messageBody
                 }

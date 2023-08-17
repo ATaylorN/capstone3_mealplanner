@@ -53,9 +53,9 @@ export default {
                                     .then(res => {
                                         console.log(res.data);
                                         mp.mealName = res.data.mealName;
-                                        this.loaded = true
+                                        this.loaded = true 
                                     })
-                            })                             
+                            })                  
             });
                 })
                 .catch(err => {

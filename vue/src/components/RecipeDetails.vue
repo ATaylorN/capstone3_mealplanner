@@ -1,8 +1,9 @@
 <template>
 
-  <div class="recipeContainer">
+  <div class="recipeContainer" v-bind:id="recipeId">
       <h1> {{bigMode}} </h1>
       <h2 class="recipeName"> {{recipe.name}} </h2>
+
       
       <div class="recipe-body">
           <img id="recipeImage" :src="recipe.image" alt="" class="img-rounded">          
@@ -16,7 +17,7 @@
                   </li>
               </ul>
           </div>
-         
+         <button @click="printRecipe()">print</button>
           <div class="instructions">
               <h3>Instructions:</h3>
               <p>{{recipe.instructions}}</p>
@@ -28,15 +29,32 @@
 </template>
 
 <script>
+import { Printd } from 'printd';
 import RecipeService from '@/services/RecipeService.js';
 
 export default {
     name: "RecipeDetails",
-    props: ['recipeId', 'bigMode'],
+    props: ['recipeId', 'bigMode', 'num'],
     data(){
        return {
            recipe: {}           
        }
+    },
+    methods: {
+        printRecipe() {
+            console.log(document.getElementById(this.recipeId))
+            const id = new Printd();
+            id.print(document.getElementById(this.recipeId))
+            console.log('good job');
+        },
+        getPrintId() {
+            if(this.num) {
+                return this.num;
+            }
+            else {
+                return 'print id'
+            }
+        }
     },
     created(){
         RecipeService.getRecipeById(this.recipeId)

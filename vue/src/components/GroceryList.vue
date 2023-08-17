@@ -125,5 +125,10 @@ export default {
 </script>
 
 <style scoped>
-
+.ingredients li{
+    font-size: 20px;
+}
+.ingredients{
+    margin: 2rem;
+}
 </style>

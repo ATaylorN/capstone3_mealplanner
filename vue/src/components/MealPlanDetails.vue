@@ -1,7 +1,7 @@
 <template>
   <div>
       <h1>MEAL PLANS FOR {{ date }} </h1>
-        <div class="meal-list">
+        <div v-if="loaded" class="meal-list">
             <div class="meals" v-for="meal in mealPlans" :key="meal.id">
                 <p>{{meal.mealName}}</p>
                 <div v-for="recipe in meal.recipes" :key="recipe.id">
@@ -23,7 +23,8 @@ export default {
             ingredients: [],
             date: this.$route.params.date,
             mealPlans: [],
-            meals: []
+            meals: [],
+            loaded: false
         }
     },
     components: {
@@ -52,6 +53,7 @@ export default {
                                     .then(res => {
                                         console.log(res.data);
                                         mp.mealName = res.data.mealName;
+                                        this.loaded = true
                                     })
                             })                             
             });

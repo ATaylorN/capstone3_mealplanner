@@ -1,6 +1,6 @@
 <template>
   <div id="grocery-list">
-      <h2>{{getHeaderText}}</h2>
+      <h2 class="grocery-list-header">{{getHeaderText}}</h2>
       <button @click="$emit('save'), getMealPlanIngredients()">Generate Grocery List</button> 
       <button v-if="listShowing" @click="printGroceryList()">Print Grocery List</button>
         <button v-if="listShowing" @click="emailGroceryList(mailTo)">E-mail Grocery List</button>
@@ -125,6 +125,9 @@ export default {
 </script>
 
 <style scoped>
+.grocery-list-header{
+    color: white;
+}
 .ingredients li{
     font-size: 20px;
 }

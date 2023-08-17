@@ -9,7 +9,7 @@
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id" @dblclick="goToDetailView(calendarSlot.date)">
           <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag">          
-            <span slot="header" @click="setDates(calendarSlot.date)"> {{ calendarSlot.displayDate }} <br></span>
+            <span class="date" slot="header" @click="setDates(calendarSlot.date)"> {{ calendarSlot.displayDate }} <br></span>
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
              {{ mealPlan.mealName }} 
             </span>
@@ -237,9 +237,10 @@ Set the calendar to a grid containing five rows, seven columns.
 .menuTitle{
   grid-area: title;
   text-align: center;
+  padding: 1rem;
   background-color: #4A180C;
   color: white;
-  box-shadow: 0px 6px 20px 0px black;
+  /* box-shadow: 0px 6px 20px 0px black; */
   border-radius: 10px;
 }
 .meal:hover{
@@ -254,7 +255,7 @@ Set the calendar to a grid containing five rows, seven columns.
 }
 section.calendar-container {
   grid-area: mid;
-  background-color: wheat;
+  background-color: rgb(250, 233, 210);
   color: black;
   padding: 2rem 1rem;
   border-radius: 10px;
@@ -275,13 +276,18 @@ section.calendar-container {
 }
 
 .calendar-square {
+  margin-top: 1rem;
   width: 11rem;
   border: 1px solid black;
   border-radius: 1rem;
-  background-color: tan;
+  background-color: #8eebc0;
   box-shadow: 0px 2px 10px 0px black;
 }
-
+.calendar-square .date{
+  font-size: 16px;
+  font-weight: 800;
+  
+}
 .meal-planner {
   margin: 8rem;
   display: grid;
@@ -311,11 +317,12 @@ section.calendar-container {
   text-align: center;
   padding-top: 1rem;
   box-shadow: 0px 2px 10px 0px black;
+  margin: auto;
 }
 .meal-list {
   grid-area: meal;
   text-align: center;
-  background-color: wheat;
+  background-color: #52B788;
   max-height: 60rem;
   border-radius: 10px;
   padding: 1rem 2rem;
@@ -327,7 +334,7 @@ section.calendar-container {
   border: 1px solid black;
   border-radius: 1rem;
   margin: 0.5rem;
-  background-color: white;
+  background-color: rgb(230, 245, 216);
   font-variant-caps: all-small-caps;
   font-weight: 800;
   width: 100px;
@@ -342,7 +349,7 @@ section.calendar-container {
   transition-duration: 0.5s;
 }
 .saveBtn {
-  margin: 1rem;
+  margin: 4rem 2rem;
   font-size: 16px;
   box-shadow: 0px 2px 10px 0px black;
 }
@@ -351,9 +358,18 @@ section.calendar-container {
   flex-direction: row;
   padding: 2rem;
   flex-wrap: wrap;
+  justify-content: center;
 }
 
 #groceries{
-  background-color: wheat;
+  background-color: #52B788;
+  padding: 2rem;
+  border-radius: 8px;
+  margin-top: 4rem;
+}
+
+#groceries button{
+  margin-top: 2rem;
+  margin-bottom: 2rem;
 }
 </style>

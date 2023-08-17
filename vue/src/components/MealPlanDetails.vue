@@ -1,17 +1,15 @@
 <template>
   <div>
       <h1>MEAL PLANS FOR {{ date }} </h1>
-        <ul class="meal-list">
-            <li class="meals" v-for="meal in mealPlans" :key="meal.id">
-                <span>{{meal}}</span>
-            </li>
-        </ul>
+        <div v-if="loaded" class="meal-list">
+            <div class="meals" v-for="meal in mealPlans" :key="meal.id">
+                <p>{{meal.mealName}}</p>
+                <div v-for="recipe in meal.recipes" :key="recipe.id">
+                    {{recipe.name}}
+                </div>
+            </div>
+        </div>
 
-        <ul class="recipesInMeal">
-            <li class="recipe" v-for="recipe in mealPlans" :key="recipe.id">
-                <span>{{recipe}}</span>
-            </li>
-        </ul>
   </div>
 </template>
 
@@ -25,7 +23,8 @@ export default {
             ingredients: [],
             date: this.$route.params.date,
             mealPlans: [],
-            meals: []
+            meals: [],
+            loaded: false
         }
     },
     components: {
@@ -48,8 +47,15 @@ export default {
                     this.mealPlans.forEach(mp => {
                         MealService.getMealRecipes(mp.mealId)   
                             .then( res => {
-                                mp.recipes = res.data
-                    })                             
+                                mp.recipes = res.data;
+                                console.log(mp.mealId)
+                                MealService.getMealById(mp.mealId)                                
+                                    .then(res => {
+                                        console.log(res.data);
+                                        mp.mealName = res.data.mealName;
+                                        this.loaded = true
+                                    })
+                            })                             
             });
                 })
                 .catch(err => {
@@ -65,8 +71,7 @@ export default {
             }
         },
         created(){
-            this.getRelevantMealPlans();
-            console.log(this.recipes);
+            this.getRelevantMealPlans();            
         }
     }
     
@@ -75,5 +80,7 @@ export default {
 </script>
 
 <style>
-
+div {
+    color: black
+}
 </style>

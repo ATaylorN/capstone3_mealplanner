@@ -18,7 +18,6 @@
 </template>
 
 <script>
-/* eslint-disable */ 
 import GroceryListService from '../services/GroceryListService.js'; 
 import { Printd }  from 'printd'; 
 import emailjs from '@emailjs/browser'

@@ -19,12 +19,12 @@
         </div>
 
         <div class="all-ingredients">
-        <draggable class="ingredient-search-results" :list="searchResults" @start="drag=true" @end="drag=false" group="moveIngredient">
+        <!-- <draggable class="ingredient-search-results" :list="searchResults" @start="drag=true" @end="drag=false" group="moveIngredient">
           <figure v-for="foundIngredient in searchResults" :key="foundIngredient.index">
             <span @click="addNewIngredientToRecipe(foundIngredient)"> {{ foundIngredient.name }} </span>
             <img @click="addNewIngredientToRecipe(foundIngredient)" :src="foundIngredient.image" :alt="foundIngredient.name"/>
           </figure>
-        </draggable>
+        </draggable> -->
 
         <draggable class="ingredients" :list="ingredients" @start="drag=true" @end="drag=false" group="moveIngredient">
           <figure v-for="ingredient in filteredIngredientList" :key="ingredient.id">
@@ -160,7 +160,7 @@ export default {
     addRecipe() {
       console.log(this.newRecipe);
       let newRecipeId = null;
-      if(!this.newRecipe.image){
+      if(this.image){
             uploadBytes(this.uploadRef, this.image)
               .then(response => {
                 console.log('great success');
@@ -170,45 +170,65 @@ export default {
                 this.newRecipe.image = url; 
                 recipeService
         .addRecipe(this.newRecipe)
-        .then((response) => {
-          if (response.status === 201) {
-            newRecipeId = response.data;
-            ingredientService
-              .addIngredientsToRecipeIngredientList(
-                this.newRecipeIngredients,
-                newRecipeId
-              )
-              .then((response) => {
-                if (response.status === 201) {
-                  console.log("ingredients added");
-                }
-              })
-              .catch((error) => {
-                console.log(error);
-              });
-            this.newRecipe = {};
-            this.newRecipeIngredients = [];
-          }
-        })
-        .catch((error) => {
-          if (error.response) {
-            console.log(error.response.status);
-            console.log(error.response.data);
-            console.log(error.response.headers);
-          } else if (error.request) {
-            console.log(error.request);
-          } else {
-            console.log(error.message);
-          }
-        });
+          .then((response) => {
+            if (response.status === 201) {
+              newRecipeId = response.data;
+              ingredientService
+                .addIngredientsToRecipeIngredientList(
+                  this.newRecipeIngredients,
+                  newRecipeId
+                )
+                .then((response) => {
+                  if (response.status === 201) {
+                    console.log("ingredients added");
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+              this.newRecipe = {};
+              this.newRecipeIngredients = [];
+            }
           })
-          .catch(error => {
-            console.log('horrific failure');
-            console.log(error);
+          .catch((error) => {
+            if (error.response) {
+              console.log(error.response.status);
+              console.log(error.response.data);
+              console.log(error.response.headers);
+            } else if (error.request) {
+              console.log(error.request);
+            } else {
+              console.log(error.message);
+            }
+          });
+            })
+            .catch(error => {
+              console.log('horrific failure');
+              console.log(error);
+            })
+                })                  
+        } else {
+          recipeService.addRecipe(this.newRecipe)
+          .then((response) => {
+            if (response.status === 201) {
+              newRecipeId = response.data;
+              ingredientService
+                .addIngredientsToRecipeIngredientList(
+                  this.newRecipeIngredients,
+                  newRecipeId
+                )
+                .then((response) => {
+                  if (response.status === 201) {
+                    console.log("ingredients added");
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                });
+              this.newRecipe = {};
+              this.newRecipeIngredients = [];
+            }
           })
-              })
-                    
-
       }
     },
     searchIngredients() {
@@ -226,8 +246,8 @@ export default {
                 ingredient.image,
             };
 
-            this.searchResults.unshift(newIngredient);
-
+            this.ingredients.unshift(newIngredient);
+            
             ingredientService
               .addIngredient(newIngredient)
               .then((response) => {

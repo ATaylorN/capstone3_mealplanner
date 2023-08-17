@@ -306,10 +306,10 @@ input {
 
 .recipe-builder{
  display: grid;
-  grid-template-columns: 0.5fr 3fr;
+  grid-template-columns: 0.5fr 5fr;
   grid-template-areas: "ingredients recipe";
-  gap: 6rem;
-  margin: 4rem;
+  gap: 2rem;
+  margin: 4rem 20rem;
 }
 
 .recipe-builder figure{
@@ -331,12 +331,12 @@ input {
   border: 2px solid black;
   transform: scale(1.20); 
   transition-duration: 0.5s;
-  /* box-shadow: 0px 5px 20px 0px black; */
 }
 
 .ingredients-section{
   margin-top: 1rem;
-  margin-left: 4rem;
+  margin-left: auto;
+  margin-right: auto;
   grid-area: ingredients;
   align-content: center;
   background-color: #4a180c;
@@ -378,7 +378,8 @@ input {
 
 .recipe-data-section{
   margin-top: 1rem;
-  margin-right: 4rem;
+  margin-right: auto;
+  margin-left: auto;
   grid-area: recipe;
   align-content: center;
   background-color: #4a180c;
@@ -388,6 +389,7 @@ input {
   display: flex; 
   flex-direction: column; 
   border-radius: 20px;
+  width: 50vw;
 }
 .recipe-data-section input{
   margin-bottom: 2rem;
@@ -428,7 +430,8 @@ input {
 .newRecipeContainer{
 margin: 2rem;
 padding: 1rem;
-border: 2px solid white;
+border-radius: 10px;
+border: 2px solid wheat;
 max-height: 200px;
 overflow: hidden;
 }
@@ -452,4 +455,13 @@ flex-direction: row;
 flex-wrap: wrap;
 }
 
+@media screen and (max-width: 1050px){
+.recipe-builder{
+  display: grid;
+  margin: auto;
+  grid-template-columns: 0.5fr;
+  grid-template-areas: "ingredients" 
+                        "recipe";
+}
+}
 </style>

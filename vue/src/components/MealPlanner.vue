@@ -8,26 +8,19 @@
     <section class="calendar-container">      
       <ul class="mealplancalendar">
         <li class="calendar-square" v-for="calendarSlot in dateSlots" :key="calendarSlot.id" @dblclick="goToDetailView(calendarSlot.date)">
-          
           <draggable :list="calendarSlot.mealPlans" group="mealplan" draggable=".meal" class="calendarDrag">          
             <span slot="header" @click="setDates(calendarSlot.date)"> {{ calendarSlot.displayDate }} <br></span>
-            
             <span :meal="mealPlan.mealName" class="meal" v-for="(mealPlan, index) in calendarSlot.mealPlans" :key="index"> 
              {{ mealPlan.mealName }} 
             </span>
-            
           </draggable>
-          
         </li>
       </ul>
     </section>
 
 
       <section class="meal-list">
-
           <button class="saveBtn" @click="readCalendar()"> Save Meal Plan </button>
-          <router-link :to="{name:'email'}" tag="button"> Email </router-link>
-          
             <draggable :group="{name: 'mealplan', pull: 'clone', put: false}" :list="mealsToDrag" @start="drag=true" @end="drag=false" class="mealCardContainer"> 
               <div class="meal-card" v-for="meal in mealsToDrag" :key="meal.id">
                   <span :mealId="meal.mealId" > {{meal.mealName}} </span>
@@ -213,13 +206,11 @@ Set the calendar to a grid containing five rows, seven columns.
 */
 .menuTitle{
   grid-area: title;
-  margin-top: 4rem;
   text-align: center;
   background-color: #4A180C;
   color: white;
   box-shadow: 0px 6px 20px 0px black;
   border-radius: 10px;
-
 }
 .meal:hover{
   cursor: pointer;
@@ -235,28 +226,25 @@ section.calendar-container {
   grid-area: mid;
   background-color: wheat;
   color: black;
-  padding: 2rem;
+  padding: 2rem 1rem;
   border-radius: 10px;
-   box-shadow: 0px 6px 20px 0px black;
+  box-shadow: 0px 6px 20px 0px black;
 }
-
-
 
 #groceries{
   grid-area: groceries; 
 }
 
 .mealplancalendar {
+  padding: 2rem;
   list-style: none;
   display: grid;
   grid-template-rows: 11rem 11rem 11rem 11rem;
   grid-template-columns: 11rem 11rem 11rem 11rem 11rem 11rem 11rem;
-  gap: 6rem;
-  
+  gap: 4rem;
 }
 
 .calendar-square {
-  height: 12rem;
   width: 11rem;
   border: 1px solid black;
   border-radius: 1rem;
@@ -265,15 +253,16 @@ section.calendar-container {
 }
 
 .meal-planner {
+  margin: 8rem;
   display: grid;
-  grid-template-columns: 1fr 3fr 2fr;
-  grid-template-rows: 0.2fr 2fr 0.2fr 1fr;
-  column-gap: 5rem;
+  grid-template-columns: 1fr 3fr;
+  grid-template-rows: 0.2fr 1fr 0.2fr 0.2fr;
+  column-gap: 4rem;
   grid-template-areas:
-    ". title ."
-    ". mid groceries"
-    ".trash ."
-    ". lowerMid .";
+    "meal title"
+    "meal mid"
+    "trash mid"
+    ". groceries";
 }
 
 .mealplancalendar li span {
@@ -294,11 +283,12 @@ section.calendar-container {
   box-shadow: 0px 2px 10px 0px black;
 }
 .meal-list {
-  grid-area: lowerMid;
+  grid-area: meal;
+  text-align: center;
   background-color: wheat;
-  height: 30rem;
+  max-height: 60rem;
   border-radius: 10px;
-  margin-top: 2rem;
+  padding: 1rem 2rem;
   box-shadow: 0px 6px 20px 0px black;
 }
 .meal-card {
@@ -315,11 +305,12 @@ section.calendar-container {
   box-shadow: 0px 6px 20px 0px black;
 }
 
-.meal-card:hover span{
+.meal-card:hover{
   cursor: pointer;
-  font-size: 2rem;
+  border: 2px solid black;
+  transform: scale(1.20); 
+  transition-duration: 0.5s;
 }
-
 .saveBtn {
   margin: 1rem;
   font-size: 16px;
@@ -335,5 +326,4 @@ section.calendar-container {
 #groceries{
   background-color: wheat;
 }
-
 </style>

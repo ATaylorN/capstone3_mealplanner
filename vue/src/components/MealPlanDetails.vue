@@ -1,16 +1,16 @@
 <template>
-  <div>
-      <h1>MEAL PLANS FOR {{ date }} </h1>
+  <div class="mpdetails">
+      <h1 class="date-title">MEAL PLANS FOR {{ date }} </h1>
         <div v-if="loaded" class="meal-list">
             <div class="meals"  v-for="meal in mealPlans" :key="meal.id">
-                <h1>{{meal.mealName}}</h1>
-                <div v-for="recipe in meal.recipes" :key="recipe.id">
-                  <h2>{{recipe.name}}</h2> 
-                  <img :src="recipe.image"/>
+                <h1 class="mealname">{{meal.mealName}}</h1>
+                <div class="recipes" v-for="recipe in meal.recipes" :key="recipe.id">
+                  <h2 class="recipename">{{recipe.name}}</h2> 
+                  <img :src="recipe.image" class="img-rounded"/>
+                  <router-link :to="{ name: 'recipe-details', params: { id: recipe.id } }" tag="button" class="detailsBtn">View Recipe</router-link>
                 </div>
             </div>
         </div>
-
   </div>
 </template>
 
@@ -93,8 +93,37 @@ export default {
 
 </script>
 
-<style>
-div {
-    color: black
+<style scoped>
+.mpdetails{
+    display: grid;
+    grid-template-rows: 0.2fr 0.5fr 2fr;
+    grid-template-areas: "title"
+                        "mealname"
+                        "recipe";  
 }
+.date-title {
+    grid-area: title;
+    text-align: center;
+    margin: 2rem;
+}
+.meals{
+    grid-area: mealname;
+    text-align: center;
+}
+.recipes{
+    grid-area: recipe;
+    display: flex;
+    flex-direction: column;
+    background-color: #4A180C;
+    color: white;
+    align-items: center;
+    padding: 2rem;
+}
+.recipes img{
+    width: 400px;
+    height: 400px;
+    object-fit: fill;
+    margin: 1rem;
+}
+
 </style>

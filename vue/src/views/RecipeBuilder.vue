@@ -306,23 +306,32 @@ input {
 
 .recipe-builder{
  display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.5fr 3fr;
   grid-template-areas: "ingredients recipe";
-  gap: 20px;
-  margin: 2rem;
+  gap: 6rem;
+  margin: 4rem;
 }
 
 .recipe-builder figure{
   display: flex;
   flex-direction: column-reverse;
   text-align: center;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
   background-color: white;
   color: black;
   max-width: 100px;
-  border-radius: 2px;
+  border-radius: 4px;
   font-weight: 900;
   font-variant-caps:all-small-caps;
+}
+.recipe-builder figure:hover{
+  cursor: pointer;
+  border: 2px solid black;
+  transform: scale(1.20); 
+  transition-duration: 0.5s;
+  /* box-shadow: 0px 5px 20px 0px black; */
 }
 
 .ingredients-section{
@@ -362,10 +371,9 @@ input {
   display: flex;
   flex-direction: column;
   list-style-type: none;
-  gap: 40px;
   padding-bottom: 1rem;
   flex-wrap: wrap;
-  max-width: 400px;
+  max-width: 90rem;
 }
 
 .recipe-data-section{
@@ -401,10 +409,11 @@ input {
   color: black;
 }
 .recipe-builder img{
-  max-width: 10rem;
-  max-height: 10rem;
+  height: 100px;
+  width: 100px;
+  object-fit: fill;
   border-radius: 1rem;
-  padding: 0.4rem;
+  padding: 0.5rem;
 }
 
 .recipe-builder button{

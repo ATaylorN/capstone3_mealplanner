@@ -274,10 +274,12 @@ Set the calendar to a grid containing five rows, seven columns.
   overflow: auto;
 }
 section.calendar-container {
+  margin-left: auto;
+  margin-right: auto;
   grid-area: mid;
   background-color: rgb(250, 233, 210);
   color: black;
-  padding: 2rem 1rem;
+  padding: 2rem 11rem;
   border-radius: 10px;
   box-shadow: 0px 6px 20px 0px black;
 }

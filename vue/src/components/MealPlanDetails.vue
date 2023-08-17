@@ -3,15 +3,11 @@
       <h1>MEAL PLANS FOR {{ date }} </h1>
         <ul class="meal-list">
             <li class="meals" v-for="meal in mealPlans" :key="meal.id">
-                <span>{{meal}}</span>
+                <span>{{meal.Name}}</span>
+                <div v-for="recipe in meal.recipes" :key="recipe.id">{{recipe.name}}</div>
             </li>
         </ul>
 
-        <ul class="recipesInMeal">
-            <li class="recipe" v-for="recipe in mealPlans" :key="recipe.id">
-                <span>{{recipe}}</span>
-            </li>
-        </ul>
   </div>
 </template>
 

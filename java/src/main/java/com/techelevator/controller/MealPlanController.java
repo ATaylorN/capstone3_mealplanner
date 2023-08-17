@@ -49,16 +49,6 @@ public class MealPlanController {
         return newMealId;
     }
 
-    @RequestMapping(value="/{mealId}", method = RequestMethod.GET)
-    public Meal getMealById(@PathVariable int mealId){
-        Meal meal = null;
-        try {
-            meal = mealDao.getMealById(mealId);
-        } catch (RuntimeException e){
-            throw new RuntimeException("Could not find meal.");
-        }
-        return meal;
-    }
 
     @RequestMapping(value="/recipe-list", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
@@ -106,6 +96,17 @@ public class MealPlanController {
         }
         return mealPlans;
     }
+    @RequestMapping(value="/meal/{mealId}", method = RequestMethod.GET)
+    public Meal getMealById(@PathVariable int mealId){
+        Meal meal = null;
+        try {
+            meal = mealDao.getMealById(mealId);
+        } catch (RuntimeException e){
+            throw new RuntimeException("Could not find meal.");
+        }
+        return meal;
+    }
+
 
     @RequestMapping(value="", method = RequestMethod.GET)
     public List<Meal> getUserMeals(Principal principal){

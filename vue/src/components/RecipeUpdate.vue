@@ -10,7 +10,7 @@
         @end="drag = false"
         group="newIngredients"
       >
-        <figure
+        <figure class="imagecard"
           v-for="ingredient in browseIngredientList"
           :key="ingredient.id"
           @click="addNewIngredientToRecipe(ingredient)"
@@ -22,7 +22,7 @@
     </section>
 
     <section class="recipe-data">
-      <form v-on:submit.prevent class="recipe-inputs">
+      <form v-on:submit.prevent class="recipe-inputs" id="updateform">
         <div class="field">
           <label for="name">Recipe Name: </label>
           <input name="name" type="text" v-model="name" />
@@ -67,7 +67,7 @@
           @end="drag = false"
           group="newIngredients"
         >
-          <figure
+          <figure class="imagecard"
             v-for="ingredient in ingredientList"
             :key="ingredient.id"
             @click="removeIngredientFromRecipe(ingredient)"
@@ -207,8 +207,14 @@ export default {
 </script>
 
 <style scoped>
+
 .recipe-updater img {
-  max-width: 100px;
+  height: 150px;
+  width: 150px;
+  object-fit: fill;
+  border-radius: 4px;
+  padding: 0.5rem;
+  border: 2 solid white;
 }
 .recipe-updater {
   display: grid;
@@ -259,6 +265,7 @@ section.ingredient-data:hover {
 }
 .recipe-data form {
   grid-area: info;
+  color: white;
 }
 .recipe-data button {
   color: black;
@@ -270,6 +277,7 @@ section.ingredient-data:hover {
 .recipe-inputs div {
   display: flex;
   flex-direction: column;
+  color: white;
 }
 .recipe-inputs input {
   height: 4rem;
@@ -282,6 +290,9 @@ section.ingredient-data:hover {
   text-align: center;
   margin-bottom: 2rem;
 }
+.recipe-ingredients span{
+  color:white;
+}
 .ingredients {
   display: flex;
   flex-wrap: wrap;
@@ -291,7 +302,7 @@ section.ingredient-data:hover {
 .ingredients:hover {
   overflow: auto;
 }
-.recipe-updater figure {
+.imagecard{
   display: flex;
   flex-direction: column-reverse;
   text-align: center;
@@ -301,7 +312,7 @@ section.ingredient-data:hover {
   margin-top: 2rem;
   background-color: white;
   color: black;
-  max-width: 100px;
+  width: 15rem;
   border-radius: 2px;
   font-weight: 900;
   font-variant-caps: all-small-caps;

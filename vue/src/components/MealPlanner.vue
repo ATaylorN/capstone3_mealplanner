@@ -300,7 +300,7 @@ section.calendar-container {
   width: 11rem;
   border: 1px solid black;
   border-radius: 1rem;
-  background-color: #8eebc0;
+  background-color: rgb(230, 245, 216);
   box-shadow: 0px 2px 10px 0px black;
 }
 .calendar-square .date{

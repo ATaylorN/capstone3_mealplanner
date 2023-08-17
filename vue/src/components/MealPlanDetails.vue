@@ -1,10 +1,17 @@
 <template>
   <div>
-      <h1>MEAL PLAN FOR {{ date }} </h1>
-      <div v-for="mealPlan in mealPlans" :key="mealPlan.id" class="mealRecipes">
-          
-         <span class="recipeName"> {{recipe.name}} </span> <br>
-      </div>
+      <h1>MEAL PLANS FOR {{ date }} </h1>
+        <ul class="meal-list">
+            <li class="meals" v-for="meal in mealPlans" :key="meal.id">
+                <span>{{meal}}</span>
+            </li>
+        </ul>
+
+        <ul class="recipesInMeal">
+            <li class="recipe" v-for="recipe in mealPlans" :key="recipe.id">
+                <span>{{recipe}}</span>
+            </li>
+        </ul>
   </div>
 </template>
 
@@ -17,7 +24,8 @@ export default {
         return {
             ingredients: [],
             date: this.$route.params.date,
-            mealPlans: []
+            mealPlans: [],
+            meals: []
         }
     },
     components: {
@@ -40,7 +48,7 @@ export default {
                     this.mealPlans.forEach(mp => {
                         MealService.getMealRecipes(mp.mealId)   
                             .then( res => {
-                                mp.meals = res.data
+                                mp.recipes = res.data
                     })                             
             });
                 })
@@ -57,11 +65,8 @@ export default {
             }
         },
         created(){
-            this.getRelevantMealPlans()
-
+            this.getRelevantMealPlans();
             console.log(this.recipes);
-        
-
         }
     }
     

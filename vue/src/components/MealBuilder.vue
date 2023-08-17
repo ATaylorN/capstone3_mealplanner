@@ -143,10 +143,18 @@ export default {
 </script>
 
 <style scoped>
-
+.recipe-card:hover{
+  cursor: pointer;
+  border: 2px solid black;
+  transform: scale(1.20); 
+  transition-duration: 0.5s;
+}
 .meal-builder-container {
-  display: flex;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
+  grid-template-areas: "usermeals newmeals";
+  gap: 2rem;
+  margin: 4rem 20rem;
 
 }
 .meal-header{
@@ -155,10 +163,8 @@ export default {
   padding-top: 2rem;
 }
 .new-meal-editor {
-  max-height: 100vh;
-  grid-area: newMeal;
+  grid-area: newmeals;
   display: grid;
-  grid-template-columns: 100%;
   grid-template-rows: 1fr 2fr 0.5fr;
   grid-template-areas: "header"
                         "addRecipeBox"
@@ -166,77 +172,86 @@ export default {
   background-color: #4a180c;
   color: white;
   box-shadow: 0px 6px 20px 0px black;
-  margin: 5rem;
+  margin-top: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+  align-content: center;
+  padding-top: 2rem;
   border-radius: 20px;
+  width: 50vw;
 }
 input{
   color: black;
 }
 .user-recipes-container {
-  max-height: 650px;
+  grid-area: usermeals;
+  max-height: 80%;
   flex-direction: column;
   justify-content: center;
   background-color: #4a180c;
   color: white;
   box-shadow: 0px 6px 20px 0px black;
-  margin: 5rem 1rem 5rem 5rem;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 1rem;
+  padding: 2rem;
   border-radius: 20px;
   overflow: hidden;
 }
 .user-recipes-container:hover {
   overflow: auto;
 }
-
-.user-recipes-container h3 {
-  justify-self: center;
-}
-figure {
+.meal-builder-container figure {
   display: flex;
   flex-direction: column;
-  border: white solid 6px;
-  align-items: center;
-  color: white;
-  height: 20rem;
-  margin: 1rem;
-  width: 20rem;
-  border-radius: 10px;
+  text-align: center;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
+  background-color: white;
+  color: black;
+  border-radius: 4px;
+  font-weight: 900;
+  font-variant-caps:all-small-caps;
+  padding: 1rem;
 }
 .recipe-card img {
   border: 2 solid white;
-  max-width: 15rem;
-  max-height: 15rem;
+  height: 200px;
+  width: 200px;
+  object-fit: fill;
   border-radius: 4px;
-  padding-top: 1rem;
+  padding: 0.5rem;
 }
 .recipe-card span {
   max-width: 90%;
   text-align: center;
-  padding: 1rem 1rem 1rem 1rem;
+  padding: 1rem;
   text-overflow: ellipsis;
 }
 #add-recipe-box {
   grid-area: addRecipeBox;
-  width: 90rem;
+  width: 40vw;
   height: 24rem;
   border-radius: 2rem;
   border: white 1px solid;
-  max-width: 90rem;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   margin: auto;
-  align-items: center;
   overflow: auto;
 }
 
 #meal-name {
-  margin: 2rem 8rem 2rem 8rem;
+  margin-right: auto;
+  margin-left: auto;
   font-size: 18px;
   border-radius: 1rem;
+  width: 60rem;
 }
 
 .create-meal-button {
-    padding: 1rem 2rem 1rem 2rem;
+    padding: 1rem 1rem 1rem 1rem;
     text-align: center;
     font-size: 18px;
     border-radius: 8px;
@@ -244,7 +259,10 @@ figure {
     color: black;
     font-family: 'Montserrat', sans-serif;
     text-decoration: none;
-    margin: 0.2rem 8rem 2rem 8rem;
+    margin: 0.2rem 1rem 2rem 1rem;
+    width: 60rem;
+    margin-right: auto;
+    margin-left: auto;
 }
 .create-meal-button:hover{
   background-color: darkkhaki;
@@ -260,12 +278,38 @@ figure {
   grid-area: userMeals;
   display: flex;
   flex-wrap: wrap;
-  padding: 2rem 2rem 2rem 2rem;
+  margin: 2rem;
   justify-content: center;
-  max-width: 100rem;
+}
+.meal-card{
+  width: 30rem;
+  height: 4rem;
+  font-size: 18px;
+  justify-content: center;
 }
 
-.meal-card {
-  max-height: 5rem;
+@media screen and (max-width: 1380px){
+  .meal-builder-container {
+  grid-template-columns: 1fr;
+  grid-template-areas: "usermeals"
+                        "newmeals";
+  gap: 1rem;
+  /* margin: 4rem 20rem; */
 }
+.user-recipes-container {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+#meal-name {
+  width: 30rem;
+}
+.create-meal-button {
+  width: 30rem;
+}
+.user-recipes-container {
+  max-height: none;
+}
+}
+
 </style>

@@ -39,9 +39,22 @@
 
 
     <div class="recipe-data-section">
+      <!-- 
+        When we submit a file from our computer, 2 things need to happen:  
+        1. We need to upload the image to Firebase
+          - Create a reference for the image file using the file's name
+          - Send the data to Firebase with uploadBytes()
+        2. Once the file is uploaded, we need to set the file's new download URL as the image property
+          - Given the reference to the file we just made, getDownloadURL() on it
+          - Stick the URL in newRecipe.image before sumitting the recipe. 
+        
+        Should hopefully be able to do this without making the form look like doo doo.           
+      -->
+
     <form @submit.prevent="addRecipe()" class="add-recipe">
       <input type="text" v-model="newRecipe.name" placeholder="Recipe Name" />
       <input type="text" v-model="newRecipe.image" placeholder="Image Link" />
+      <input type="file" @change="preUpload()" ref="imageFile" placeholder="Upload an image" />
       <input type="text" v-model="newRecipe.ingredients" placeholder="Ingredients"/>
       <textarea name="instructions" id="prep-instructions" v-model="newRecipe.instructions" placeholder="Prep Instructions"/>
       <button class="saveBtn">Save Recipe</button>
@@ -67,6 +80,8 @@ import recipeService from "@/services/RecipeService.js";
 import spoonacularService from "@/services/SpoonacularService.js";
 import Header from "@/components/Header.vue";
 import draggable from 'vuedraggable';
+import {getStorage, ref, getDownloadURL, uploadBytes} from 'firebase/storage';
+
 
 export default {
   components: {
@@ -89,6 +104,8 @@ export default {
       searched: false,
       searchResults: [],
       newIngredients: [],
+      image: null,
+      uploadRef: null,
     };
   },
   computed: {
@@ -99,6 +116,13 @@ export default {
     },
   },
   methods: {
+    preUpload(){
+      this.image = this.$refs.imageFile.files[0];
+      const storage = getStorage();
+      const imgRef = ref(storage, '/recipeImgs/' + this.image.name)
+      this.uploadRef = imgRef; 
+    },
+
     runSearch() {
       this.searchTerm = this.searchInputValue + this.autoCompleteSuggestion;
       this.autoCompleteSuggestion = "";
@@ -137,7 +161,15 @@ export default {
     addRecipe() {
       console.log(this.newRecipe);
       let newRecipeId = null;
-      recipeService
+      if(!this.newRecipe.image){
+            uploadBytes(this.uploadRef, this.image)
+              .then(response => {
+                console.log('great success');
+                console.log(response);
+                getDownloadURL(this.uploadRef)
+                .then(url => {
+                this.newRecipe.image = url; 
+                recipeService
         .addRecipe(this.newRecipe)
         .then((response) => {
           if (response.status === 201) {
@@ -170,6 +202,15 @@ export default {
             console.log(error.message);
           }
         });
+          })
+          .catch(error => {
+            console.log('horrific failure');
+            console.log(error);
+          })
+              })
+                    
+
+      }
     },
     searchIngredients() {
       spoonacularService
@@ -265,28 +306,37 @@ input {
 
 .recipe-builder{
  display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 0.5fr 5fr;
   grid-template-areas: "ingredients recipe";
-  gap: 20px;
-  margin: 2rem;
+  gap: 2rem;
+  margin: 4rem 20rem;
 }
 
 .recipe-builder figure{
   display: flex;
   flex-direction: column-reverse;
   text-align: center;
-  margin: auto;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 2rem;
   background-color: white;
   color: black;
   max-width: 100px;
-  border-radius: 2px;
+  border-radius: 4px;
   font-weight: 900;
   font-variant-caps:all-small-caps;
+}
+.recipe-builder figure:hover{
+  cursor: pointer;
+  border: 2px solid black;
+  transform: scale(1.20); 
+  transition-duration: 0.5s;
 }
 
 .ingredients-section{
   margin-top: 1rem;
-  margin-left: 4rem;
+  margin-left: auto;
+  margin-right: auto;
   grid-area: ingredients;
   align-content: center;
   background-color: #4a180c;
@@ -321,15 +371,15 @@ input {
   display: flex;
   flex-direction: column;
   list-style-type: none;
-  gap: 40px;
   padding-bottom: 1rem;
   flex-wrap: wrap;
-  max-width: 400px;
+  max-width: 90rem;
 }
 
 .recipe-data-section{
   margin-top: 1rem;
-  margin-right: 4rem;
+  margin-right: auto;
+  margin-left: auto;
   grid-area: recipe;
   align-content: center;
   background-color: #4a180c;
@@ -339,6 +389,7 @@ input {
   display: flex; 
   flex-direction: column; 
   border-radius: 20px;
+  width: 50vw;
 }
 .recipe-data-section input{
   margin-bottom: 2rem;
@@ -360,10 +411,11 @@ input {
   color: black;
 }
 .recipe-builder img{
-  max-width: 10rem;
-  max-height: 10rem;
+  height: 100px;
+  width: 100px;
+  object-fit: fill;
   border-radius: 1rem;
-  padding: 0.4rem;
+  padding: 0.5rem;
 }
 
 .recipe-builder button{
@@ -378,7 +430,8 @@ input {
 .newRecipeContainer{
 margin: 2rem;
 padding: 1rem;
-border: 2px solid white;
+border-radius: 10px;
+border: 2px solid wheat;
 max-height: 200px;
 overflow: hidden;
 }
@@ -402,4 +455,13 @@ flex-direction: row;
 flex-wrap: wrap;
 }
 
+@media screen and (max-width: 1050px){
+.recipe-builder{
+  display: grid;
+  margin: auto;
+  grid-template-columns: 0.5fr;
+  grid-template-areas: "ingredients" 
+                        "recipe";
+}
+}
 </style>

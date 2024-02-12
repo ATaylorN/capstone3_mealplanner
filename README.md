@@ -6,6 +6,8 @@ Each project contains instructions that provides information about the starting 
 
 ## MealPlannerApp
 
+[![My Skills](https://skillicons.dev/icons?i=js,postman,html,css,bootstrap,figma,idea,java,vue,nodejs,spring,vscode,postgres)](https://skillicons.dev)
+
 [![Generic badge](https://img.shields.io/badge/STATUS-COMPLETE-GREEN.svg)](https://shields.io/)
 
 12 weeks into the program, we were assigned to a team of 4. Together we utilized Java, Spring Boot, PostgreSQL, and Vue.js (just to name a few) to develop  a meal planner web application where a user can view, add, or update recipes with ease. In the 'Build a Recipe' page, the user can search for ingredients to add to their recipe and the information/images are supplied by an API. Our Calendar contained a lot of functionality; by simply dragging and dropping selected recipes onto the calendar, users can plan out a full month's worth of meals accurately. With the option to select a date range, the application will display the necessary ingredients needed for that period. To further streamline the process, users can print or email the grocery list, and even download a VCS file that is compatible with Google Calendar.
